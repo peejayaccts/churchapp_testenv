@@ -1,3 +1,0 @@
-# Place here all the dependencies used by "Philip" in her local development
-# Usage: pip3 install -r requirements/local_pj.txt
--r base.txt # includes the base.txt requirements file
