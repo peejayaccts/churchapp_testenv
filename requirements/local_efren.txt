@@ -1,0 +1,5 @@
+# requirements/local_efren.txt
+# =========================================================
+# Place here all the dependencies used by "Efren" in her local development
+# Usage: pip3 install -r requirements/local_efren.txt
+-r base.txt # includes the base.txt requirements file

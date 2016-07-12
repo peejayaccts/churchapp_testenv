@@ -1,0 +1,5 @@
+# requirements/staging.txt
+# =========================================================
+# Place here all the dependencies used only for staging server
+# Usage: pip3 install -r requirements/staging.txt
+-r base.txt # includes the base.txt requirements file
