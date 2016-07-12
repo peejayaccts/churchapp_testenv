@@ -3,3 +3,5 @@
 # Place here all the dependencies used in all environments
 # Usage: pip3 install -r requirements/base.tx
 # Note: this must be called by all other requirements/*.txt
+Django==1.9.7
+pkg-resources==0.0.0
