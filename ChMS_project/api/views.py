@@ -4,6 +4,7 @@ from rest_framework import authentication, permissions, viewsets, filters
 
 from .models import Church, Person
 from .serializers import ChurchSerializer, PersonSerializer
+from .forms import PersonFilter
 
 
 class DefaultsMixin(object):
@@ -40,5 +41,6 @@ class PersonViewSet(DefaultsMixin, viewsets.ModelViewSet):
     """API Endpoint for listing and creating daughter churches"""
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
+    filter_class = PersonFilter
     search_fields = ('first_name', 'last_name',)
     ordering_fields = ('first_name', 'last_name', )
