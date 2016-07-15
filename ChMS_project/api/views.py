@@ -22,7 +22,9 @@ class DefaultsMixin(object):
     paginate_by_param = 'page_size'
     max_paginate_by = 100
     filter_backends = (
+        filters.DjangoFilterBackend,
         filters.SearchFilter,
+        filters.OrderingFilter,
     )
 
 
@@ -31,6 +33,7 @@ class ChurchViewSet(DefaultsMixin, viewsets.ModelViewSet):
     queryset = Church.objects.all()
     serializer_class = ChurchSerializer
     search_fields = ('church_name', )
+    ordering_fields = ('church_name', 'church_type', )
 
 
 class PersonViewSet(DefaultsMixin, viewsets.ModelViewSet):
@@ -38,3 +41,4 @@ class PersonViewSet(DefaultsMixin, viewsets.ModelViewSet):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
     search_fields = ('first_name', 'last_name',)
+    ordering_fields = ('first_name', 'last_name', )
