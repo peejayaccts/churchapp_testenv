@@ -7,11 +7,19 @@ class Church(models.Model):
     """
     Main or Daughter Church of the Church Management Application.
     """
+    CHURCH_TYPE_MAIN = 'M'
+    CHURCH_TYPE_DAUGHTER = 'D'
+    CHURCH_TYPE_CHOICES = (
+        (CHURCH_TYPE_MAIN, _('Main')),
+        (CHURCH_TYPE_DAUGHTER, _('Daughter')),
+    )
     church_name = models.CharField(max_length=255, blank=False)
     logo_path = models.TextField(blank=True, default='')
     vision = models.TextField(blank=True, default='')
     language_format = models.TextField(blank=True, default='')
     timezone_format = models.TextField(blank=True, default='')
+    church_type = models.CharField(
+        max_length=1, choices=CHURCH_TYPE_CHOICES, default=CHURCH_TYPE_DAUGHTER)
 
     def __str__(self):
         return self.church_name
