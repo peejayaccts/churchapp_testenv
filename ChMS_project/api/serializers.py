@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.reverse import reverse
 
 from .models import Church, Person
 
@@ -18,16 +19,25 @@ class ChurchSerializer(serializers.ModelSerializer):
 class PersonSerializer(serializers.ModelSerializer):
     gender_display = serializers.SerializerMethodField()
     marital_status_display = serializers.SerializerMethodField()
+    links = serializers.SerializerMethodField()
 
     class Meta:
         model = Person
         fields = ('id', 'first_name', 'middle_initial', 'last_name', 'gender',
                   'gender_display', 'marital_status', 'marital_status_display',
                   'is_born_again_christian', 'alternate_email_address',
-                  'church')
+                  'church', 'links',)
 
     def get_gender_display(self, obj):
         return obj.get_gender_display()
 
     def get_marital_status_display(self, obj):
         return obj.get_marital_status_display()
+
+    def get_links(self, obj):
+        request = self.context['request']
+        return {
+            'church': reverse('church-detail',
+                              kwargs={'pk': obj.church_id},
+                              request=request),
+        }
