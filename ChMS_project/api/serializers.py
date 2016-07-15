@@ -6,14 +6,22 @@ from .models import Church, Person
 
 class ChurchSerializer(serializers.ModelSerializer):
     church_type_display = serializers.SerializerMethodField()
+    links = serializers.SerializerMethodField()
 
     class Meta:
         model = Church
         fields = ('id', 'church_name', 'church_type', 'church_type_display',
-                  'logo_path', 'vision', 'language_format', 'timezone_format',)
+                  'logo_path', 'vision', 'language_format', 'timezone_format',
+                  'links')
 
     def get_church_type_display(self, obj):
         return obj.get_church_type_display()
+
+    def get_links(self, obj):
+        request = self.context['request']
+        return {
+            'people': reverse('person-list', request=request) + '?church={}'.format(obj.pk),
+        }
 
 
 class PersonSerializer(serializers.ModelSerializer):
