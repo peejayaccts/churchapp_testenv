@@ -5,3 +5,4 @@ from . import views
 router = DefaultRouter()
 router.register(r'churches', views.ChurchViewSet)
 router.register(r'people', views.PersonViewSet)
+router.register(r'interests', views.InterestViewSet)

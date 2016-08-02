@@ -2,8 +2,8 @@ from django.shortcuts import render
 
 from rest_framework import authentication, permissions, viewsets, filters
 
-from .models import Church, Person
-from .serializers import ChurchSerializer, PersonSerializer
+from .models import Church, Person, Interest
+from .serializers import ChurchSerializer, PersonSerializer, InterestSerializer
 from .forms import PersonFilter
 
 
@@ -44,3 +44,11 @@ class PersonViewSet(DefaultsMixin, viewsets.ModelViewSet):
     filter_class = PersonFilter
     search_fields = ('first_name', 'last_name',)
     ordering_fields = ('first_name', 'last_name', )
+
+
+class InterestViewSet(DefaultsMixin, viewsets.ModelViewSet):
+    """API Endpoint for listing, creating, updating, deleting Interest List"""
+    queryset = Interest.objects.all()
+    serializer_class = InterestSerializer
+    search_fields = ('name', )
+    ordering_fields = ('name', )

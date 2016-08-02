@@ -1,7 +1,9 @@
+from django.utils.translation import ugettext_lazy as _
+
 from rest_framework import serializers
 from rest_framework.reverse import reverse
 
-from .models import Church, Person
+from .models import Church, Person, Interest
 
 
 class ChurchSerializer(serializers.ModelSerializer):
@@ -49,3 +51,10 @@ class PersonSerializer(serializers.ModelSerializer):
                               kwargs={'pk': obj.church_id},
                               request=request),
         }
+
+
+class InterestSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Interest
+        fields = ('id', 'name')
