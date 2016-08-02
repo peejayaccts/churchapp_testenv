@@ -7,7 +7,7 @@ import pprint
 class InterestAPITest(unittest.TestCase):
 
     def setUp(self):
-        response = requests.get('http://127.0.0.1:8000/api/')
+        response = requests.get('http://127.0.0.1:8000/apis/')
         self.assertTrue(response.status_code, 200)
         self.api = response.json()
         pprint.pprint(self.api)
