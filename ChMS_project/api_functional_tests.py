@@ -46,6 +46,7 @@ class InterestAPITest(unittest.TestCase):
         response = requests.post(self.api['interests'],
                                  data={'name': 'X'})
         self.assertFalse(response.status_code, 201)
+        self.assertTrue(response.status_code, 400)
 
     def test_get_interest(self):
         response = requests.get(
