@@ -86,3 +86,10 @@ class Ministry(models.Model):
 
     def __str__(self):
         return (self.name.title())
+
+
+class MemberStatus(models.Model):
+    name = models.CharField(max_length=255, unique=True, blank=False)
+
+    def __str__(self):
+        return (self.name.title())
