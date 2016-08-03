@@ -58,5 +58,10 @@ class InterestViewSet(mixins.ListModelMixin,
 
     queryset = Interest.objects.all()
     serializer_class = InterestSerializer
+    filter_backends = (
+        filters.DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    )
     search_fields = ('name', )
     ordering_fields = ('name', )
