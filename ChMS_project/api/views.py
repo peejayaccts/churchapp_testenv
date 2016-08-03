@@ -2,9 +2,11 @@ from django.shortcuts import render
 
 from rest_framework import authentication, permissions, viewsets, filters, mixins
 
-from .models import Church, Person, Interest, SkillAndProfession
+from .models import Church, Person, Interest, SkillAndProfession, \
+    SpiritualMilestone
 from .serializers import ChurchSerializer, PersonSerializer
-from .serializers import InterestSerializer, SkillAndProfessionSerializer
+from .serializers import InterestSerializer, SkillAndProfessionSerializer, \
+    SpiritualMilestoneSerializer
 from .forms import PersonFilter
 
 
@@ -80,6 +82,27 @@ class SkillAndProfessionViewSet(mixins.ListModelMixin,
 
     queryset = SkillAndProfession.objects.all()
     serializer_class = SkillAndProfessionSerializer
+    filter_backends = (
+        filters.DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    )
+    search_fields = ('name', )
+    ordering_fields = ('name', )
+
+
+class SpiritualMilestoneViewSet(mixins.ListModelMixin,
+                                mixins.RetrieveModelMixin,
+                                mixins.CreateModelMixin,
+                                mixins.UpdateModelMixin,
+                                mixins.DestroyModelMixin,
+                                viewsets.GenericViewSet):
+    """
+    API Endpoint for listing, creating, updating, deleting Spiritual Milestones List
+    """
+
+    queryset = SpiritualMilestone.objects.all()
+    serializer_class = SpiritualMilestoneSerializer
     filter_backends = (
         filters.DjangoFilterBackend,
         filters.SearchFilter,
