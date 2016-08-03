@@ -480,5 +480,120 @@ class MinistriesAPITest(unittest.TestCase):
         self.added_test_data.pop()
 
 
+class MemberStatusesAPITest(unittest.TestCase):
+
+    added_test_data = []
+
+    def setUp(self):
+        response = requests.get('http://127.0.0.1:8000/api/')
+        self.assertTrue(response.status_code, 200)
+        self.api = response.json()
+
+    def tearDown(self):
+        while self.added_test_data:
+            response = requests.get(
+                self.api['member_statuses'] + str(self.added_test_data.pop()))
+            self.assertTrue(response.status_code == 200)
+            member_status = response.json()
+            del_response = requests.delete(
+                member_status['links']['self'])
+            self.assertTrue(del_response.status_code == 204)
+
+    def test_member_status_resource_found(self):
+        self.assertTrue('member_statuses' in self.api)
+
+    def test_add_member_status(self, member_status=randomword(200)):
+        response = requests.post(
+            self.api['member_statuses'], data={'name': member_status})
+        self.assertTrue(response.status_code == 201)
+        response_json = response.json()
+        self.added_test_data.append(response_json['id'])
+
+    def test_add_duplicate(self):
+        same_name = randomword(200)
+        self.test_add_member_status(same_name)
+        response = requests.post(self.api['member_statuses'],
+                                 data={'name': same_name})
+        self.assertTrue(response.status_code == 400)
+
+    def test_add_256char(self):
+        str256 = randomword(256)
+        response = requests.post(
+            self.api['member_statuses'], data={'name': str256})
+        self.assertTrue(response.status_code == 400)
+
+    def test_get_all_member_status(self):
+        response = requests.get(self.api['member_statuses'])
+        self.assertTrue(response.status_code == 200)
+
+    def test_search_member_status(self):
+        new_member_status = randomword(20)
+        self.test_add_member_status(new_member_status)
+        response = requests.get(
+            self.api['member_statuses'] + '?search=' + new_member_status)
+        self.assertTrue(response.status_code == 200)
+        self.assertTrue(len(response.json()) == 1)
+
+    def test_sort_asc_name(self):
+        new_member_status = 'A' * 10
+        self.test_add_member_status(new_member_status)
+        another_member_status = 'Z' * 10
+        self.test_add_member_status(another_member_status)
+        response = requests.get(
+            self.api['member_statuses'] + '?ordering=name')
+        member_statuses = response.json()
+        latest_member_status = ''
+        for member_status in member_statuses:
+            if member_status['name'] == new_member_status or \
+               member_status['name'] == another_member_status:
+                latest_member_status = member_status['name']
+        self.assertTrue(latest_member_status == another_member_status,
+                        "Ascending order not ok")
+
+    def test_sort_desc_name(self):
+        new_member_status = 'A' * 10
+        self.test_add_member_status(new_member_status)
+        another_member_status = 'Z' * 10
+        self.test_add_member_status(another_member_status)
+        response = requests.get(
+            self.api['member_statuses'] + '?ordering=-name')
+        member_statuses = response.json()
+        latest_member_status = ''
+        for member_status in member_statuses:
+            if member_status['name'] == new_member_status or \
+               member_status['name'] == another_member_status:
+                latest_member_status = member_status['name']
+        self.assertTrue(latest_member_status == new_member_status,
+                        "Descending order not working")
+
+    def test_update_member_status(self):
+        new_member_status = randomword(200)
+        self.test_add_member_status(new_member_status)
+        response = requests.get(self.api['member_statuses'])
+        self.assertTrue(response.status_code == 200)
+        member_statuses = response.json()
+        for member_status in member_statuses:
+            if member_status['name'] == new_member_status:
+                member_status[
+                    'name'] = 'Test: Updated Member_Status'
+                put_response = requests.put(member_status['links']['self'],
+                                            data=member_status)
+                self.assertTrue(put_response.status_code == 200)
+                put_response_json = put_response.json()
+                self.assertTrue(put_response_json[
+                                'name'] == member_status['name'])
+
+    def test_delete_member_status(self):
+        self.test_add_member_status()
+        current_id = self.added_test_data[-1]
+        response = requests.get(
+            self.api['member_statuses'] + str(current_id))
+        self.assertTrue(response.status_code == 200)
+        member_status = response.json()
+        del_response = requests.delete(member_status['links']['self'])
+        self.assertTrue(del_response.status_code == 204)
+        self.added_test_data.pop()
+
+
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
