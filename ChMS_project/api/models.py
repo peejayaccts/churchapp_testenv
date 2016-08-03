@@ -65,3 +65,10 @@ class Interest(models.Model):
 
     def __str__(self):
         return (self.name.title())
+
+
+class SkillAndProfession(models.Model):
+    name = models.CharField(max_length=255, unique=True, blank=False)
+
+    def __str__(self):
+        return (self.name.title())
