@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from rest_framework import authentication, permissions, viewsets, filters
+from rest_framework import authentication, permissions, viewsets, filters, mixins
 
 from .models import Church, Person, Interest
 from .serializers import ChurchSerializer, PersonSerializer, InterestSerializer
@@ -46,8 +46,16 @@ class PersonViewSet(DefaultsMixin, viewsets.ModelViewSet):
     ordering_fields = ('first_name', 'last_name', )
 
 
-class InterestViewSet(DefaultsMixin, viewsets.ModelViewSet):
-    """API Endpoint for listing, creating, updating, deleting Interest List"""
+class InterestViewSet(mixins.ListModelMixin,
+                      mixins.RetrieveModelMixin,
+                      mixins.CreateModelMixin,
+                      mixins.UpdateModelMixin,
+                      mixins.DestroyModelMixin,
+                      viewsets.GenericViewSet):
+    """
+    API Endpoint for listing, creating, updating, deleting Interest List
+    """
+
     queryset = Interest.objects.all()
     serializer_class = InterestSerializer
     search_fields = ('name', )

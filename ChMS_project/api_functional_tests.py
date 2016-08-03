@@ -26,21 +26,30 @@ class InterestAPITest(unittest.TestCase):
         response = requests.get(
             self.api['interests'], auth=('demo', 'demodemo'))
         self.assertTrue(response.status_code, 200)
-        interests = response.json()
-        # pprint.pprint(interests)
 
-    def test_delete_interest(self):
-        response = requests.get(
-            self.api['interests'], auth=('demo', 'demodemo'))
+    def test_update_interest(self):
+        response = requests.get(self.api['interests'])
         self.assertTrue(response.status_code, 200)
         interests = response.json()
-        pprint.pprint(interests)
         for interest in interests:
-            requests.delete(self.api['interests'],
-                            data=interest, auth=('demo', 'demodemo'))
-            pprint.pprint(response)
-            # do delete here
+            current_interest = interest
+            current_interest['name'] = 'Test Interests' + \
+                str(int(interest['id']) + 1)
+            put_response = requests.put(self.api['interests'] + str(interest['id']) + '/',
+                                        data=current_interest)
+            self.assertTrue(put_response.status_code, 200)
+            put_response_json = put_response.json()
+            self.assertTrue(put_response_json[
+                            'name'], current_interest['name'])
 
+    def test_delete_interest(self):
+        response = requests.get(self.api['interests'])
+        self.assertTrue(response.status_code, 200)
+        interests = response.json()
+        for interest in interests:
+            del_response = requests.delete(
+                self.api['interests'] + str(interest['id']) + '/')
+            self.assertTrue(del_response.status_code, 204)
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
