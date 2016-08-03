@@ -33,22 +33,24 @@ class InterestAPITest(unittest.TestCase):
         interests = response.json()
         for interest in interests:
             current_interest = interest
+            pprint.pprint('Updating Interest: ' + interest['name'])
             current_interest['name'] = 'Test Interests' + \
                 str(int(interest['id']) + 1)
-            put_response = requests.put(self.api['interests'] + str(interest['id']) + '/',
-                                        data=current_interest)
+            put_response = requests.put(
+                interest['links']['self'], data=current_interest)
             self.assertTrue(put_response.status_code, 200)
             put_response_json = put_response.json()
             self.assertTrue(put_response_json[
                             'name'], current_interest['name'])
+            pprint.pprint('to : ' + put_response_json['name'])
 
     def test_delete_interest(self):
         response = requests.get(self.api['interests'])
         self.assertTrue(response.status_code, 200)
         interests = response.json()
         for interest in interests:
-            del_response = requests.delete(
-                self.api['interests'] + str(interest['id']) + '/')
+            pprint.pprint('Deleting Interest: ' + interest['name'])
+            del_response = requests.delete(interest['links']['self'])
             self.assertTrue(del_response.status_code, 204)
 
 if __name__ == '__main__':

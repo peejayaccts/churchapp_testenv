@@ -55,6 +55,14 @@ class PersonSerializer(serializers.ModelSerializer):
 
 class InterestSerializer(serializers.ModelSerializer):
 
+    links = serializers.SerializerMethodField()
+
     class Meta:
         model = Interest
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'links')
+
+    def get_links(self, obj):
+        request = self.context['request']
+        return {
+            'self': reverse('interest-detail', kwargs={'pk': obj.pk}, request=request),
+        }
