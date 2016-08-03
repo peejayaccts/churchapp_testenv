@@ -6,7 +6,7 @@ from rest_framework.validators import UniqueValidator
 from rest_framework.reverse import reverse
 
 from .models import Church, Person, Interest, SkillAndProfession,\
-    SpiritualMilestone, Ministry
+    SpiritualMilestone, Ministry, MemberStatus
 
 
 class ChurchSerializer(serializers.ModelSerializer):
@@ -113,4 +113,19 @@ class MinistrySerializer(serializers.ModelSerializer):
         request = self.context['request']
         return {
             'self': reverse('ministry-detail', kwargs={'pk': obj.pk}, request=request),
+        }
+
+
+class MemberStatusSerializer(serializers.ModelSerializer):
+
+    links = serializers.SerializerMethodField()
+
+    class Meta:
+        model = MemberStatus
+        fields = ('id', 'name', 'links')
+
+    def get_links(self, obj):
+        request = self.context['request']
+        return {
+            'self': reverse('member_status-detail', kwargs={'pk': obj.pk}, request=request),
         }

@@ -3,10 +3,10 @@ from django.shortcuts import render
 from rest_framework import authentication, permissions, viewsets, filters, mixins
 
 from .models import Church, Person, Interest, SkillAndProfession, \
-    SpiritualMilestone, Ministry
+    SpiritualMilestone, Ministry, MemberStatus
 from .serializers import ChurchSerializer, PersonSerializer
 from .serializers import InterestSerializer, SkillAndProfessionSerializer, \
-    SpiritualMilestoneSerializer, MinistrySerializer
+    SpiritualMilestoneSerializer, MinistrySerializer, MemberStatusSerializer
 from .forms import PersonFilter
 
 
@@ -124,6 +124,27 @@ class MinistryViewSet(mixins.ListModelMixin,
 
     queryset = Ministry.objects.all()
     serializer_class = MinistrySerializer
+    filter_backends = (
+        filters.DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    )
+    search_fields = ('name', )
+    ordering_fields = ('name', )
+
+
+class MemberStatusViewSet(mixins.ListModelMixin,
+                          mixins.RetrieveModelMixin,
+                          mixins.CreateModelMixin,
+                          mixins.UpdateModelMixin,
+                          mixins.DestroyModelMixin,
+                          viewsets.GenericViewSet):
+    """
+    API Endpoint for listing, creating, updating, deleting Member Statuses List
+    """
+
+    queryset = MemberStatus.objects.all()
+    serializer_class = MemberStatusSerializer
     filter_backends = (
         filters.DjangoFilterBackend,
         filters.SearchFilter,

@@ -10,5 +10,5 @@ router.register(r'skills_and_professions',
                 views.SkillAndProfessionViewSet, 'skill')
 router.register(r'spiritual_milestones',
                 views.SpiritualMilestoneViewSet, 'spiritual_milestone')
-router.register(r'ministries',
-                views.MinistryViewSet, 'ministry')
+router.register(r'ministries', views.MinistryViewSet, 'ministry')
+router.register(r'member_statuses', views.MemberStatusViewSet, 'member_status')
