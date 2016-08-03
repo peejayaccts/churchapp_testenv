@@ -6,3 +6,5 @@ router = DefaultRouter()
 router.register(r'churches', views.ChurchViewSet)
 router.register(r'people', views.PersonViewSet)
 router.register(r'interests', views.InterestViewSet)
+router.register(r'skills_and_professions',
+                views.SkillAndProfessionViewSet, 'skill')

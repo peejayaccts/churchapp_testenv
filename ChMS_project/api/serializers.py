@@ -5,7 +5,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from rest_framework.reverse import reverse
 
-from .models import Church, Person, Interest
+from .models import Church, Person, Interest, SkillAndProfession
 
 
 class ChurchSerializer(serializers.ModelSerializer):
@@ -67,4 +67,19 @@ class InterestSerializer(serializers.ModelSerializer):
         request = self.context['request']
         return {
             'self': reverse('interest-detail', kwargs={'pk': obj.pk}, request=request),
+        }
+
+
+class SkillAndProfessionSerializer(serializers.ModelSerializer):
+
+    links = serializers.SerializerMethodField()
+
+    class Meta:
+        model = SkillAndProfession
+        fields = ('id', 'name', 'links')
+
+    def get_links(self, obj):
+        request = self.context['request']
+        return {
+            'self': reverse('skill-detail', kwargs={'pk': obj.pk}, request=request),
         }

@@ -2,8 +2,9 @@ from django.shortcuts import render
 
 from rest_framework import authentication, permissions, viewsets, filters, mixins
 
-from .models import Church, Person, Interest
-from .serializers import ChurchSerializer, PersonSerializer, InterestSerializer
+from .models import Church, Person, Interest, SkillAndProfession
+from .serializers import ChurchSerializer, PersonSerializer
+from .serializers import InterestSerializer, SkillAndProfessionSerializer
 from .forms import PersonFilter
 
 
@@ -58,6 +59,27 @@ class InterestViewSet(mixins.ListModelMixin,
 
     queryset = Interest.objects.all()
     serializer_class = InterestSerializer
+    filter_backends = (
+        filters.DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    )
+    search_fields = ('name', )
+    ordering_fields = ('name', )
+
+
+class SkillAndProfessionViewSet(mixins.ListModelMixin,
+                                mixins.RetrieveModelMixin,
+                                mixins.CreateModelMixin,
+                                mixins.UpdateModelMixin,
+                                mixins.DestroyModelMixin,
+                                viewsets.GenericViewSet):
+    """
+    API Endpoint for listing, creating, updating, deleting Skills and Professions List
+    """
+
+    queryset = SkillAndProfession.objects.all()
+    serializer_class = SkillAndProfessionSerializer
     filter_backends = (
         filters.DjangoFilterBackend,
         filters.SearchFilter,
