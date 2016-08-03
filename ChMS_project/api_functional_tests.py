@@ -138,6 +138,13 @@ class SkillsAndProfessionsAPITest(unittest.TestCase):
         self.api = response.json()
         # pprint.pprint(self.api)
 
+    def delAll(self):
+        response = requests.get(self.api['skills_and_professions'])
+        skills = response.json()
+        for skill in skills:
+            del_response = requests.delete(self.api['skills_and_professions']
+                                           + str(skill['id']) + '/')
+
     def tearDown(self):
         while self.added_test_data:
             response = requests.get(
