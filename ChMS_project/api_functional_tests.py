@@ -34,8 +34,18 @@ class InterestAPITest(unittest.TestCase):
         self.assertTrue(response.status_code, 201)
         response_json = response.json()
         # pprint.pprint(response_json)
-
         added_test_data.append(response_json['id'])
+
+    def test_add_duplicate(self):
+        response = requests.post(self.api['interests'],
+                                 data={'name': 'X'})
+        self.assertTrue(response.status_code, 201)
+        response_json = response.json()
+        added_test_data.append(response_json['id'])
+
+        response = requests.post(self.api['interests'],
+                                 data={'name': 'X'})
+        self.assertFalse(response.status_code, 201)
 
     def test_get_interest(self):
         response = requests.get(
