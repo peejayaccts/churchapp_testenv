@@ -595,5 +595,134 @@ class MemberStatusesAPITest(unittest.TestCase):
         self.added_test_data.pop()
 
 
+class ChurchAPITest(unittest.TestCase):
+
+    added_test_data = []
+
+    def setUp(self):
+        response = requests.get('http://127.0.0.1:8000/api/')
+        self.assertTrue(response.status_code, 200)
+        self.api = response.json()
+        # pprint.pprint(self.api)
+
+    def tearDown(self):
+        while self.added_test_data:
+            response = requests.get(
+                self.api['churches'] + str(self.added_test_data.pop()))
+            self.assertTrue(response.status_code == 200)
+            interest = response.json()
+            #pprint.pprint('Deleting Interest: ' + interest['name'])
+            del_response = requests.delete(interest['links']['self'])
+            self.assertTrue(del_response.status_code == 204)
+
+    def test_church_resource_found(self):
+        self.assertTrue('churches' in self.api)
+
+    def test_add_church(self, church=randomword(200)):
+        response = requests.post(
+            self.api['churches'], data={
+                'name': church,
+                'vision': randomword(200),
+                'logo': randomword(200),
+                'banner': randomword(200),
+            })
+        response_json = response.json()
+        # pprint.pprint(response_json)
+        self.assertTrue(response.status_code == 201)
+        self.added_test_data.append(response_json['id'])
+
+    def test_add_duplicate(self):
+        same_name = randomword(200)
+        self.test_add_church(same_name)
+        response = requests.post(
+            self.api['churches'], data={
+                'name': same_name,
+                'vision': randomword(200),
+                'logo': randomword(200),
+                'banner': randomword(200),
+            })
+        if(response.status_code != 400):
+            response_json = response.json()
+            self.added_test_data.append(response_json['id'])
+        self.assertTrue(response.status_code == 400,
+                        'Must not allow duplicate church names')
+
+    def test_add_main_church(self):
+        response = requests.post(
+            self.api['churches'], data={
+                'name': randomword(200),
+                'church_ type': 'M',
+                'vision': randomword(200),
+                'logo': randomword(200),
+                'banner': randomword(200),
+            })
+        if(response.status_code != 400):
+            response_json = response.json()
+            self.added_test_data.append(response_json['id'])
+        self.assertTrue(response.status_code == 400,
+                        'Must not allow adding main churches')
+
+    def test_add_256char(self):
+        str256 = randomword(256)
+        response = requests.post(
+            self.api['churches'], data={
+                'name': str256,
+                'vision': randomword(200),
+                'logo': randomword(200),
+                'banner': randomword(200),
+            })
+        if(response.status_code != 400):
+            response_json = response.json()
+            self.added_test_data.append(response_json['id'])
+        self.assertTrue(response.status_code == 400,
+                        'Must not allow church name exceeding 255.')
+
+    def test_get_all_church(self):
+        response = requests.get(self.api['churches'])
+        self.assertTrue(response.status_code == 200)
+
+    def test_search_church(self):
+        new_church = randomword(20)
+        self.test_add_church(new_church)
+        response = requests.get(
+            self.api['churches'] + '?search=' + new_church)
+        self.assertTrue(response.status_code == 200)
+        self.assertTrue(len(response.json()) == 1)
+
+    def test_update_church(self):
+        new_church = randomword(200)
+        self.test_add_church(new_church)
+        response = requests.get(self.api['churches'])
+        self.assertTrue(response.status_code == 200)
+        churches = response.json()
+        for church in churches:
+            if church['name'] == new_church:
+                church['name'] = 'Test: Updated Church Name'
+                church['vision'] = 'Test: Updated Vision'
+                church['logo'] = 'Test: Logo'
+                church['banner'] = 'Test: Banner'
+                put_response = requests.put(church['links']['self'],
+                                            data=church)
+                self.assertTrue(put_response.status_code == 200)
+                put_response_json = put_response.json()
+                self.assertTrue(put_response_json['name'] == church['name'])
+                self.assertTrue(put_response_json[
+                                'vision'] == church['vision'])
+                self.assertTrue(put_response_json['logo'] == church['logo'])
+                self.assertTrue(put_response_json[
+                                'banner'] == church['banner'])
+
+    def test_delete_church(self):
+        self.test_add_church()
+        current_id = self.added_test_data[-1]
+        response = requests.get(
+            self.api['churches'] + str(current_id))
+        self.assertTrue(response.status_code == 200)
+        church = response.json()
+        del_response = requests.delete(church['links']['self'])
+        self.assertTrue(del_response.status_code == 204)
+        self.added_test_data.pop()
+
+
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
