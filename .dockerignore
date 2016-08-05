@@ -1,3 +1,15 @@
-.*
-node_modules
+#for development
+.git
+.ipynb_checkpoints/*
+/notebooks/*
+/unused/*
+Dockerfile
+.DS_Store
+.gitignore
+README.md
+env.*
+.env*
+/devops/*
 
+#for tmp storage
+/tmp/*

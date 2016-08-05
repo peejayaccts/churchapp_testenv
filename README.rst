@@ -1,6 +1,6 @@
-==============================
-Church Management System(ChMS)
-==============================
+================================================
+Church Management System(ChMS) - Django Back-end
+================================================
 
 A project of Good News Technologies, powered by PEK Team of UPITDC.
 

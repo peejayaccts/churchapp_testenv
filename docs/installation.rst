@@ -1,15 +1,14 @@
-===========================================
-Church Management System(ChMS) - Production 
-===========================================
+==============================================================
+Church Management System(ChMS) - Production Environment Set-up 
+==============================================================
 A project of Good News Technologies, powered by PEK Team of UPITDC.
 
-To use this project follow these steps:
-
 Technology Stack and Version
- Ubuntu 16.04 LTS
- Python 3.5
- Mysql 5.7
- Apache 2.2.3
+# Ubuntu 16.04 LTS
+# Python 3.5
+# Mysql 5.7
+# mod_wsgi 
+# Apache 2.2.3
 
 How to deploy
 ===================
@@ -27,39 +26,68 @@ To use this project follow these steps:
 Create non-root user with sudo privilges
 ======================================
 
+On Debian based, create a non root user with sudo privilges::
+
+First, create a system-wide group (e.g developer)::
+
     $ sudo groupadd --system <groupname> 
 
-    $ useradd <username> 
-    $ passwd <username>
+Add a your username (e.g efrenversia)::
 
-    $ sudo usermod -aG <groupname> <username> 
+    $ useradd efrenversia 
+    $ passwd password 
 
+Add the username to the group::
+
+    $ sudo usermod -aG developer efrenversia 
+
+Grant sudo privileges to the username::
     $ sudo visudo
-      <username>   ALL=(ALL:ALL) ALL
+ 
+    Add the following below, then save:: 
+
+      efrenversia ALL=(ALL:ALL) ALL
 
 Install dependencies and packages
 ======================================
+The following dependencies for environment set-up are
+# Python 3.5
+# Mysql 5.7
+# Apache 2.2.3
+# mod_wsgi 
+
+Install the depndencies using the created username or root user::
+
     $ sudo apt-get update &&  apt-get install -y \
       python3-pip \
       apache2 \ 
       libapache2-mod-wsgi3 \
       mysql
 
- 
 Create Python virtual environment
 ======================================
 
+Install the python virtual environment package::
     $ sudo pip3 install virtualenv
-    $ mkdir ~/churchapp
-    $ cd ~/churchapp
 
+Create the directory for the project::
+    $ mkdir ~/churchapp
+
+Create a virtual environment directory for the project::
+    $ cd ~/churchapp
     $ virtualenv myprojectenv
+    
+Activate the virtual environment for the project::
+    $ cd ~/churchapp
     $ source myprojectenv/bin/activate
 
 Download Django based app 
 ======================================
+Download the repository to the created project folder::
+
     $ git clone https://<username>@bitbucket.org/churchappgroup/churchapp.git --change username to your username
    
+Install the app dependencies::
     $ pip install -r requirements/production.txt
 
 Create Database (MySQL 5.7)
@@ -74,36 +102,41 @@ Provided that mysqlserver and mysqlclient is already installed:
 Sync Database with downloaded app 
 =============================
 Go to repo/ChMS_project.
-run migrate::
+run migrate to syncronize the app object data model to MySQL::
 
     $ python manage.py migrate
 
 Configure Apache
 ======================================
+To set-up a web server for production, edit the apache config file::
+
     $ sudo nano /etc/apache2/sites-available/000-default.conf
 
+Add the following in the config file::
     <VirtualHost *:80>
 
-        Alias /static /home/sammy/myproject/static
-        <Directory /home/sammy/myproject/static>
+        Alias /static /home/efrenversia/churchapp/ChMS_project/ChMS/static
+        <Directory /home/efreneversia/churchapp/ChMS_project/ChMS/static>
             Require all granted
         </Directory>
 
-        <Directory /home/sammy/myproject/myproject>
+        <Directory /home/efrenversia/churchapp/ChMS_project/ChMS>
             <Files wsgi.py>
                 Require all granted
             </Files>
         </Directory>
 
-        WSGIDaemonProcess myproject python-home=/home/sammy/myproject/myprojectenv python-path=/home/sammy/myproject
-        WSGIProcessGroup myproject
-        WSGIScriptAlias / /home/sammy/myproject/myproject/wsgi.py
+        WSGIDaemonProcess churchapp python-home=/home/efrenversia/churchapp/myprojectenv python-path=/home/efrenverisa/churchapp/ChMS_project/ChMS
+        WSGIProcessGroup churchapp 
+        WSGIScriptAlias / /home/efrenversia/churchapp/ChMS_project/ChMS/wsgi.py
 
     </VirtualHost>
 
+Restart the Apache server for the configuration to take effect::
     $ sudo systemctl restart apache2
  
 
 Create self-signed SSL certificate
 ======================================
+TO FOLLOW
 
