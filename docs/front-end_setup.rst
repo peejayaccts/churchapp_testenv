@@ -1,10 +1,11 @@
-======================================================
+=======================================================
 Church Management System(ChMS) - Front-end Installation 
-=====================================================
+=======================================================
 
 A project of Good News Technologies, powered by PEK Team of UPITDC.
 
-Development Tools and Version
+Development Tools and Version:
+
 #. node 4.4.7 
 #. npm 3.10.5 
 #. bower
@@ -13,7 +14,7 @@ Development Tools and Version
 #. generator-angular
 #. generator-karma
 
-How to run front-end 
+How to the run front-end 
 ===================
 
 To use this project follow these steps:
@@ -25,18 +26,17 @@ To use this project follow these steps:
 #. Run Angular  
 
 
-
 Install nodejs and npm 
 ==========================
-Install nodejs and npm relative to your OS 
+Provided that nodejs and npm is already installed relative to your OS:
+Run the following to make sure same version as stated above::
 
-Check the SPECIFIC version::
     $ node -v
     $ npm -v
 
 Setup npm permissions
 ==========================
-For debian based, set npm permissions. 
+For debian based, set npm permissions: 
 The folders node_modules,bin,share are the main directory for all npm
 packages::
 
@@ -46,23 +46,24 @@ packages::
 
 Install all development tools 
 ==========================
-For debian based, the tools will be stored in the 3 folders stated above
+For debian based, the development tools will be stored in the 3 folders stated above
 
 The following are brief description of the development tools
 -----------------------------------------------------------
-Grunt: automated build system (e.g auto minify)
-Bower: package manager that contains dependencies (e.g Bootstrap package)
-Yoeman: generates the folder structure/scaffolding automatically
-        (generator-angular)
-Karma: javascript test runner 
+Grunt - automated build system (e.g auto minify).
+Bower - package manager that contains dependencies (e.g Bootstrap package).
+Yoeman - generates the folder structure/scaffolding automatically (generator-angular).
+Karma - javascript test runner. 
 
 Install the tools on GLOBAL set-up::
+
     $ npm install -g grunt-cli bower yo gnerator-karma generator-angular 
 
 Generate Angular folder structure 
 ==========================
 
 Generate the scaffolding::
+
     $ cd ~/churchapp/ChMS_project/app/ 
     $ yo angular app 
 
@@ -71,13 +72,14 @@ Run App for development
 Build and run the app using grunt-cli::
     $ grunt serve
 
-The development folder can be found in the /app/ folder
+*note: The development folder can be found in the /app/ folder*
 
 Build the App for production 
 ==========================
 Build and run the app using grunt-cli::
+
     $ grunt build 
 
-The production folder can be found in the /dist/ folder
+*note: The production folder can be found in the /dist/ folder*
 
 
