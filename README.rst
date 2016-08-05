@@ -14,7 +14,7 @@ To use this project follow these steps:
 #. Create superuser
 #. Run Server and Test
 
-Working Environment
+Working Environment 
 ===================
 
 You have several options in setting up your working environment.  We recommend
@@ -40,7 +40,7 @@ run the following command::
 
     $ git clone https://<username>@bitbucket.org/churchappgroup/churchapp.git --change username to your username
 
-Installation of Dependencies
+Installation of Python Dependencies (Python 3.5)
 =============================
 
 Depending on where you are installing dependencies:
@@ -57,7 +57,7 @@ Production::
 
     $ pip install -r requirements/production.txt
 
-Create Database
+Create Database (MySQL 5.7)
 =============================
 Provided that mysqlserver and mysqlclient is already installed:
 
