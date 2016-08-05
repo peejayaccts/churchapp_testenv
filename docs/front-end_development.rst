@@ -11,9 +11,9 @@ Development Tools and Version:
 
 #. node 4.4.7 
 #. npm 3.10.5 
-#. bower
-#. yo 
-#. grunt 
+#. bower 1.7.9
+#. yo 1.8.4
+#. grunt-cli v1.2.0 
 #. generator-angular
 #. generator-karma
 
@@ -33,7 +33,8 @@ To use this project follow these steps:
 Install git, nodejs and npm 
 ======================
 Provided that git, nodejs, and npm is already installed relative to your OS:
-Run the following to make sure same version as stated above::
+
+Run the following to make sure to install SAME version as stated above::
 
     $ node -v
     $ npm -v
@@ -42,6 +43,7 @@ Run the following to make sure same version as stated above::
 Setup npm permissions
 =====================
 For debian based, set npm permissions: 
+
 The folders node_modules,bin,share are the main directory for all npm
 packages::
 
@@ -49,16 +51,22 @@ packages::
     $ sudo chown -R $(whoami) /usr/local/lib/bin
     $ sudo chown -R $(whoami) /usr/local/lib/share
 
+*note: This npm permission is set to avoid using sudo when installing npm
+packages*
+
 Install locally the development tools 
 =====================================
 For debian based, the development tools will be stored in the 3 folders stated above
 
 The following are brief description of the development tools
 -----------------------------------------------------------
-Grunt - automated build system (e.g auto minify).
-Bower - package manager that contains dependencies (e.g Bootstrap package).
-Yoeman - generates the folder structure/scaffolding automatically (generator-angular).
-Karma - javascript test runner. 
+Grunt - automated build system (e.g auto minify):
+
+Bower - package manager that contains dependencies (e.g Bootstrap package):
+
+Yoeman - generates the folder structure/scaffolding automatically (generator-angular):
+
+Karma - javascript test runner: 
 
 Install the tools on GLOBAL set-up::
 
@@ -92,7 +100,8 @@ Build and run the app using grunt-cli::
     $ grunt serve
 
 *note: Go to http://localhost:9000*
-*note: The development folder can be found in the /app/ folder*
+
+*The development folder can be found in the /app/ folder*
 
 Build the App for production 
 ==========================
