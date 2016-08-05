@@ -13,16 +13,15 @@ class Church(models.Model):
         (CHURCH_TYPE_MAIN, _('Main')),
         (CHURCH_TYPE_DAUGHTER, _('Daughter')),
     )
-    church_name = models.CharField(max_length=255, blank=False)
-    logo_path = models.TextField(blank=True, default='')
-    vision = models.TextField(blank=True, default='')
-    language_format = models.TextField(blank=True, default='')
-    timezone_format = models.TextField(blank=True, default='')
+    name = models.CharField(max_length=255, unique=True, blank=False)
     church_type = models.CharField(
         max_length=1, choices=CHURCH_TYPE_CHOICES, default=CHURCH_TYPE_DAUGHTER)
+    vision = models.CharField(max_length=255, blank=True)
+    logo = models.CharField(max_length=255, blank=True)
+    banner = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
-        return self.church_name
+        return self.name
 
 
 class Person(models.Model):
