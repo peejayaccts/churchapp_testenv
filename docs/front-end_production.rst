@@ -2,6 +2,9 @@
 Church Management System(ChMS) - Front-end Installation 
 =======================================================
 
+This is a guide to setup front-end from scratch
+_______________________________________________
+
 A project of Good News Technologies, powered by PEK Team of UPITDC.
 
 Development Tools and Version:
@@ -19,16 +22,16 @@ How to the run front-end
 
 To use this project follow these steps:
 
-#. Install nodejs and npm 
+#. Install git, nodejs and npm 
 #. Setup npm permissions
 #. Install development tools 
 #. Generate Angular folder structure 
 #. Run Angular  
 
 
-Install nodejs and npm 
+Install git, nodejs and npm 
 ==========================
-Provided that nodejs and npm is already installed relative to your OS:
+Provided that git, nodejs and npm is already installed relative to your OS:
 Run the following to make sure same version as stated above::
 
     $ node -v
@@ -57,7 +60,7 @@ Karma - javascript test runner.
 
 Install the tools on GLOBAL set-up::
 
-    $ npm install -g grunt-cli bower yo gnerator-karma generator-angular 
+    $ npm install -g grunt-cli bower yo generator-karma generator-angular 
 
 Generate Angular folder structure 
 ==========================

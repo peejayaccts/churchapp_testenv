@@ -1,0 +1,105 @@
+=======================================================
+Church Management System(ChMS) - Front-end Installation 
+=======================================================
+
+This is a guide to setup front-end from repository 
+_________________________________________________
+
+A project of Good News Technologies, powered by PEK Team of UPITDC.
+
+Development Tools and Version:
+
+#. node 4.4.7 
+#. npm 3.10.5 
+#. bower
+#. yo 
+#. grunt 
+#. generator-angular
+#. generator-karma
+
+How to the run front-end 
+===================
+
+To use this project follow these steps:
+
+#. Install git, nodejs and npm 
+#. Setup npm permissions
+#. Install locally the development tools 
+#. Download the app from repository 
+#. Install the dependencies
+#. Run the app 
+
+
+Install git, nodejs and npm 
+======================
+Provided that git, nodejs, and npm is already installed relative to your OS:
+Run the following to make sure same version as stated above::
+
+    $ node -v
+    $ npm -v
+    $ git -v
+
+Setup npm permissions
+=====================
+For debian based, set npm permissions: 
+The folders node_modules,bin,share are the main directory for all npm
+packages::
+
+    $ sudo chown -R $(whoami) /usr/local/lib/node_modules
+    $ sudo chown -R $(whoami) /usr/local/lib/bin
+    $ sudo chown -R $(whoami) /usr/local/lib/share
+
+Install locally the development tools 
+=====================================
+For debian based, the development tools will be stored in the 3 folders stated above
+
+The following are brief description of the development tools
+-----------------------------------------------------------
+Grunt - automated build system (e.g auto minify).
+Bower - package manager that contains dependencies (e.g Bootstrap package).
+Yoeman - generates the folder structure/scaffolding automatically (generator-angular).
+Karma - javascript test runner. 
+
+Install the tools on GLOBAL set-up::
+
+    $ npm install -g grunt-cli bower yo generator-karma generator-angular 
+
+Download the app from the repository
+====================================
+Pull the repository to the created project folder::
+
+    $ git clone https://<username>@bitbucket.org/churchappgroup/churchapp.git --change username to your username
+   
+
+Install the dependecies
+=============================
+Go to the front-end directory::
+
+    $ cd ~/churchapp/ChMS_project/app/
+
+Download the node modules::
+ 
+    $ npm install
+
+Download the bower components::
+  
+    $ bower install
+
+Run App for development
+==========================
+Build and run the app using grunt-cli::
+
+    $ grunt serve
+
+*note: Go to http://localhost:9000*
+*note: The development folder can be found in the /app/ folder*
+
+Build the App for production 
+==========================
+Build and run the app using grunt-cli::
+
+    $ grunt build 
+
+*note: The production folder can be found in the /dist/ folder*
+
+
