@@ -689,7 +689,7 @@ class ChurchAPITest(unittest.TestCase):
         self.assertTrue(response.status_code == 200)
         self.assertTrue(len(response.json()) == 1)
 
-    def test_update_church(self):
+    def test_update_basic_info_church(self):
         new_church = randomword(200)
         self.test_add_church(new_church)
         response = requests.get(self.api['churches'])
@@ -755,6 +755,17 @@ class ChurchAPITest(unittest.TestCase):
         self.assertTrue(latest_church == new_church,
                         "Descending order not working")
 
+    def test_link_regional_info_404(self):
+        new_church = randomword(20)
+        self.test_add_church(new_church)
+        response = requests.get(self.api['churches'] + '?search=' + new_church)
+        self.assertTrue(response.status_code == 200)
+        churches = response.json()
+        for church in churches:
+            pprint.pprint(church['links'])
+            self.assertTrue('regional_info' in church['links'])
+            response = requests.get(church['links']['regional_info'])
+            self.assertTrue(response.status_code == 400)
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
