@@ -32,12 +32,22 @@ class DefaultsMixin(object):
     )
 
 
-class ChurchViewSet(DefaultsMixin, viewsets.ModelViewSet):
+class ChurchViewSet(mixins.ListModelMixin,
+                    mixins.RetrieveModelMixin,
+                    mixins.CreateModelMixin,
+                    mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin,
+                    viewsets.GenericViewSet):
     """API Endpoint for listing and creating daughter churches"""
     queryset = Church.objects.all()
     serializer_class = ChurchSerializer
-    search_fields = ('church_name', )
-    ordering_fields = ('church_name', 'church_type', )
+    filter_backends = (
+        filters.DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    )
+    search_fields = ('name', )
+    ordering_fields = ('name', 'church_type', )
 
 
 class PersonViewSet(DefaultsMixin, viewsets.ModelViewSet):

@@ -10,14 +10,14 @@ from .models import Church, Person, Interest, SkillAndProfession,\
 
 
 class ChurchSerializer(serializers.ModelSerializer):
+
     church_type_display = serializers.SerializerMethodField()
     links = serializers.SerializerMethodField()
 
     class Meta:
         model = Church
-        fields = ('id', 'church_name', 'church_type', 'church_type_display',
-                  'logo_path', 'vision', 'language_format', 'timezone_format',
-                  'links')
+        fields = ('id', 'name', 'church_type',
+                  'church_type_display', 'vision', 'logo', 'banner', 'links')
 
     def get_church_type_display(self, obj):
         return obj.get_church_type_display()
@@ -25,8 +25,17 @@ class ChurchSerializer(serializers.ModelSerializer):
     def get_links(self, obj):
         request = self.context['request']
         return {
-            'people': reverse('person-list', request=request) + '?church={}'.format(obj.pk),
+            'self': reverse('church-detail', kwargs={'pk': obj.pk}, request=request),
         }
+
+    def validate_church_type(self, value):
+        """
+        Check that only Daughter Churches are allowed to be created
+        """
+        if value == 'M':
+            raise serializers.ValidationError(
+                "Only Daughter churches are allowed to be created.")
+        return value
 
 
 class PersonSerializer(serializers.ModelSerializer):
