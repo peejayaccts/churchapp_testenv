@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name appsApp.controller:AboutCtrl
+ * @name appsApp.components.home:HomeCtrl
  * @description
- * # AboutCtrl
+ * # HomeCtrl
  * Controller of the appsApp
  */
 angular.module('appsApp')
-  .controller('AboutCtrl', function () {
+  .controller('HomeCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
