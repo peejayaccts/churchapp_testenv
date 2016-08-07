@@ -1,0 +1,9 @@
+# requirements/local_chan.txt
+# =========================================================
+# Place here all the dependencies used by "Chan" in her local development
+# Usage: pip3 install -r requirements/local_chan.txt
+-r base.txt # includes the base.txt requirements file
+requests==2.10.0
+
+# For Functional Testing
+selenium==2.53.6
