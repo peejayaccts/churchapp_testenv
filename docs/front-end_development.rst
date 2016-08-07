@@ -101,7 +101,8 @@ Build and run the app using grunt-cli::
 
 *note: Go to http://localhost:9000*
 
-*The development folder can be found in the /app/ folder*
+*The development folder can be found in 
+the ~/churchapp/ChMS_project/src/app/ folder*
 
 Build the App for production 
 ==========================
@@ -109,6 +110,7 @@ Build and run the app using grunt-cli::
 
     $ grunt build 
 
-*note: The production folder can be found in the /dist/ folder*
+*note: The production folder can be found in 
+the ~/churchapp/ChMS_project/src/dist/ folder*
 
 

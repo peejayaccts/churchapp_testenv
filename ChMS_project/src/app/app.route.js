@@ -8,8 +8,7 @@
  *
  * Main module of the application.
  */
-angular
-  .module('appsApp')
+angular.module('appsApp')
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
