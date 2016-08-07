@@ -28,6 +28,15 @@ class ChurchSerializer(serializers.ModelSerializer):
             'self': reverse('church-detail', kwargs={'pk': obj.pk}, request=request),
         }
 
+    def validate_church_type(self, value):
+        """
+        Check that only Daughter Churches are allowed to be created
+        """
+        if value == 'M':
+            raise serializers.ValidationError(
+                "Only Daughter churches are allowed to be created.")
+        return value
+
 
 class PersonSerializer(serializers.ModelSerializer):
     gender_display = serializers.SerializerMethodField()

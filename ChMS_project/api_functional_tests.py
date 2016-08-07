@@ -651,7 +651,7 @@ class ChurchAPITest(unittest.TestCase):
         response = requests.post(
             self.api['churches'], data={
                 'name': randomword(200),
-                'church_ type': 'M',
+                'church_type': 'M',
                 'vision': randomword(200),
                 'logo': randomword(200),
                 'banner': randomword(200),
@@ -722,6 +722,38 @@ class ChurchAPITest(unittest.TestCase):
         del_response = requests.delete(church['links']['self'])
         self.assertTrue(del_response.status_code == 204)
         self.added_test_data.pop()
+
+    def test_sort_asc_name(self):
+        new_church = 'A' * 10
+        self.test_add_church(new_church)
+        another_church = 'Z' * 10
+        self.test_add_church(another_church)
+        response = requests.get(
+            self.api['churches'] + '?ordering=name')
+        churches = response.json()
+        latest_church = ''
+        for church in churches:
+            if church['name'] == new_church or \
+               church['name'] == another_church:
+                latest_church = church['name']
+        self.assertTrue(latest_church == another_church,
+                        "Ascending order not ok")
+
+    def test_sort_desc_name(self):
+        new_church = 'A' * 10
+        self.test_add_church(new_church)
+        another_church = 'Z' * 10
+        self.test_add_church(another_church)
+        response = requests.get(
+            self.api['churches'] + '?ordering=-name')
+        churches = response.json()
+        latest_church = ''
+        for church in churches:
+            if church['name'] == new_church or \
+               church['name'] == another_church:
+                latest_church = church['name']
+        self.assertTrue(latest_church == new_church,
+                        "Descending order not working")
 
 
 if __name__ == '__main__':
