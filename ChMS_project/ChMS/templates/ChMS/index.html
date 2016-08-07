@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/site.css' %}"> 
   </head>
-  <body>
+	<body ng-app="{% block ng_app %}Chms-ui{% endblock %}"\
+			 ng-controller="{% block ng_controller %}IndexController{% endblock %}">
     <div class="jumbotron">
       <div class="container">
 	<h1>Welcome To PEK Team</h1>
@@ -31,8 +32,19 @@
 	</div>
       </div>
     </div>
+		{% verbatim %}
+
+		<ul ng-repeat="person in names">
+			<li>
+				{{ person.name }}
+			</li>
+		</ul>
+
+		{% endverbatim %}
     
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/angular.min.js' %}"></script>
+    <script src="{% static 'js/Chms-ui.module.js' %}"></script>
   </body>
 </html>
