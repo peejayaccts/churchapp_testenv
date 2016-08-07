@@ -29,7 +29,9 @@ class ChurchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Church
         fields = ('id', 'name', 'church_type', 'church_type_display',
-                  'vision', 'logo', 'banner', 'regional_info', 'links')
+                  'vision', 'logo', 'banner', 'max_mentees_mentor',
+                  'max_subgroup_person', 'max_subgroup_members', 'regional_info',
+                  'links')
 
     def get_church_type_display(self, obj):
         return obj.get_church_type_display()
@@ -63,6 +65,12 @@ class ChurchSerializer(serializers.ModelSerializer):
         instance.vision = validated_data.get('vision', instance.vision)
         instance.logo = validated_data.get('logo', instance.logo)
         instance.banner = validated_data.get('banner', instance.banner)
+        instance.max_mentees_mentor = validated_data.get(
+            'max_mentees_mentor', instance.max_mentees_mentor)
+        instance.max_subgroup_person = validated_data.get(
+            'max_subgroup_person', instance.max_subgroup_person)
+        instance.max_subgroup_members = validated_data.get(
+            'max_subgroup_members', instance.max_subgroup_members)
         instance.save()
         if regional_info_data:
             if hasattr(instance, 'regional_info'):

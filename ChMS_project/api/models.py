@@ -19,6 +19,9 @@ class Church(models.Model):
     vision = models.CharField(max_length=255, blank=True)
     logo = models.CharField(max_length=255, blank=True)
     banner = models.CharField(max_length=255, blank=True)
+    max_mentees_mentor = models.IntegerField(blank=False, default=2)
+    max_subgroup_person = models.IntegerField(blank=False, default=3)
+    max_subgroup_members = models.IntegerField(blank=False, default=12)
 
     def __str__(self):
         return self.name

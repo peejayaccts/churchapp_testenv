@@ -829,5 +829,29 @@ class ChurchAPITest(unittest.TestCase):
                 self.assertTrue(put_response_json['regional_info'][
                                 'date_format'] == 'date_format_updated')
 
+    def test_update_global_info_church(self):
+        new_church = randomword(200)
+        self.test_add_church(new_church)
+        response = requests.get(self.api['churches'])
+        self.assertTrue(response.status_code == 200)
+        churches = response.json()
+        for church in churches:
+            if church['name'] == new_church:
+                church['max_mentees_mentor'] = 98
+                church['max_subgroup_person'] = 99
+                church['max_subgroup_members'] = 100
+                headers = {'X-Requested-With': 'Python requests',
+                           'Content-type': 'application/json'}
+                put_response = requests.put(church['links']['self'],
+                                            data=json.dumps(church),
+                                            headers=headers)
+                put_response_json = put_response.json()
+                self.assertTrue(put_response.status_code == 200)
+                self.assertTrue(put_response_json['max_mentees_mentor'] == 98)
+                self.assertTrue(put_response_json[
+                                'max_subgroup_person'] == 99)
+                self.assertTrue(put_response_json[
+                                'max_subgroup_members'] == 100)
+
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
