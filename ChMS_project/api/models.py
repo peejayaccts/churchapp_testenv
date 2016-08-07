@@ -24,6 +24,26 @@ class Church(models.Model):
         return self.name
 
 
+class ChurchRegionalInfo(models.Model):
+    """
+    Regional Information for Main or Daughter Church.
+    """
+    church = models.OneToOneField(Church,
+                                  on_delete=models.CASCADE,
+                                  primary_key=True,
+                                  related_name='regional_info')
+    date_format = models.CharField(max_length=255, blank=False)
+    timezone = models.CharField(max_length=255, blank=False)
+    language = models.CharField(max_length=255, blank=False)
+    country = models.CharField(max_length=255, blank=False)
+    state_province = models.CharField(max_length=255, blank=False)
+    city = models.CharField(max_length=255, blank=True)
+    zip_post_code = models.IntegerField(blank=False)
+
+    def __str__(self):
+        return self.date_format + ' ' + self.timezone
+
+
 class Person(models.Model):
     """
     A User of the Church Management Application.
@@ -52,7 +72,6 @@ class Person(models.Model):
     is_born_again_christian = models.BooleanField()
     alternate_email_address = models.CharField(
         max_length=250, blank=True, default='')
-    church = models.ForeignKey(Church, blank=False, null=False)
 
     def __str__(self):
         return (self.first_name + ' ' + self.middle_initial + ' ' +
