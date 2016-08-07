@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # Third party apps
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
     # Internal apps
     'api',
     'ChMS'
@@ -54,6 +55,8 @@ MIDDLEWARE_CLASSES = [
     #    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     #    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware'
 ]
 
 
