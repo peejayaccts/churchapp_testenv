@@ -2,18 +2,41 @@ var chmsUi = angular.module('Chms-ui', []);
 
 chmsUi.controller('IndexController', ['$scope', '$http',
 		function($scope, $http) {
-			$scope.names = [
-				{ name: 'Jon' },
-				{ name: 'Pj' },
-				{ name: 'Pao' },
-				{ name: 'Chan' },
-			];
 			$scope.churches = [];
-			$http.get('http://localhost:8000/api/churches/')
+
+			var churchData = {
+				'name' : 'New World Order Church',
+				'vision' : 'I want to be... the very best.. like no one ever was...',
+				'logo' : 'NWO logo',
+				'banner': 'NWO banner'
+			};
+
+			$http.get('/api/churches', {format : 'json'})
 				.then(function(result) {
-					// angular.forEach(result.data) {
-					// 	// $scope.churches.push()
-					// };
+					console.log(result.data);
+					angular.forEach(result.data, function(data) {
+						$scope.churches.push(data);
+					});
 				});
+
+			$scope.addChurch = function(){
+				console.log('Added Church');
+				console.log(churchData);
+
+				$http.post('api/church/', churchData).then(
+						function(response) {
+							console.log('Success: ' + response.status);
+						},
+						function(response) {
+							console.log('Error: ' + response.status);
+							console.log(response.data)
+						});
+			}
+			$scope.deleteChurch = function(){
+				console.log('Delete Church');
+			}
+			$scope.editChurch = function(){
+				console.log('Edit Church');
+			}
 		}
 ]);

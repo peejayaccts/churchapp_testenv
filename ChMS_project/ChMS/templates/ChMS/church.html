@@ -60,13 +60,13 @@
 
         <div id="control_buttons" class="btn-group">
           <form class="form-inline form-group" role="form">
-            <button type="button" class="btn btn-default">
+            <button type="button" class="btn btn-default" ng-click="addChurch()">
               Add Church
             </button>
-            <button type="button" class="btn btn-default">
+            <button type="button" class="btn btn-default" ng-click="deleteChurch()">
               Delete Church
             </button>
-            <button type="button" class="btn btn-default">
+            <button type="button" class="btn btn-default" ng-click="editChurch()">
               Edit Church
             </button>
           </form>
@@ -82,14 +82,19 @@
 						<thead>
 							<tr>
 								<th>Church Name</th>
-								<th>Location</th>
-								<th>Leader Pastor</th>
+								<th>Church Type</th>
 							</tr>
 						</thead>
+						<tr><td>ANC Church</td><td>M</td></tr>
+						<tr ng-repeat="church in churches">
+							<td>{{ church.name }}</td>
+							<td>{{ church.type }}</td>
+						</tr>
+						<!--
 						<tr><td>ABC Church</td><td>Newcastle</td><td>ABD Leader</td></tr>
 						<tr><td>ABC Church</td><td>Newcastle</td><td>ABD Leader</td></tr>
 						<tr><td>ABC Church</td><td>Newcastle</td><td>ABD Leader</td></tr>
-						<tr><td>ABC Church</td><td>Newcastle</td><td>ABD Leader</td></tr>
+						-->
 					</table>
 				</div>
 
@@ -109,6 +114,12 @@
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/angular.min.js' %}"></script>
     <script src="{% static 'js/Chms-ui.module.js' %}"></script>
+		<script type="text/javascript">
+			var app = angular.module("Chms-ui");
+			app.config(["$httpProvider", function($httpProvider) {
+				$httpProvider.defaults.headers.common["X-CSRFToken"] = "{{ csrf_token | escapejs }}";
+			}]);
+		</script>
 
   </body>
 
