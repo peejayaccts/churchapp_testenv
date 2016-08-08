@@ -59,6 +59,11 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware'
 ]
 
+CORS_ORIGIN_ALLOW_ALL = False 
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = (
+    'http://127.0.0.1:9000'
+)
 
 ROOT_URLCONF = 'config.urls'
 
