@@ -23,7 +23,7 @@ chmsUi.controller('IndexController', ['$scope', '$http',
 				console.log('Added Church');
 				console.log(churchData);
 
-				$http.post('api/church/', churchData).then(
+				$http.post('/api/churches/', churchData).then(
 						function(response) {
 							console.log('Success: ' + response.status);
 						},
