@@ -10,19 +10,39 @@
 
 angular.module('appsApp')
   .factory('peopleFactory',['$http',function($http){ 
-      return $http({
-          withCredentials: true,
-          //headers: {'Content-Type': 'application/json; charset=uft-8'},
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-          method: 'GET',
-          /*dataType: 'jsonp',*/
-          url: 'http://127.0.0.1:8000/api/people/?format=json'})
-          /*url: 'http://127.0.0.1:8000/api/people/'})*/
-          /*url: 'http://www.pinoymountaineer.com/api/get_recent_posts/'})*/
-              .success(function(data){
-                  return data;
-              })
-              .error(function(err){
-                  return err;
-              });
+
+      var peopleFactory = {};
+
+      peopleFactory.getPeople = function (){
+          return $http({
+              withCredentials: true,
+              headers: {'Content-Type' : 'application/json'},
+              method: 'GET',
+              url: 'http://127.0.0.1:8000/api/people/'})
+                  .success(function(response){
+                      return response;
+                  })
+                  .error(function(err){
+                      return err;
+                  });
+      }
+
+      peopleFactory.insertPeople = function (){
+          return $http({
+              withCredentials: true,
+              headers: {'Content-Type' : 'application/json'},
+              method: 'POST',
+              data: { "name" : "xxxFFFFFFFFFeeeFFFFF"},
+              url: 'http://127.0.0.1:8000/api/spiritual_milestones/'})
+                  .success(function(response){
+                      return response;
+                  })
+                  .error(function(err){
+                      console.log(err);
+                      return err;
+                  });
+      }
+
+      return peopleFactory;
+
   }]); 
