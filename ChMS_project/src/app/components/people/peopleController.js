@@ -8,9 +8,9 @@
  * Controller of the appsApp
  */
 angular.module('appsApp')
-  .controller('PeopleCtrl',['$scope','dataFactory',
-      function ($scope,dataFactory) {
-          dataFactory.success(function(data){
+  .controller('PeopleCtrl',['$scope','peopleFactory',
+      function ($scope,peopleFactory) {
+          peopleFactory.success(function(data){
               $scope.people = data;
           })
   /*.controller('PeopleCtrl',['$scope',
