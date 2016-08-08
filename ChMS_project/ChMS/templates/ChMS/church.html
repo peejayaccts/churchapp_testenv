@@ -1,0 +1,115 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+
+		<!-- meta info -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- CSS stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/site.css' %}"> 
+
+    <title>Church Management System</title>
+
+  </head>
+
+	<body ng-app="{% block ng_app %}Chms-ui{% endblock %}"\
+			 ng-controller="{% block ng_controller %}IndexController{% endblock %}">
+
+
+		<!-- Navigation bar -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+      <div class="container">
+				<div class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li {% if slug == 'index' %}class="active"{% endif %}>
+							<a href="/">Home</a>
+						</li>
+						<li {% if slug == 'contact' %}class="active"{% endif %}>
+							<a href="/api">API</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+    </div>
+
+		<!-- Header Page title -->
+    <div class="jumbotron">
+
+      <div class="container">
+				<h1>Church Page</h1>
+			</div>
+
+    </div>
+
+		<!-- Content -->
+		{% verbatim %}
+
+		<div id="church_crud" class="container">
+
+			<!-- Church control buttons -->
+			<div id="church_controls" class="row">
+
+        <div id="control_buttons" class="btn-group">
+          <form class="form-inline form-group" role="form">
+            <button type="button" class="btn btn-default">
+              Add Church
+            </button>
+            <button type="button" class="btn btn-default">
+              Delete Church
+            </button>
+            <button type="button" class="btn btn-default">
+              Edit Church
+            </button>
+          </form>
+        </div>
+
+			</div>
+
+			<!-- Church list gorup -->
+			<div id="church_list" class="row">
+
+				<div class="col-md-6">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Church Name</th>
+								<th>Location</th>
+								<th>Leader Pastor</th>
+							</tr>
+						</thead>
+						<tr><td>ABC Church</td><td>Newcastle</td><td>ABD Leader</td></tr>
+						<tr><td>ABC Church</td><td>Newcastle</td><td>ABD Leader</td></tr>
+						<tr><td>ABC Church</td><td>Newcastle</td><td>ABD Leader</td></tr>
+						<tr><td>ABC Church</td><td>Newcastle</td><td>ABD Leader</td></tr>
+					</table>
+				</div>
+
+				<div class="col_nd-5">
+					<p>Church Information</p>
+				</div>
+
+			</div>
+			
+		</div>
+
+		{% endverbatim %}
+		<!-- End content -->
+    
+		<!-- Javascript -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/angular.min.js' %}"></script>
+    <script src="{% static 'js/Chms-ui.module.js' %}"></script>
+
+  </body>
+
+</html>
