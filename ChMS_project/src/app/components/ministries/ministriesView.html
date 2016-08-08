@@ -1,13 +1,51 @@
 <div ng-controller="MinistriesCtrl">
-    <p>All</p>
-    {{ministries}}
 
-    <p>Single</p>
-    {{ministry}}
-    <h1>Status</h1>
-    <pre>
-    {{status}}
-    </pre>
-    <script>
-    </script>
+    <form ng-submit="newMinistry()">
+        <label>Add Ministry</label>
+        <br/>
+        <input type='text' 
+               placeholder='Enter Ministry Name' 
+               ng-model="addMinistry" 
+               ng-required/>
+               <button type='submit'>Add</button>
+    </form>
+    {{addStatus}}
+
+
+    <br/>
+    <form ng-submit="searchMinistry()">
+        <label>Search Ministry</label>
+        <br/>
+        <input type='text' 
+               placeholder='Enter Ministry ID' 
+               ng-model="searchID" 
+               ng-required/>
+               <button type='submit'>Search</button>
+    </form>
+    {{searchStatus.name}}
+    <br/>
+
+
+    <br/>
+    <table border='1'>
+        <thead>
+            <td>Number</td>
+            <td>Ministry ID</td>
+            <td>Name</td>
+            <td>Action</td>
+        </thead>
+        <tbody>
+            <tr ng-repeat="ministry in ministries">
+                <td>{{$index + 1 }}</td>
+                <td>{{ministry.id}}</td>
+                <td>{{ministry.name}}</td>
+                <td><a href='/#/ministries' ng-click="deleteMinistry(ministry.id)">DELETE</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br/>
+
+
+
 </div>

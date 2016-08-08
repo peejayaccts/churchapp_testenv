@@ -8,38 +8,23 @@
  * Controller of the appsApp
  */
 angular.module('appsApp')
-  /*.controller('PeopleCtrl',['$scope','peopleService',
-      function ($scope,peopleService) {*/
   .controller('PeopleCtrl',['$scope','peopleFactory',
       function ($scope,peopleFactory) {
 
          $scope.people;
          $scope.status;
 
-         /*$scope.people = peopleService.query();*/
-
-         /*getPeople();*/
-         insertPeople();
+         getPeople();
 
          function getPeople(){
              peopleFactory.getPeople()
                 .then(function(response){
-                    console.log(response.data[0].name)
                   $scope.people = response.data;
                 }, 
                 function(error){
+                  $scope.status = error.data.name;
                 });
          }
-
-         function insertPeople(){
-             peopleFactory.insertPeople()
-                .then(function(response){
-                  $scope.people = response.data;
-                }, 
-                function(error){
-                });
-         }
-
 
       }
   ]);

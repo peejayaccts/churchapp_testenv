@@ -2,22 +2,29 @@
 
 /**
  * @ngdoc function
- * @name appsApp.components.ministries:ministriesService
+ * @name appsApp.components.ministries:ministriesFactory
  * @description
  * # ministriesSrvc
  * Controller of the appsApp
  */
 
 angular.module('appsApp')
-  .factory('ministriesService',function($http){ 
-       var ministriesService = {};
+  .factory('ministriesFactory',function($http){ 
+       var ministriesFactory = {};
 
-      ministriesService.getMinistries = function (){
-          return $http({
+      var apiUrl = 'http://127.0.0.1:8000/api/ministries/';
+
+      var configs = {
               withCredentials: true,
-              headers: {'Content-Type' : 'application/json'},
+              headers: {'Content-Type' : 'application/json'}
+      };
+
+      ministriesFactory.getMinistries = function (){
+          return $http({
+              url: apiUrl,
               method: 'GET',
-              url: 'http://127.0.0.1:8000/api/ministries/'})
+              configs
+              })
                   .success(function(response){
                       return response;
                   })
@@ -26,5 +33,48 @@ angular.module('appsApp')
                   });
       }
 
-       return ministriesService;
+      ministriesFactory.getMinistry = function (id){
+          return $http({
+              url: apiUrl + id,
+              method: 'GET',
+              configs
+              })
+                  .success(function(response){
+                      return response;
+                  })
+                  .error(function(err){
+                      return err;
+                  });
+      }
+
+      ministriesFactory.insertMinistry = function (data){
+          return $http({ 
+              url: apiUrl,
+              method: 'POST',
+              configs,
+              data : data 
+          })
+                  .success(function(response){
+                      return response;
+                  })
+                  .error(function(err){
+                      return err;
+                  });
+      }
+
+      ministriesFactory.deleteMinistry = function (id){
+          return $http({ 
+              url: apiUrl + id + '/',
+              method: 'DELETE',
+              configs
+          })
+                  .success(function(response){
+                      return response;
+                  })
+                  .error(function(err){
+                      return err;
+                  });
+      }
+
+       return ministriesFactory;
   }); 
