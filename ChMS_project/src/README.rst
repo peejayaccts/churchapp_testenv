@@ -61,19 +61,19 @@ For debian based, the development tools will be stored in the 3 folders stated a
 
 The following are brief description of the development tools
 -----------------------------------------------------------
-Grunt - automated build system (e.g auto minify):
+#. Grunt - automated build system (e.g. auto minify):
 
-Bower - package manager that contains dependencies (e.g Bootstrap package):
+#. Bower - package manager that contains dependencies (e.g. Bootstrap package):
 
-Yoeman - generates the folder structure/scaffolding automatically (generator-angular):
+#. Yoeman - generates the folder structure/scaffolding automatically (i.e. generator-angular):
 
-Karma - javascript test runner: 
+#. Karma - javascript test runner: 
 
 Install the tools on GLOBAL set-up::
 
     $ npm install -g grunt-cli bower yo generator-karma generator-angular 
 
-Download the app from the repository
+Download the codebase from the repository
 ====================================
 Pull the repository to the created project folder::
 
@@ -84,13 +84,13 @@ Install the dependecies
 =============================
 Go to the front-end directory::
 
-    $ cd ~/churchapp/ChMS_project/app/
+    $ cd ~/churchapp/ChMS_project/src/
 
-Download the node modules::
+Download the node modules in the package.json::
  
     $ npm install
 
-Download the bower components::
+Download the bower components in the bower.json::
   
     $ bower install
 
