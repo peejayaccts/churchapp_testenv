@@ -1,13 +1,85 @@
 <div ng-controller="MinistriesCtrl">
-    <p>All</p>
-    {{ministries}}
 
-    <p>Single</p>
-    {{ministry}}
-    <h1>Status</h1>
-    <pre>
-    {{status}}
-    </pre>
-    <script>
-    </script>
+    <form ng-submit="newMinistry()">
+        <label>Add Ministry</label>
+        <br/>
+        <input type='text' 
+               placeholder='Enter Ministry Name' 
+               ng-model="addMinistry" 
+               ng-required/>
+               <button type='submit'>Add</button>
+    </form>
+    {{addStatus}}
+
+
+    <br/>
+    <form ng-submit="searchMinistry()">
+        <label>Search Ministry</label>
+        <br/>
+        <input type='text' 
+               placeholder='Enter Ministry ID' 
+               ng-model="searchID" 
+               ng-required/>
+               <button type='submit'>Search</button>
+    </form>
+    {{searchStatus.name}}
+    <br/>
+
+
+    <br/>
+    <table border='1'>
+        <thead>
+            <td>Number</td>
+            <td>Ministry ID</td>
+            <td>Name</td>
+            <td></td>
+            <td></td>
+        </thead>
+        <tbody>
+            <tr ng-repeat="ministry in ministries">
+                <td>{{$index + 1 }}</td>
+                <td>{{ministry.id}}</td>
+                <td>{{ministry.name}}</td>
+                <td><a href='/#/ministries' 
+                        ng-click="deleteMinistry(ministry.id)">DELETE</a></td>
+                <td><a href='/#/ministries'
+                        data-toggle="modal"
+                        data-target="#myModal"
+                        ng-click="updateModal(ministry)">UPDATE</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <br/>
+
+
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Upadte Ministry</h4>
+                </div>
+                <div class="modal-body">
+                    <input type='hidden' 
+                           ng-model="ministryID" 
+                           value="ministryID" 
+                           ng-required/>
+                    <input type='text' 
+                           ng-model="ministryName" 
+                           value="ministryName" 
+                           ng-required/>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success"
+                            ng-click="updateMinistry(ministryID,ministryName)"
+                            data-dismiss="modal">SAVE</button>
+                    <button class="btn" 
+                            data-dismiss="modal">CANCEL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 </div>
