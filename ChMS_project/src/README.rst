@@ -103,7 +103,8 @@ Build and run the app using grunt-cli::
 *note: Go to http://localhost:9000*
 
 *The development folder can be found in 
-the ~/churchapp/ChMS_project/src/app/ folder*
+the ~/churchapp/ChMS_project/src/app/ folder
+You need to simultaneously run the back-end server for the API to work*
 
 Build the App for production 
 ==========================
