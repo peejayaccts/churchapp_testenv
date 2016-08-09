@@ -23,4 +23,6 @@ app_name = 'ChMS'
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='ChMS/index.html')),
     url(r'^church/', TemplateView.as_view(template_name='ChMS/church.html'), name='church'),
+    url(r'^login/', TemplateView.as_view(template_name='ChMS/login.html'),
+        name='login')
 ]
