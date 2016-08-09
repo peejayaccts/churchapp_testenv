@@ -24,4 +24,6 @@ urlpatterns = [
     url(r'^api/token/', obtain_auth_token, name="api-token"),
     url(r'^api/', include(router.urls)),
     url(r'^', include('ChMS.urls')),
+    # @peejayhacks
+    # url(r'^$', TemplateView.as_view(template_name='dist/index.html'))
 ]

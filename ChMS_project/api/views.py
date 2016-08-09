@@ -7,7 +7,6 @@ from .models import Church, Person, Interest, SkillAndProfession, \
 from .serializers import ChurchSerializer, PersonSerializer
 from .serializers import InterestSerializer, SkillAndProfessionSerializer, \
     SpiritualMilestoneSerializer, MinistrySerializer, MemberStatusSerializer
-from .forms import PersonFilter
 
 
 class DefaultsMixin(object):
@@ -54,7 +53,6 @@ class PersonViewSet(DefaultsMixin, viewsets.ModelViewSet):
     """API Endpoint for listing and creating daughter churches"""
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
-    filter_class = PersonFilter
     search_fields = ('first_name', 'last_name',)
     ordering_fields = ('first_name', 'last_name', )
 

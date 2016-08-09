@@ -8,12 +8,13 @@
  *
  * Main module of the application.
  */
-angular
-  .module('appsApp', [
+angular.module('appsApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
     'ngRoute',
     'ngSanitize',
     'ngTouch'
+    /*'appsApp.components.people.PeopleCtrl',
+    'appsApp.components.people.dataFactory'*/
   ]);

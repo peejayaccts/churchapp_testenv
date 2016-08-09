@@ -2,8 +2,9 @@
 Church Management System(ChMS) - Front-end Installation 
 =======================================================
 
-This is a guide to setup front-end from repository 
-_________________________________________________
+
+*note: This is a guide to run front-end from repository*
+===================
 
 A project of Good News Technologies, powered by PEK Team of UPITDC.
 
