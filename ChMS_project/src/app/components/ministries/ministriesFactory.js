@@ -10,20 +10,18 @@
 
 angular.module('appsApp')
   .factory('ministriesFactory',function($http){ 
-       var ministriesFactory = {};
-
+      var ministriesFactory = {};
       var apiUrl = 'http://127.0.0.1:8000/api/ministries/';
-
       var configs = {
-              withCredentials: true,
-              headers: {'Content-Type' : 'application/json'}
+          withCredentials: true,
+          headers: {'Content-Type' : 'application/json'}
       };
 
       ministriesFactory.getMinistries = function (){
           return $http({
               url: apiUrl,
               method: 'GET',
-              configs
+              params: configs
               })
                   .success(function(response){
                       return response;
@@ -37,7 +35,7 @@ angular.module('appsApp')
           return $http({
               url: apiUrl + id,
               method: 'GET',
-              configs
+              params: configs
               })
                   .success(function(response){
                       return response;
@@ -51,7 +49,7 @@ angular.module('appsApp')
           return $http({ 
               url: apiUrl,
               method: 'POST',
-              configs,
+              params: configs,
               data : data 
           })
                   .success(function(response){
@@ -66,7 +64,7 @@ angular.module('appsApp')
           return $http({ 
               url: apiUrl + id + '/',
               method: 'DELETE',
-              configs
+              params: configs
           })
                   .success(function(response){
                       return response;
@@ -76,5 +74,20 @@ angular.module('appsApp')
                   });
       }
 
-       return ministriesFactory;
+      ministriesFactory.updateMinistry = function (data){
+          return $http({ 
+              url: apiUrl + data.id + '/',
+              method: 'PATCH',
+              params: configs,
+              data : data.value 
+          })
+                  .success(function(response){
+                      return response;
+                  })
+                  .error(function(err){
+                      return err;
+                  });
+      }
+
+      return ministriesFactory;
   }); 

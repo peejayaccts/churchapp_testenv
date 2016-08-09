@@ -8,23 +8,19 @@
  * Controller of the appsApp
  */
 angular.module('appsApp')
-  .controller('PeopleCtrl',['$scope','peopleFactory',
-      function ($scope,peopleFactory) {
+  .controller('PeopleCtrl',['$scope', 'PeopleFactory',
+      function ($scope,PeopleFactory) {
+          $scope.people;
+          $scope.status;
 
-         $scope.people;
-         $scope.status;
+          function getPeople(){
+              PeopleFactory.getPeople()
+                 .then(function(response){
+                     $scope.people = response.data;
+                 },
+                 function(error){
+                     $scope.status = error.data.name;
+                 });
+          }
 
-         getPeople();
-
-         function getPeople(){
-             peopleFactory.getPeople()
-                .then(function(response){
-                  $scope.people = response.data;
-                }, 
-                function(error){
-                  $scope.status = error.data.name;
-                });
-         }
-
-      }
-  ]);
+  }]);
