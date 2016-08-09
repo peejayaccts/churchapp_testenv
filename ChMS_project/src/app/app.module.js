@@ -15,6 +15,7 @@ angular.module('appsApp', [
     'ngRoute',
     'ngSanitize',
     'ngTouch'
+    /*'bootstrap'*/
     /*'appsApp.components.people.PeopleCtrl',
     'appsApp.components.people.dataFactory'*/
   ]);
