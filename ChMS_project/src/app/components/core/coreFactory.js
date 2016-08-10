@@ -9,62 +9,62 @@
  */
 
 angular.module('appsApp')
-  .factory('coreFactory',['$http','$API','$HTTP', function($http,$API,$HTTP){ 
+  .factory('coreFactory',['$http','$API','$HTTP', function ($http, $API, $HTTP){ 
       var coreFactory = {};
 
-      coreFactory.getAll = function(url){
+      coreFactory.getAll = function (url){
           return $http({
               url    : url,
               method : 'GET',
               params : $HTTP.fields 
               })
-                  .success(function(response){
-                      return response;
+                  .success(function (data, status, headers, config){
+                      return data;
                   })
-                  .error(function(err){
+                  .error(function (err){
                       return err;
                   });
       }
 
-      coreFactory.searchID = function(url,id){
+      coreFactory.searchID = function (url, id){
           return $http({
-              url    : url + id,
+              url    : url + id + '/',
               method : 'GET',
               params : $HTTP.fields 
               })
-                  .success(function(response){
-                      return response;
+                  .success(function (data, status, headers, config){
+                      return data;
                   })
-                  .error(function(err){
+                  .error(function (err){
                       return err;
                   });
       }
 
-      coreFactory.insert = function(url,searchCriteria){
+      coreFactory.insert = function (url, searchCriteria){
           return $http({ 
               url    : url,
               method : 'POST',
               params : $HTTP.fields,
               data   : searchCriteria 
           })
-                  .success(function(response){
-                      return response;
+                  .success(function (data, status, headers, config){
+                      return data;
                   })
-                  .error(function(err){
+                  .error(function (err){
                       return err;
                   });
       }
 
-      coreFactory.del = function(url,id){
+      coreFactory.del = function (url, id){
           return $http({ 
               url    : url + id + '/',
               method : 'DELETE',
               params : $HTTP.fields
           })
-                  .success(function(response){
-                      return response;
+                  .success(function (data, status, headers, config){
+                      return data;
                   })
-                  .error(function(err){
+                  .error(function (err){
                       return err;
                   });
       }
@@ -77,10 +77,10 @@ angular.module('appsApp')
               params : $HTTP.fields,
               data   : data.value 
           })
-                  .success(function(response){
-                      return response;
+                  .success(function (data, status, headers, config){
+                      return data;
                   })
-                  .error(function(err){
+                  .error(function (err){
                       return err;
                   });
       }
