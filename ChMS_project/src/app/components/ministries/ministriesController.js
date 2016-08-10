@@ -8,8 +8,10 @@
  * Controller of the appsApp
  */
 angular.module('appsApp')
-  .controller('MinistriesCtrl',['$scope','ministriesFactory',
-      function ($scope,ministriesFactory) {
+  .controller('MinistriesCtrl',['$scope','ministriesFactory','coreFactory','$API',
+      function ($scope,ministriesFactory,coreFactory,$API) {
+
+          var url = $API.ministries;
 
           $scope.addStatus;
           $scope.delStatus;
@@ -17,52 +19,57 @@ angular.module('appsApp')
           $scope.ministries;
           $scope.ministry;
 
-          getMinistries();
+          getMinistries(url);
 
-        function getMinistries(){
-              ministriesFactory.getMinistries()
-                .then(function(response){
-                    $scope.ministries = response.data; 
-                },function(error){
-                    $scope.status = error.message;
-                });
+        function getMinistries(url){
+
+          coreFactory.getAll(url)
+            .then(function(response){
+                $scope.ministries = response.data; 
+            },function(error){
+                $scope.status = error.message;
+            });
         }
 
         $scope.searchMinistry = function(){
-            var id =  $scope.searchID;
-                  ministriesFactory.getMinistry(id)
-                    .then(function(response){
-                        $scope.searchStatus = response.data; 
-                    },function(error){
-                        $scope.searchStatus = error.message;
-                    });
+
+          var id =  $scope.searchID;
+
+          coreFactory.searchID(url,id)
+            .then(function(response){
+                $scope.searchStatus = response.data; 
+            },function(error){
+                $scope.searchStatus = error.message;
+            });
         }
 
 
         $scope.newMinistry = function(){
-            var data = { 'name' : $scope.addMinistry};
-                 ministriesFactory.insertMinistry(data)
-                    .then(function(response){
 
-                      $scope.addStatus= response.data;
-                      //fetch all list to table
-                      getMinistries();
-                    }, 
-                    function(error){
-                      $scope.addStatus= error.data;
-                    });
+          var searchCriteria = { 'name' : $scope.addMinistry};
 
+          coreFactory.insert(url,searchCriteria)
+             .then(function(response){
+                $scope.addStatus= response.data;
+                //fetch all list to table
+                getMinistries(url);
+            }, 
+            function(error){
+                $scope.addStatus= error.data;
+            });
         }
 
         $scope.deleteMinistry = function(id){
-             ministriesFactory.deleteMinistry(id)
-                .then(function(response){
-                  $scope.ministry = response.data;
-                  getMinistries();
-                }, 
-                function(error){
-                  $scope.status = error;
-                });
+
+         coreFactory.del(url,id)
+            .then(function(response){
+               $scope.ministry = response.data;
+               //fetch all list to table
+               getMinistries(url);
+            }, 
+            function(error){
+               $scope.status = error;
+            });
         }
 
 
@@ -77,14 +84,14 @@ angular.module('appsApp')
                           'name': name} 
                         };
 
-             ministriesFactory.updateMinistry(data)
+             coreFactory.update(url,data)
                 .then(function(response){
-                  $scope.ministry = response.data;
-                  //fetch all list to table
-                  getMinistries();
+                    $scope.ministry = response.data;
+                    //fetch all list to table
+                    getMinistries(url);
                 }, 
                 function(error){
-                  $scope.status = error;
+                    $scope.status = error;
                 });
         }
 
