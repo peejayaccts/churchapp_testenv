@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'corsheaders',
     # Internal apps
     'api',
-    'ChMS'
+    'ChMS',
+    'ui'
 ]
 
 MIDDLEWARE_CLASSES = [
