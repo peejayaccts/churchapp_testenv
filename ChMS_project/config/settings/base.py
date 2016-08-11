@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'corsheaders',
     # Internal apps
     'api',
-    'ChMS'
+    'ChMS',
+    # Experimental ui app to show simplified ui structure
+    'ui'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -59,11 +61,13 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware'
 ]
 
-CORS_ORIGIN_ALLOW_ALL = False;
-CORS_ALLOW_CREDENTIALS = True;
-CORS_ORIGIN_WHITELIST = (
-    'http://127.0.0.1:9000'
-);
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+# enable if CORS_ORIGIN_ALLOW_ALL = False
+# CORS_ORIGIN_WHITELIST = (
+#    'http://127.0.0.1:9000',
+#    'http://0.0.0.0:9000'
+#);
 
 CORS_ALLOW_METHODS = (
     'GET',
@@ -72,7 +76,7 @@ CORS_ALLOW_METHODS = (
     'PATCH',
     'DELETE',
     'OPTIONS'
-);
+)
 
 ROOT_URLCONF = 'config.urls'
 

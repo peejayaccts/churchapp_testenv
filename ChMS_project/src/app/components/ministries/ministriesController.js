@@ -8,8 +8,10 @@
  * Controller of the appsApp
  */
 angular.module('appsApp')
-  .controller('MinistriesCtrl',['$scope','ministriesFactory',
-      function ($scope,ministriesFactory) {
+  .controller('MinistriesCtrl',['$scope', 'coreFactory', '$API',
+      function ($scope, coreFactory, $API) {
+
+          var url = $API.ministries;
 
           $scope.addStatus;
           $scope.delStatus;
@@ -20,71 +22,78 @@ angular.module('appsApp')
           getMinistries();
 
         function getMinistries(){
-              ministriesFactory.getMinistries()
-                .then(function(response){
-                    $scope.ministries = response.data; 
-                },function(error){
-                    $scope.status = error.message;
-                });
+
+          coreFactory.getAll(url)
+            .then(function (response){
+                $scope.ministries = response.data; 
+            },
+            function (error){
+                $scope.status = error.message;
+            });
         }
 
-        $scope.searchMinistry = function(){
-            var id =  $scope.searchID;
-                  ministriesFactory.getMinistry(id)
-                    .then(function(response){
-                        $scope.searchStatus = response.data; 
-                    },function(error){
-                        $scope.searchStatus = error.message;
-                    });
-        }
+        $scope.searchMinistry = function (){
 
+          var id =  $scope.searchID;
 
-        $scope.newMinistry = function(){
-            var data = { 'name' : $scope.addMinistry};
-                 ministriesFactory.insertMinistry(data)
-                    .then(function(response){
-
-                      $scope.addStatus= response.data;
-                      //fetch all list to table
-                      getMinistries();
-                    }, 
-                    function(error){
-                      $scope.addStatus= error.data;
-                    });
-
-        }
-
-        $scope.deleteMinistry = function(id){
-             ministriesFactory.deleteMinistry(id)
-                .then(function(response){
-                  $scope.ministry = response.data;
-                  getMinistries();
-                }, 
-                function(error){
-                  $scope.status = error;
-                });
+          coreFactory.searchID(url, id)
+            .then(function (response){
+                $scope.searchStatus = response.data; 
+            },
+            function (error){
+                $scope.searchStatus = error.message;
+            });
         }
 
 
-        $scope.updateModal = function(data){
+        $scope.newMinistry = function (){
+
+          var searchCriteria = { 'name' : $scope.addMinistry};
+
+          coreFactory.insert(url, searchCriteria)
+             .then(function (response){
+                $scope.addStatus= response.data;
+                //fetch all list to table
+                getMinistries(url);
+            }, 
+            function (error){
+                $scope.addStatus= error.data;
+            });
+        }
+
+        $scope.deleteMinistry = function (id){
+
+         coreFactory.del(url, id)
+            .then(function (response){
+               $scope.ministry = response.data;
+               //fetch all list to table
+               getMinistries(url);
+            }, 
+            function (error){
+               $scope.status = error;
+            });
+        }
+
+
+        $scope.updateModal = function (data){
             $scope.ministryName = data.name;
             $scope.ministryID = data.id;
         }
 
-        $scope.updateMinistry = function(id,name){
+        $scope.updateMinistry = function (id, name){
             var data  = { id: id, 
                           value : { 
                           'name': name} 
                         };
 
-             ministriesFactory.updateMinistry(data)
-                .then(function(response){
-                  $scope.ministry = response.data;
-                  //fetch all list to table
-                  getMinistries();
+             coreFactory.update(url, data)
+                .then(function (response){
+                    $scope.ministry = response.data;
+                    //fetch all list to table
+                    getMinistries(url);
                 }, 
                 function(error){
-                  $scope.status = error;
+                    $scope.status = error;
                 });
         }
 
