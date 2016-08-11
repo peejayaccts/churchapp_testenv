@@ -1,6 +1,22 @@
-var chmsUi = angular.module('Chms-ui', []);
+var chmsUi = angular.module('ChMS-ui', [
+		'ngRoute',
+		'HomeModule',
+		'AdminModule',
+		'LogInModule',
+		'PeopleModule',
+		'MinistriesModule'
+]);
 
-chmsUi.controller('IndexController', ['$scope', '$http',
+chmsUi.controller('MainController', ['$scope', '$http',
+		function($scope, $http) {
+		}
+]);
+
+
+
+
+
+chmsUi.controller('ChurchController', ['$scope', '$http',
 		function($scope, $http) {
 			$scope.churches = [];
 
@@ -46,6 +62,7 @@ chmsUi.controller('IndexController', ['$scope', '$http',
 							console.log(response.data)
 						});
 			}
+
 			$scope.deleteChurch = function(){
 				console.log('Delete Church');
 				var church_id = $scope.churches.pop().links['self'];
