@@ -3,11 +3,13 @@
     <form ng-submit="newMinistry()">
         <label>Add Ministry</label>
         <br/>
-        <input type='text' 
+        <div class="form-group">
+        <input type='text' class="form-control input-sm"
                placeholder='Enter Ministry Name' 
                ng-model="addMinistry" 
                ng-required/>
-               <button type='submit'>Add</button>
+               <button type='submit' class="btn btn-success">Add</button>
+        </div>
     </form>
     {{addStatus}}
 
@@ -16,24 +18,28 @@
     <form ng-submit="searchMinistry()">
         <label>Search Ministry</label>
         <br/>
-        <input type='text' 
+        <div class="form-group">
+        <input type='text' class="form-control input-sm"
                placeholder='Enter Ministry ID' 
                ng-model="searchID" 
                ng-required/>
-               <button type='submit'>Search</button>
+                <button type='submit' class="btn btn-success">Search</button>
+        </div>
     </form>
     {{searchStatus.name}}
     <br/>
 
 
     <br/>
-    <table border='1'>
+    <table class='table table-bordered' border='1'>
         <thead>
-            <td>Number</td>
-            <td>Ministry ID</td>
-            <td>Name</td>
-            <td></td>
-            <td></td>
+            <tr>
+                <th>Number</th>
+                <th>Ministry ID</th>
+                <th>Name</th>
+                <th></th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
             <tr ng-repeat="ministry in ministries">
@@ -63,7 +69,7 @@
                            ng-model="ministryID" 
                            value="ministryID" 
                            ng-required/>
-                    <input type='text' 
+                    <input type='text' class="form-control input-sm"
                            ng-model="ministryName" 
                            value="ministryName" 
                            ng-required/>
