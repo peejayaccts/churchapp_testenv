@@ -2,6 +2,7 @@
 from .base import *
 
 DEBUG = False
+LOCAL_DEV = False 
 
 DATABASES = {
     'default': {

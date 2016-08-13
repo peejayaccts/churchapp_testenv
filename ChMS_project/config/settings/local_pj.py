@@ -2,6 +2,7 @@
 from .base import *
 
 DEBUG = True
+LOCAL_DEV = True
 
 DATABASES = {
     'default': {
@@ -13,5 +14,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+
+
 
 #INSTALLED_APPS += ("debug_toolbar", )
