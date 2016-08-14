@@ -46,4 +46,5 @@ script:
 #  - python functional_tests.py
 #  - sh ./build.sh
 # RUN the grunt build script 
-  - cd ../../ sh ./grunt.sh
+#  - cd ../../ sh ./grunt.sh
+   - grunt test
