@@ -25,4 +25,5 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3
 script: 
-  - sh ./api_test.sh
+  - python api_functional_tests.py
+  - python functional_tests.py
