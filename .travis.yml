@@ -40,8 +40,6 @@ script:
   - cd ChMS_project/
   - python api_functional_tests.py
   - python functional_tests.py
-
 # RUN the grunt build script 
-  - cd ..
-  - cd src/ 
+  - cd ../src/ 
   - grunt test 
