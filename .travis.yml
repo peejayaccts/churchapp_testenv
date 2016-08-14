@@ -17,6 +17,8 @@ install:
   - pip install -r requirements/base.txt
 before_script:
   - mysql -u root -e 'CREATE DATABASE GNT_ChMS_MyDB CHARACTER SET utf8; GRANT ALL ON GNT_ChMS_MyDB.* TO 'pekUrsTruly' IDENTIFIED BY "GloriaTai4ndP#k"';
-  - sh ./build.sh
+  - cd ChMS_project/
+  - python manage.py migrate --noinput
+  - python manage.py runserver &
 script: 
-  - sh ./api_test.sh
+  - python functional_tests.py
