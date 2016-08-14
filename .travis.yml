@@ -46,6 +46,6 @@ before_script:
   - cd $CI_HOME 
 script: 
 # RUN the django test script 
-  - ./build.sh
-  - ./grunt.sh
+  - "sh -e ./build.sh"
+  - "sh -e ./grunt.sh"
 # RUN the grunt build script 
