@@ -9,32 +9,32 @@ env:
 addons:
   apt:
     packages:
-    - mysql-server-5.6
-    - mysql-client-core-5.6
-    - mysql-client-5.6
-    - nodejs
+#    - mysql-server-5.6
+#    - mysql-client-core-5.6
+#    - mysql-client-5.6
+    - nodejs-4.4.7
     - npm 
     - build-essential 
 services:
   - mysql 
 before_install:
 # Use django set-up for database 
-  - export DJANGO_SETTINGS_MODULE=config.settings.base
+#  - export DJANGO_SETTINGS_MODULE=config.settings.base
 install:
-  - pip install -r requirements/base.txt
+#  - pip install -r requirements/base.txt
 before_script:
 # LOAD DATABASE 
-  - mysql -u root -e 'CREATE DATABASE GNT_ChMS_MyDB CHARACTER SET utf8; GRANT ALL ON GNT_ChMS_MyDB.* TO 'pekUrsTruly' IDENTIFIED BY "GloriaTai4ndP#k"';
+#  - mysql -u root -e 'CREATE DATABASE GNT_ChMS_MyDB CHARACTER SET utf8; GRANT ALL ON GNT_ChMS_MyDB.* TO 'pekUrsTruly' IDENTIFIED BY "GloriaTai4ndP#k"';
 
 # RUN the migration and server
-  - cd $CI_HOME/ChMS_project 
-  - python manage.py migrate --noinput
-  - python manage.py runserver &
-  - sleep 3
+#  - cd $CI_HOME/ChMS_project 
+#  - python manage.py migrate --noinput
+#  - python manage.py runserver &
+#  - sleep 3
 # RUN the headless UI 
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3
+#  - "export DISPLAY=:99.0"
+#  - "sh -e /etc/init.d/xvfb start"
+#  - sleep 3
 # INSTALL FRONT-END BUILD TOOLS
   - npm install -g grunt-cli bower yo generator-karma generator-angular
   - cd $CI_HOME/ChMS_project/src 
@@ -44,6 +44,6 @@ before_script:
   - cd $CI_HOME 
 script: 
 # RUN the django test script 
-  - "sh -e ./build.sh"
+#  - "sh -e ./test-django.sh"
 # RUN the grunt build script 
-  - "sh -e ./grunt.sh"
+  - "sh -e ./test-grunt.sh"
