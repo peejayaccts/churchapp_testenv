@@ -9,6 +9,9 @@ addons:
     - mysql-server-5.6
     - mysql-client-core-5.6
     - mysql-client-5.6
+    - nodejs
+    - npm 
+    - build-essential 
 services:
   - mysql 
 before_install:
@@ -41,5 +44,6 @@ script:
   - python api_functional_tests.py
   - python functional_tests.py
 # RUN the grunt build script 
-  - cd ../src/ 
+  - cd ..
+  - cd src/ 
   - grunt test 
