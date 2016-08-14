@@ -10,8 +10,7 @@
 angular.module('appsApp')
   .controller('PeopleCtrl',['$scope', 'PeopleFactory',
       function ($scope,PeopleFactory) {
-          $scope.people;
-          $scope.status;
+
 
           function getPeople(){
               PeopleFactory.getPeople()
@@ -22,5 +21,7 @@ angular.module('appsApp')
                      $scope.status = error.data.name;
                  });
           }
+
+          getPeople();
 
   }]);

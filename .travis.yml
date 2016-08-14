@@ -1,10 +1,22 @@
-language: python
+language: python 
 python:
-  - "3.5"
-  - "3.5-dev" # 3.5 development branch
-install: 
-    "pip install -r requirements.txt"
+  - 3.5
+dist: trusty 
+sudo: required
+addons:
+  apt:
+    packages:
+    - mysql-server-5.6
+    - mysql-client-core-5.6
+    - mysql-client-5.6
+services:
+  - mysql 
+before_install:
+  - export DJANGO_SETTINGS_MODULE=config.settings.base
+install:
+  - pip install -r requirements/base.txt
+before_script:
+  - mysql -u root -e 'CREATE DATABASE GNT_ChMS_MyDB CHARACTER SET utf8; GRANT ALL ON GNT_ChMS_MyDB.* TO 'pekUrsTruly' IDENTIFIED BY "GloriaTai4ndP#k"';
+  - sh ./build.sh
 script: 
-  - "python manage.py runserver 0.0.0.0:8000" 
-  - "python api_functional_tests.py" 
-  - "python functional_tests.py" 
+  - sh ./api_test.sh

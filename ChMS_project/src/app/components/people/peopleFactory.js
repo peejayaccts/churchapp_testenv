@@ -30,7 +30,7 @@ var peopleFactory = {};
                   .error(function(err){
                       return err;
                   });
-      }
+      };
 
       return peopleFactory;
 
