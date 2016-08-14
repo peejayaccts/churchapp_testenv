@@ -44,6 +44,6 @@ before_script:
   - bower install
 script: 
 # RUN the django test script 
-  - build.sh
-  - grunt.sh
+  - sh ./build.sh
+  - sh ./grunt.sh
 # RUN the grunt build script 
