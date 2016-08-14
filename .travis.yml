@@ -42,8 +42,10 @@ before_script:
   - cd $CI_HOME/ChMS_project/src 
   - npm install
   - bower install
+  - pwd
+  - cd $CI_HOME 
 script: 
 # RUN the django test script 
-  - sh ./build.sh
-  - sh ./grunt.sh
+  - ./build.sh
+  - ./grunt.sh
 # RUN the grunt build script 
