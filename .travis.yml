@@ -33,7 +33,7 @@ before_script:
 #  - "sh -e /etc/init.d/xvfb start"
 #  - sleep 3
 # RUN FRONT END
-  - npm install -g npm grunt-cli bower yo generator-karma generator-angular
+  - npm install -g grunt-cli bower yo generator-karma generator-angular
   - echo $HOME
   - pwd
   - cd ChMS_project/src 
