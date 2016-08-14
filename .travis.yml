@@ -29,7 +29,19 @@ before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3
+# RUN FRONT END
+  - npm install -g grunt-cli bower yo generator-karma generator-angular
+  - cd src/ 
+  - npm install
+  - bower install
 script: 
 # RUN the django test script 
+  - cd ..
+  - cd ChMS_project/
   - python api_functional_tests.py
   - python functional_tests.py
+
+# RUN the grunt build script 
+  - cd ..
+  - cd src/ 
+  - grunt test 
