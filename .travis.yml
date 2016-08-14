@@ -3,6 +3,9 @@ python:
   - 3.5
 dist: trusty 
 sudo: required
+env:
+  global:
+    - CI_HOME='/home/travis/build/peejayaccts/churchapp_testenv'
 addons:
   apt:
     packages:
@@ -36,11 +39,11 @@ before_script:
   - npm install -g grunt-cli bower yo generator-karma generator-angular
   - echo $HOME
   - pwd
-  - cd ChMS_project/src 
+  - cd $CI_HOME/ChMS_project/src 
   - npm install
   - bower install
 script: 
 # RUN the django test script 
-  - cd ../../ sh build.sh
+  - build.sh
+  - grunt.sh
 # RUN the grunt build script 
-  - cd ../ sh grunt.sh
