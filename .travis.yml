@@ -34,7 +34,9 @@ before_script:
 #  - sleep 3
 # RUN FRONT END
   - npm install -g npm grunt-cli bower yo generator-karma generator-angular
-  - cd churchapp_testenv/ChMS_project/src 
+  - echo $HOME
+  - pwd
+  - cd ChMS_project/src 
   - npm install
   - bower install
 script: 
