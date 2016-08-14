@@ -2,5 +2,6 @@
 
 set -ev
 
-cd src/ 
+
+cd ChMS_project/src
 grunt test 

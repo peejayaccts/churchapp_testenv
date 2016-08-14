@@ -41,10 +41,9 @@ before_script:
   - bower install
 script: 
 # RUN the django test script 
-  - cd ..
-#  - cd ChMS_project/
+#  - cd ..
 #  - python api_functional_tests.py
 #  - python functional_tests.py
 #  - sh ./build.sh
 # RUN the grunt build script 
-  - sh ./grunt.sh
+  - cd ../../ sh ./grunt.sh
