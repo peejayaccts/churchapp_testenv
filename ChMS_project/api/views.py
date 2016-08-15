@@ -49,14 +49,6 @@ class ChurchViewSet(mixins.ListModelMixin,
     ordering_fields = ('name', 'church_type', )
 
 
-class PersonViewSet(DefaultsMixin, viewsets.ModelViewSet):
-    """API Endpoint for listing and creating daughter churches"""
-    queryset = Person.objects.all()
-    serializer_class = PersonSerializer
-    search_fields = ('first_name', 'last_name',)
-    ordering_fields = ('first_name', 'last_name', )
-
-
 class InterestViewSet(mixins.ListModelMixin,
                       mixins.RetrieveModelMixin,
                       mixins.CreateModelMixin,
@@ -160,3 +152,24 @@ class MemberStatusViewSet(mixins.ListModelMixin,
     )
     search_fields = ('name', )
     ordering_fields = ('name', )
+
+
+class PersonViewSet(mixins.ListModelMixin,
+                    mixins.RetrieveModelMixin,
+                    mixins.CreateModelMixin,
+                    mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin,
+                    viewsets.GenericViewSet):
+    """
+    API Endpoint for listing and creating daughter churches
+    """
+
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
+    filter_backends = (
+        filters.DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    )
+    search_fields = ('first_name', 'last_name',)
+    ordering_fields = ('first_name', 'last_name', )
