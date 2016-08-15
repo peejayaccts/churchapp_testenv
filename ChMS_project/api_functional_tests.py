@@ -853,5 +853,116 @@ class ChurchAPITest(unittest.TestCase):
                 self.assertTrue(put_response_json[
                                 'max_subgroup_members'] == 100)
 
+
+class PeopleAPITest(unittest.TestCase):
+
+    added_test_data = []
+
+    def setUp(self):
+        response = requests.get('http://127.0.0.1:8000/api/')
+        self.assertTrue(response.status_code, 200)
+        self.api = response.json()
+        # pprint.pprint(self.api)
+
+    def tearDown(self):
+        while self.added_test_data:
+            response = requests.get(
+                self.api['people'] + str(self.added_test_data.pop()))
+            self.assertTrue(response.status_code == 200)
+            people = response.json()
+            # pprint.pprint('Deleting Interest: ' + interest['name'])
+            del_response = requests.delete(people['links']['self'])
+            self.assertTrue(del_response.status_code == 204)
+
+    def test_people_resource_found(self):
+        self.assertTrue('people' in self.api)
+
+    def test_add_person(self, first_name=randomword(200), last_name=randomword(200)):
+        input_data = {
+            'first_name': first_name,
+            'middle_initial': randomword(10),
+            'last_name': last_name,
+            'date_of_birth': '12/14/1987',
+            'gender': 'M',
+            'marital_status': 'S',
+            'church': 20,
+            'member_status': 10,
+        }
+        headers = {'X-Requested-With': 'Python requests',
+                   'Content-type': 'application/json'}
+        response = requests.post(
+            self.api['people'], data=json.dumps(input_data), headers=headers)
+        self.assertTrue(response.status_code == 201)
+        response_json = response.json()
+        # pprint.pprint(response_json)
+        self.added_test_data.append(response_json['id'])
+
+    def test_delete_person(self):
+        self.test_add_person()
+        current_id = self.added_test_data[-1]
+        response = requests.get(self.api['people'] + str(current_id))
+        self.assertTrue(response.status_code == 200)
+        person = response.json()
+        del_response = requests.delete(person['links']['self'])
+        self.assertTrue(del_response.status_code == 204)
+        self.added_test_data.pop()
+
+    def test_update_basic_info_person(self):
+        self.test_add_person()
+        current_id = self.added_test_data[-1]
+        response = requests.get(self.api['people'] + str(current_id))
+        self.assertTrue(response.status_code == 200)
+        person = response.json()
+        person['date_of_birth'] = '12/14/1988'
+        headers = {'X-Requested-With': 'Python requests',
+                   'Content-type': 'application/json'}
+        put_response = requests.put(person['links']['self'],
+                                    data=json.dumps(person),
+                                    headers=headers)
+        put_response_json = put_response.json()
+        self.assertTrue(put_response.status_code == 200)
+        self.assertTrue(put_response_json['date_of_birth'] == '12/14/1988')
+        self.assertTrue(put_response_json['age'] == 27)
+
+    def test_sort_asc_lastname(self):
+        new_person = 'A' * 10
+        self.test_add_person(last_name=new_person)
+        another_person = 'Z' * 10
+        self.test_add_person(last_name=another_person)
+        response = requests.get(
+            self.api['people'] + '?ordering=last_name')
+        people = response.json()
+        latest_person = ''
+        for person in people:
+            if person['last_name'] == new_person or \
+               person['last_name'] == another_person:
+                latest_person = person['last_name']
+        self.assertTrue(latest_person == another_person,
+                        "Ascending order not ok")
+
+    def test_sort_desc_firstname(self):
+        new_person = 'A' * 10
+        self.test_add_person(first_name=new_person)
+        another_person = 'Z' * 10
+        self.test_add_person(first_name=another_person)
+        response = requests.get(
+            self.api['people'] + '?ordering=-first_name')
+        people = response.json()
+        latest_person = ''
+        for person in people:
+            if person['first_name'] == new_person or \
+               person['first_name'] == another_person:
+                latest_person = person['first_name']
+        self.assertTrue(latest_person == new_person,
+                        "Descending order not working")
+
+    def test_search_person(self):
+        new_person = randomword(20)
+        self.test_add_person(last_name=new_person)
+        response = requests.get(
+            self.api['people'] + '?search=' + new_person)
+        self.assertTrue(response.status_code == 200)
+        self.assertTrue(len(response.json()) == 1)
+
 if __name__ == '__main__':
     unittest.main(warnings='ignore')

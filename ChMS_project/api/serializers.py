@@ -1,5 +1,10 @@
+
+from datetime import date
+import datetime
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
@@ -104,23 +109,6 @@ class ChurchSerializer(serializers.ModelSerializer):
         return instance
 
 
-class PersonSerializer(serializers.ModelSerializer):
-    gender_display = serializers.SerializerMethodField()
-    marital_status_display = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Person
-        fields = ('id', 'first_name', 'middle_initial', 'last_name', 'gender',
-                  'gender_display', 'marital_status', 'marital_status_display',
-                  'is_born_again_christian', 'alternate_email_address',)
-
-    def get_gender_display(self, obj):
-        return obj.get_gender_display()
-
-    def get_marital_status_display(self, obj):
-        return obj.get_marital_status_display()
-
-
 class InterestSerializer(serializers.ModelSerializer):
 
     links = serializers.SerializerMethodField()
@@ -194,3 +182,39 @@ class MemberStatusSerializer(serializers.ModelSerializer):
         return {
             'self': reverse('member_status-detail', kwargs={'pk': obj.pk}, request=request),
         }
+
+
+class PersonSerializer(serializers.ModelSerializer):
+    gender_display = serializers.SerializerMethodField()
+    marital_status_display = serializers.SerializerMethodField()
+    age = serializers.IntegerField(read_only=True)
+    date_of_birth = serializers.DateField(
+        format=settings.DATE_FORMAT, input_formats=settings.DATE_INPUT_FORMATS)
+    links = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Person
+        fields = ('id', 'first_name', 'middle_initial', 'last_name',
+                  'date_of_birth', 'age', 'gender', 'gender_display',
+                  'marital_status', 'marital_status_display',
+                  'church', 'member_status', 'links')
+
+    def get_gender_display(self, obj):
+        return obj.get_gender_display()
+
+    def get_marital_status_display(self, obj):
+        return obj.get_marital_status_display()
+
+    def get_links(self, obj):
+        request = self.context['request']
+        return {
+            'self': reverse('person-detail', kwargs={'pk': obj.pk}, request=request),
+        }
+
+    def validate(self, data):
+        if data['date_of_birth']:
+            dob = data['date_of_birth']
+            today = date.today()
+            data['age'] = today.year - dob.year - \
+                ((today.month, today.day) < (dob.month, dob.day))
+        return data

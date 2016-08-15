@@ -2,7 +2,7 @@
 Church Management System(ChMS) - Front-end Installation 
 =======================================================
 
-This is a guide to setup front-end from scratch
+This is a guide to setup front-end from SCRATCH 
 _______________________________________________
 
 A project of Good News Technologies, powered by PEK Team of UPITDC.

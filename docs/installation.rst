@@ -7,7 +7,6 @@ Technology Stack and Version:
 #. Ubuntu 16.04 LTS
 #. Python 3.5
 #. Mysql 5.7
-#. mod_wsgi 
 #. Apache 2.2.3
 
 How to deploy
@@ -16,7 +15,7 @@ How to deploy
 To use this project follow these steps:
 
 #. Create non-root user with sudo privilges
-#. Install dependencies and packages
+#. Install packages from Ubuntu Repositories
 #. Create Python virtual environment
 #. Start Django project
 #. Configure Apache
@@ -49,7 +48,7 @@ Add the following below, then save::
 
       efrenversia ALL=(ALL:ALL) ALL
 
-Install dependencies and packages
+Install packages from Ubuntu Repositories
 ======================================
 The following dependencies for environment set-up are:
 #. Python 3.5
@@ -149,7 +148,9 @@ Restart the Apache server for the configuration to take effect::
 
 *note: Go to http://127.0.0.1:8000/api/ and explore*
 
+
 Create self-signed SSL certificate
 ======================================
 TO FOLLOW
+
 

@@ -1,3 +1,6 @@
+from datetime import date
+import datetime
+
 from django.db import models
 
 from django.utils.translation import ugettext_lazy as _
@@ -47,40 +50,6 @@ class ChurchRegionalInfo(models.Model):
         return self.date_format + ' ' + self.timezone
 
 
-class Person(models.Model):
-    """
-    A User of the Church Management Application.
-    This includes, System Administrator, Senior Pastor, Super User, Member, etc.
-    """
-    GENDER_MALE = 'M'
-    GENDER_FEMALE = 'F'
-    GENDER_CHOICES = (
-        (GENDER_MALE, _('Male')),
-        (GENDER_FEMALE, _('Female')),
-    )
-    MARITAL_STATUS_SINGLE = 'S'
-    MARITAL_STATUS_MARRIED = 'M'
-    MARITAL_STATUS_CHOICES = (
-        (MARITAL_STATUS_SINGLE, _('Single')),
-        (MARITAL_STATUS_MARRIED, _('Married')),
-    )
-
-    first_name = models.CharField(max_length=255, blank=False)
-    middle_initial = models.CharField(max_length=1, blank=True, default='')
-    last_name = models.CharField(max_length=255, blank=True, default='')
-    gender = models.CharField(
-        max_length=1, choices=GENDER_CHOICES, default=GENDER_MALE)
-    marital_status = models.CharField(
-        max_length=1, choices=MARITAL_STATUS_CHOICES, default=MARITAL_STATUS_SINGLE)
-    is_born_again_christian = models.BooleanField()
-    alternate_email_address = models.CharField(
-        max_length=250, blank=True, default='')
-
-    def __str__(self):
-        return (self.first_name + ' ' + self.middle_initial + ' ' +
-                self.last_name)
-
-
 class Interest(models.Model):
     name = models.CharField(max_length=255, unique=True, blank=False)
 
@@ -114,3 +83,39 @@ class MemberStatus(models.Model):
 
     def __str__(self):
         return (self.name.title())
+
+
+class Person(models.Model):
+    """
+    A User of the Church Management Application.
+    This includes, System Administrator, Senior Pastor, Super User, Member, etc.
+    """
+    GENDER_MALE = 'M'
+    GENDER_FEMALE = 'F'
+    GENDER_CHOICES = (
+        (GENDER_MALE, _('Male')),
+        (GENDER_FEMALE, _('Female')),
+    )
+    MARITAL_STATUS_SINGLE = 'S'
+    MARITAL_STATUS_MARRIED = 'M'
+    MARITAL_STATUS_CHOICES = (
+        (MARITAL_STATUS_SINGLE, _('Single')),
+        (MARITAL_STATUS_MARRIED, _('Married')),
+    )
+
+    first_name = models.CharField(max_length=255, blank=False)
+    middle_initial = models.CharField(max_length=255, blank=True, default='')
+    last_name = models.CharField(max_length=255, blank=False)
+    date_of_birth = models.DateField(blank=False)
+    age = models.IntegerField(blank=False)
+    gender = models.CharField(
+        max_length=1, choices=GENDER_CHOICES, default=GENDER_MALE)
+    marital_status = models.CharField(
+        max_length=1, choices=MARITAL_STATUS_CHOICES, default=MARITAL_STATUS_SINGLE)
+    church = models.ForeignKey(Church, blank=False, null=False)
+    member_status = models.ForeignKey(
+        MemberStatus, blank=False, null=False)
+
+    def __str__(self):
+        return (self.first_name + ' ' + self.middle_initial + ' ' +
+                self.last_name)
