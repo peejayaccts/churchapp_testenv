@@ -20,6 +20,8 @@
 
 	<body ng-app="ChMS-ui">
 
+    <div class="wrapper">
+
     <!-- Container -->
 		<div class="container">
 
@@ -70,17 +72,26 @@
 			{% endverbatim %}
       <!-- Contents end -->
 
+    <div class="push"></div> 
 		</div>
     <!-- Container end -->
+    </div>
 
-    <footer class="footer well" id="footer">
-      <div class="container">
-        <a class="col-sm-1" href="#">Careers</a>
-        <a class="col-sm-1" href="#">Contact</a>
-        <a class="col-sm-1" href="#">About</a>
-        <p class="col-sm-4 text-muted">All Rights Reserved (C) 2016</p>
+
+      <div class="footer">
+        <div class="container">
+          <div class="col-sm-12" style="padding-top:20px;">
+            <a class="col-sm-1" href="#">Careers</a>
+            <a class="col-sm-1" href="#">Contact</a>
+            <a class="col-sm-1" href="#">About</a>
+            <p class="col-sm-4 text-muted">All Rights Reserved (C) 2016</p>
+          </div>
+        </div>
       </div>
-    </footer>
+
+
+
+
 
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>

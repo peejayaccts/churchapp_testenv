@@ -1,27 +1,38 @@
 /* Custom CSS */
-/* getbootstrap.com/examples/sticky-footer/sticky-footer.css */
-
-html {
-	/* position		: relative; */
-	min-height	:	100%;
+* {
+  margin : 0;
 }
 
+html,
 body {
-	/* Margin bottom by footer height */
-	min-height	:	100%;
-	overflow	:	auto;
+	height	:	100%;
+}
+
+.container {
+  min-height : 100%;
+}
+
+.wrapper {
+  min-height : 100%;
+  height : auto !important;
+  height : 100%;
+  margin : 0 auto -60px;
+}
+
+.upcoming-events {
+  height:150px;
+  overflow:auto;
+}
+
+.bottom-buffer {
+  margin-bottom : 20px;
+}
+
+.footer,
+.push {
+  height : 60px;
 }
 
 .footer {
-	position					:	absolute;
-	bottom						:	0;
-	width							:	100%;
-	/* Set the fixed height of the footer here */
-	/* height						: 60px; */
-	/* background-color	: #f5f5f5; */
-	background-color	:	black;
-}
-
-.well#footer {
-  margin  : 0px;
+  background-color : black;
 }
