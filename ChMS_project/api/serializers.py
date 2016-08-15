@@ -12,7 +12,7 @@ from rest_framework.reverse import reverse
 
 from .models import Church, Person, Interest, SkillAndProfession,\
     SpiritualMilestone, Ministry, MemberStatus, ChurchRegionalInfo, \
-    ContactInfo
+    ContactInfo, ResidentialAddress, MailAddress
 
 
 class ChurchRegionalInfoSerializer(serializers.ModelSerializer):
@@ -193,6 +193,32 @@ class ContactInfoSerializer(serializers.ModelSerializer):
                   'other_contact_num', 'alternate_email',)
 
 
+class ResidentialAddressSerializer(serializers.ModelSerializer):
+
+    latitude = serializers.DecimalField(
+        max_digits=9, decimal_places=7, read_only=True)
+    longitude = serializers.DecimalField(
+        max_digits=10, decimal_places=7, read_only=True)
+
+    class Meta:
+        model = ResidentialAddress
+        fields = ('street', 'country', 'city', 'zip_post_code', 'state_province',
+                  'latitude', 'longitude',)
+
+
+class MailAddressSerializer(serializers.ModelSerializer):
+
+    latitude = serializers.DecimalField(
+        max_digits=9, decimal_places=7, read_only=True)
+    longitude = serializers.DecimalField(
+        max_digits=10, decimal_places=7, read_only=True)
+
+    class Meta:
+        model = MailAddress
+        fields = ('street', 'country', 'city', 'zip_post_code', 'state_province',
+                  'latitude', 'longitude',)
+
+
 class PersonSerializer(serializers.ModelSerializer):
     gender_display = serializers.SerializerMethodField()
     marital_status_display = serializers.SerializerMethodField()
@@ -200,6 +226,9 @@ class PersonSerializer(serializers.ModelSerializer):
     date_of_birth = serializers.DateField(
         format=settings.DATE_FORMAT, input_formats=settings.DATE_INPUT_FORMATS)
     contact_info = ContactInfoSerializer(required=False, allow_null=True)
+    residential_address = ResidentialAddressSerializer(
+        required=False, allow_null=True)
+    mail_address = MailAddressSerializer(required=False, allow_null=True)
     links = serializers.SerializerMethodField()
 
     class Meta:
@@ -207,7 +236,8 @@ class PersonSerializer(serializers.ModelSerializer):
         fields = ('id', 'first_name', 'middle_initial', 'last_name',
                   'date_of_birth', 'age', 'gender', 'gender_display',
                   'marital_status', 'marital_status_display',
-                  'church', 'member_status', 'contact_info', 'links')
+                  'church', 'member_status', 'contact_info',
+                  'residential_address', 'mail_address', 'links')
 
     def get_gender_display(self, obj):
         return obj.get_gender_display()
@@ -231,14 +261,24 @@ class PersonSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         contact_info_data = validated_data.pop('contact_info')
+        residential_address_data = validated_data.pop('residential_address')
+        mail_address_data = validated_data.pop('mail_address')
         person_data = Person.objects.create(**validated_data)
         if contact_info_data:
             ContactInfo.objects.create(
                 person=person_data, **contact_info_data)
+        if residential_address_data:
+            ResidentialAddress.objects.create(
+                person=person_data, **residential_address_data)
+        if mail_address_data:
+            MailAddress.objects.create(
+                person=person_data, **mail_address_data)
         return person_data
 
     def update(self, instance, validated_data):
         contact_info_data = validated_data.pop('contact_info')
+        residential_address_data = validated_data.pop('residential_address')
+        mail_address_data = validated_data.pop('mail_address')
         instance.first_name = validated_data.get(
             'first_name', instance.first_name)
         instance.middle_initial = validated_data.get(
@@ -274,4 +314,66 @@ class PersonSerializer(serializers.ModelSerializer):
                         'other_contact_num'),
                     alternate_email=contact_info_data.get('alternate_email'))
                 instance.contact_info.save()
+        if residential_address_data:
+            if hasattr(instance, 'residential_address'):
+                residential_address = instance.residential_address
+                residential_address.street = residential_address_data.get(
+                    'street', residential_address.street)
+                residential_address.country = residential_address_data.get(
+                    'country', residential_address.country)
+                residential_address.city = residential_address_data.get(
+                    'city', residential_address.city)
+                residential_address.zip_post_code = residential_address_data.get(
+                    'zip_post_code', residential_address.zip_post_code)
+                residential_address.state_province = residential_address_data.get(
+                    'state_province', residential_address.state_province)
+                residential_address.latitude = residential_address_data.get(
+                    'latitude', residential_address.latitude)
+                residential_address.longitude = residential_address_data.get(
+                    'longitude', residential_address.longitude)
+                residential_address.save()
+            else:
+                instance.residential_address = ResidentialAddress(
+                    person=instance,
+                    street=residential_address_data.get('street'),
+                    country=residential_address_data.get('country'),
+                    city=residential_address_data.get('city'),
+                    zip_post_code=residential_address_data.get(
+                        'zip_post_code'),
+                    state_province=residential_address_data.get(
+                        'state_province'),
+                    latitude=residential_address_data.get('latitude'),
+                    longitude=residential_address_data.get('longitude'))
+                instance.residential_address.save()
+        if mail_address_data:
+            if hasattr(instance, 'mail_address'):
+                mail_address = instance.mail_address
+                mail_address.street = mail_address_data.get(
+                    'street', mail_address.street)
+                mail_address.country = mail_address_data.get(
+                    'country', mail_address.country)
+                mail_address.city = mail_address_data.get(
+                    'city', mail_address.city)
+                mail_address.zip_post_code = mail_address_data.get(
+                    'zip_post_code', mail_address.zip_post_code)
+                mail_address.state_province = mail_address_data.get(
+                    'state_province', mail_address.state_province)
+                mail_address.latitude = mail_address_data.get(
+                    'latitude', mail_address.latitude)
+                mail_address.longitude = mail_address_data.get(
+                    'longitude', mail_address.longitude)
+                mail_address.save()
+            else:
+                instance.mail_address = MailAddress(
+                    person=instance,
+                    street=mail_address_data.get('street'),
+                    country=mail_address_data.get('country'),
+                    city=mail_address_data.get('city'),
+                    zip_post_code=mail_address_data.get(
+                        'zip_post_code'),
+                    state_province=mail_address_data.get(
+                        'state_province'),
+                    latitude=mail_address_data.get('latitude'),
+                    longitude=mail_address_data.get('longitude'))
+                instance.mail_address.save()
         return instance

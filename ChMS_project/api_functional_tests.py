@@ -880,7 +880,9 @@ class PeopleAPITest(unittest.TestCase):
     def test_add_person(self,
                         first_name=randomword(200),
                         last_name=randomword(200),
-                        contact_info=None):
+                        contact_info=None,
+                        res_address=None,
+                        mail_address=None):
         input_data = {
             'first_name': first_name,
             'middle_initial': randomword(10),
@@ -891,6 +893,8 @@ class PeopleAPITest(unittest.TestCase):
             'church': 20,
             'member_status': 10,
             'contact_info': contact_info,
+            'residential_address': res_address,
+            'mail_address': mail_address,
         }
         headers = {'X-Requested-With': 'Python requests',
                    'Content-type': 'application/json'}
@@ -1020,6 +1024,125 @@ class PeopleAPITest(unittest.TestCase):
         self.assertTrue(put_response_json['contact_info'][
                         'alternate_email'] == 'true@email.com')
 
+    def test_update_res_address_person(self):
+        self.test_add_person()
+        current_id = self.added_test_data[-1]
+        response = requests.get(self.api['people'] + str(current_id))
+        self.assertTrue(response.status_code == 200)
+        person = response.json()
+        res_address = {}
+        res_address['street'] = 'street'
+        res_address['country'] = 'country'
+        res_address['city'] = 'city'
+        res_address['zip_post_code'] = 123
+        person['residential_address'] = res_address
+        headers = {'X-Requested-With': 'Python requests',
+                   'Content-type': 'application/json'}
+        put_response = requests.put(person['links']['self'],
+                                    data=json.dumps(person),
+                                    headers=headers)
+        self.assertTrue(put_response.status_code == 200)
+        put_response_json = put_response.json()
+        self.assertTrue(put_response_json['residential_address'][
+                        'street'] == 'street')
+        self.assertTrue(put_response_json['residential_address'][
+                        'country'] == 'country')
+        self.assertTrue(put_response_json['residential_address'][
+                        'city'] == 'city')
+        self.assertTrue(put_response_json['residential_address'][
+                        'zip_post_code'] == 123)
+
+    def test_update_existing_res_address_person(self):
+        res_address = {}
+        res_address['street'] = 'street'
+        res_address['country'] = 'country'
+        res_address['city'] = 'city'
+        res_address['zip_post_code'] = 123
+        self.test_add_person(res_address=res_address)
+        current_id = self.added_test_data[-1]
+        response = requests.get(self.api['people'] + str(current_id))
+        self.assertTrue(response.status_code == 200)
+        person = response.json()
+        person['residential_address']['street'] = 'street_updated'
+        person['residential_address']['country'] = 'country_updated'
+        person['residential_address']['city'] = 'city_updated'
+        person['residential_address']['zip_post_code'] = 321
+
+        headers = {'X-Requested-With': 'Python requests',
+                   'Content-type': 'application/json'}
+        put_response = requests.put(person['links']['self'],
+                                    data=json.dumps(person),
+                                    headers=headers)
+        self.assertTrue(put_response.status_code == 200)
+        put_response_json = put_response.json()
+        self.assertTrue(put_response_json['residential_address'][
+                        'street'] == 'street_updated')
+        self.assertTrue(put_response_json['residential_address'][
+                        'country'] == 'country_updated')
+        self.assertTrue(put_response_json['residential_address'][
+                        'city'] == 'city_updated')
+        self.assertTrue(put_response_json['residential_address'][
+                        'zip_post_code'] == 321)
+
+    def test_update_mail_address_person(self):
+        self.test_add_person()
+        current_id = self.added_test_data[-1]
+        response = requests.get(self.api['people'] + str(current_id))
+        self.assertTrue(response.status_code == 200)
+        person = response.json()
+        mail_address = {}
+        mail_address['street'] = 'street'
+        mail_address['country'] = 'country'
+        mail_address['city'] = 'city'
+        mail_address['zip_post_code'] = 123
+        person['mail_address'] = mail_address
+        headers = {'X-Requested-With': 'Python requests',
+                   'Content-type': 'application/json'}
+        put_response = requests.put(person['links']['self'],
+                                    data=json.dumps(person),
+                                    headers=headers)
+        self.assertTrue(put_response.status_code == 200)
+        put_response_json = put_response.json()
+        self.assertTrue(put_response_json['mail_address'][
+                        'street'] == 'street')
+        self.assertTrue(put_response_json['mail_address'][
+                        'country'] == 'country')
+        self.assertTrue(put_response_json['mail_address'][
+                        'city'] == 'city')
+        self.assertTrue(put_response_json['mail_address'][
+                        'zip_post_code'] == 123)
+
+    def test_update_existing_mail_address_person(self):
+        mail_address = {}
+        mail_address['street'] = 'street'
+        mail_address['country'] = 'country'
+        mail_address['city'] = 'city'
+        mail_address['zip_post_code'] = 123
+        self.test_add_person(mail_address=mail_address)
+        current_id = self.added_test_data[-1]
+        response = requests.get(self.api['people'] + str(current_id))
+        self.assertTrue(response.status_code == 200)
+        person = response.json()
+        person['mail_address']['street'] = 'street_updated'
+        person['mail_address']['country'] = 'country_updated'
+        person['mail_address']['city'] = 'city_updated'
+        person['mail_address']['zip_post_code'] = 321
+
+        headers = {'X-Requested-With': 'Python requests',
+                   'Content-type': 'application/json'}
+        put_response = requests.put(person['links']['self'],
+                                    data=json.dumps(person),
+                                    headers=headers)
+        self.assertTrue(put_response.status_code == 200)
+        put_response_json = put_response.json()
+        self.assertTrue(put_response_json['mail_address'][
+                        'street'] == 'street_updated')
+        self.assertTrue(put_response_json['mail_address'][
+                        'country'] == 'country_updated')
+        self.assertTrue(put_response_json['mail_address'][
+                        'city'] == 'city_updated')
+        self.assertTrue(put_response_json['mail_address'][
+                        'zip_post_code'] == 321)
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
