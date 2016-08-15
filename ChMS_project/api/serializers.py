@@ -11,7 +11,8 @@ from rest_framework.validators import UniqueValidator
 from rest_framework.reverse import reverse
 
 from .models import Church, Person, Interest, SkillAndProfession,\
-    SpiritualMilestone, Ministry, MemberStatus, ChurchRegionalInfo
+    SpiritualMilestone, Ministry, MemberStatus, ChurchRegionalInfo, \
+    ContactInfo
 
 
 class ChurchRegionalInfoSerializer(serializers.ModelSerializer):
@@ -184,12 +185,21 @@ class MemberStatusSerializer(serializers.ModelSerializer):
         }
 
 
+class ContactInfoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ContactInfo
+        fields = ('primary_contact_num',
+                  'other_contact_num', 'alternate_email',)
+
+
 class PersonSerializer(serializers.ModelSerializer):
     gender_display = serializers.SerializerMethodField()
     marital_status_display = serializers.SerializerMethodField()
     age = serializers.IntegerField(read_only=True)
     date_of_birth = serializers.DateField(
         format=settings.DATE_FORMAT, input_formats=settings.DATE_INPUT_FORMATS)
+    contact_info = ContactInfoSerializer(required=False, allow_null=True)
     links = serializers.SerializerMethodField()
 
     class Meta:
@@ -197,7 +207,7 @@ class PersonSerializer(serializers.ModelSerializer):
         fields = ('id', 'first_name', 'middle_initial', 'last_name',
                   'date_of_birth', 'age', 'gender', 'gender_display',
                   'marital_status', 'marital_status_display',
-                  'church', 'member_status', 'links')
+                  'church', 'member_status', 'contact_info', 'links')
 
     def get_gender_display(self, obj):
         return obj.get_gender_display()
@@ -218,3 +228,50 @@ class PersonSerializer(serializers.ModelSerializer):
             data['age'] = today.year - dob.year - \
                 ((today.month, today.day) < (dob.month, dob.day))
         return data
+
+    def create(self, validated_data):
+        contact_info_data = validated_data.pop('contact_info')
+        person_data = Person.objects.create(**validated_data)
+        if contact_info_data:
+            ContactInfo.objects.create(
+                person=person_data, **contact_info_data)
+        return person_data
+
+    def update(self, instance, validated_data):
+        contact_info_data = validated_data.pop('contact_info')
+        instance.first_name = validated_data.get(
+            'first_name', instance.first_name)
+        instance.middle_initial = validated_data.get(
+            'middle_initial', instance.middle_initial)
+        instance.last_name = validated_data.get(
+            'last_name', instance.last_name)
+        instance.date_of_birth = validated_data.get(
+            'date_of_birth', instance.date_of_birth)
+        instance.age = validated_data.get('age', instance.age)
+        instance.gender = validated_data.get('gender', instance.gender)
+        instance.marital_status = validated_data.get(
+            'marital_status', instance.marital_status)
+        instance.church = validated_data.get('church', instance.church)
+        instance.member_status = validated_data.get(
+            'member_status', instance.member_status)
+        instance.save()
+        if contact_info_data:
+            if hasattr(instance, 'contact_info'):
+                contact_info = instance.contact_info
+                contact_info.primary_contact_num = contact_info_data.get(
+                    'primary_contact_num', contact_info.primary_contact_num)
+                contact_info.other_contact_num = contact_info_data.get(
+                    'other_contact_num', contact_info.other_contact_num)
+                contact_info.alternate_email = contact_info_data.get(
+                    'alternate_email', contact_info.alternate_email)
+                contact_info.save()
+            else:
+                instance.contact_info = ContactInfo(
+                    person=instance,
+                    primary_contact_num=contact_info_data.get(
+                        'primary_contact_num'),
+                    other_contact_num=contact_info_data.get(
+                        'other_contact_num'),
+                    alternate_email=contact_info_data.get('alternate_email'))
+                instance.contact_info.save()
+        return instance

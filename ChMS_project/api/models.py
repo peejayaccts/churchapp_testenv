@@ -119,3 +119,19 @@ class Person(models.Model):
     def __str__(self):
         return (self.first_name + ' ' + self.middle_initial + ' ' +
                 self.last_name)
+
+
+class ContactInfo(models.Model):
+    """
+    Contact Information for Person.
+    """
+    person = models.OneToOneField(Person,
+                                  on_delete=models.CASCADE,
+                                  primary_key=True,
+                                  related_name='contact_info')
+    primary_contact_num = models.CharField(max_length=255, blank=False)
+    other_contact_num = models.CharField(max_length=255, blank=True)
+    alternate_email = models.CharField(max_length=255, blank=False)
+
+    def __str__(self):
+        return self.person + ' ' + self.primary_contact_num

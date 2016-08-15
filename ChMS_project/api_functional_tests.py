@@ -877,7 +877,10 @@ class PeopleAPITest(unittest.TestCase):
     def test_people_resource_found(self):
         self.assertTrue('people' in self.api)
 
-    def test_add_person(self, first_name=randomword(200), last_name=randomword(200)):
+    def test_add_person(self,
+                        first_name=randomword(200),
+                        last_name=randomword(200),
+                        contact_info=None):
         input_data = {
             'first_name': first_name,
             'middle_initial': randomword(10),
@@ -887,6 +890,7 @@ class PeopleAPITest(unittest.TestCase):
             'marital_status': 'S',
             'church': 20,
             'member_status': 10,
+            'contact_info': contact_info,
         }
         headers = {'X-Requested-With': 'Python requests',
                    'Content-type': 'application/json'}
@@ -963,6 +967,59 @@ class PeopleAPITest(unittest.TestCase):
             self.api['people'] + '?search=' + new_person)
         self.assertTrue(response.status_code == 200)
         self.assertTrue(len(response.json()) == 1)
+
+    def test_update_contact_info_person(self):
+        self.test_add_person()
+        current_id = self.added_test_data[-1]
+        response = requests.get(self.api['people'] + str(current_id))
+        self.assertTrue(response.status_code == 200)
+        person = response.json()
+        contact_info = {}
+        contact_info['primary_contact_num'] = '100-000-111'
+        contact_info['other_contact_num'] = '100-100-111'
+        contact_info['alternate_email'] = 'email@email.com'
+        person['contact_info'] = contact_info
+        headers = {'X-Requested-With': 'Python requests',
+                   'Content-type': 'application/json'}
+        put_response = requests.put(person['links']['self'],
+                                    data=json.dumps(person),
+                                    headers=headers)
+        self.assertTrue(put_response.status_code == 200)
+        put_response_json = put_response.json()
+        self.assertTrue(put_response_json['contact_info'][
+                        'primary_contact_num'] == '100-000-111')
+        self.assertTrue(put_response_json['contact_info'][
+                        'other_contact_num'] == '100-100-111')
+        self.assertTrue(put_response_json['contact_info'][
+                        'alternate_email'] == 'email@email.com')
+
+    def test_update_existing_contact_info_person(self):
+        contact_info = {}
+        contact_info['primary_contact_num'] = '100-000-111'
+        contact_info['other_contact_num'] = '100-100-111'
+        contact_info['alternate_email'] = 'email@email.com'
+        self.test_add_person(contact_info=contact_info)
+        current_id = self.added_test_data[-1]
+        response = requests.get(self.api['people'] + str(current_id))
+        self.assertTrue(response.status_code == 200)
+        person = response.json()
+        person['contact_info']['primary_contact_num'] = '99'
+        person['contact_info']['other_contact_num'] = '01'
+        person['contact_info']['alternate_email'] = 'true@email.com'
+        headers = {'X-Requested-With': 'Python requests',
+                   'Content-type': 'application/json'}
+        put_response = requests.put(person['links']['self'],
+                                    data=json.dumps(person),
+                                    headers=headers)
+        self.assertTrue(put_response.status_code == 200)
+        put_response_json = put_response.json()
+        self.assertTrue(put_response_json['contact_info'][
+                        'primary_contact_num'] == '99')
+        self.assertTrue(put_response_json['contact_info'][
+                        'other_contact_num'] == '01')
+        self.assertTrue(put_response_json['contact_info'][
+                        'alternate_email'] == 'true@email.com')
+
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
