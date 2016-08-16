@@ -10,7 +10,7 @@
   			$routeProvider
   				.when('/', {
   				templateUrl : static_dir.concat('login/login.template.html'),
-  				controller : 'LoginController'
+  				controller : 'LoginController',
   				})
   				.when('/home', {
   					templateUrl : static_dir.concat('home/home.template.html'),
@@ -22,7 +22,8 @@
   				})
   				.when('/people', {
   					templateUrl : static_dir.concat('/people/people.template.html'),
-  					controller : 'PeopleController'
+  					controller : 'PeopleController',
+            controllerAs : 'peopleCtrl'
   				})
   				.when('/ministries', {
   					templateUrl : static_dir.concat('/ministries/ministries.template.html'),
