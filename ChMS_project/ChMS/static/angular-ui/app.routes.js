@@ -27,7 +27,8 @@
   				})
   				.when('/ministries', {
   					templateUrl : static_dir.concat('/ministries/ministries.template.html'),
-  					controller : 'MinistriesController'
+  					controller : 'MinistriesController',
+            controllerAs : 'ministryCtrl'
   				})
   				.when('/admin', {
   					templateUrl : static_dir.concat('/admin/admin.template.html'),
