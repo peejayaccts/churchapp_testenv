@@ -1,4 +1,5 @@
 /* Custom CSS */
+/* Generic base style */
 * {
   margin : 0;
 }
@@ -19,11 +20,6 @@ body {
   margin : 0 auto -60px;
 }
 
-.upcoming-events {
-  height:150px;
-  overflow:auto;
-}
-
 .bottom-buffer {
   margin-bottom : 20px;
 }
@@ -36,3 +32,29 @@ body {
 .footer {
   background-color : black;
 }
+
+.jumbotron-banner {
+  margin-bottom : 0px;
+  min-height : 10px;
+}
+
+.status-bar {
+  overflow : hidden;
+  background-color : grey;
+  border-radius : 3px;
+}
+
+
+.status-bar [class*="col-"]{
+  margin-bottom : -99999px;
+  padding-bottom : 99999px;
+}
+
+/* Home view style */
+.upcoming-events {
+  height:150px;
+  overflow:auto;
+}
+
+
+

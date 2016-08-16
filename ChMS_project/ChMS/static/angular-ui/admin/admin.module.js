@@ -1,7 +1,17 @@
-var adminModule = angular.module('AdminModule', []);
+// Admin module
 
-adminModule.controller('AdminController', ['$scope', '$http',
-		function($scope, $http) {
-			$scope.message = 'You are in the Admin page!';
-		}
-]);
+(function() {
+
+  angular
+    .module('AdminModule', [])
+  
+    .controller('AdminController', ['$scope', '$http',
+      AdminController
+    ]);
+
+    function AdminController($scope, $http) {
+      $scope.message = 'You are in the Admin page!';
+    }
+
+}());
+

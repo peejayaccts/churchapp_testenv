@@ -1,8 +1,17 @@
 // login module
-var loginModule = angular.module('LogInModule',[]);
 
-loginModule.controller('LoginController', ['$scope', '$http',
-		function($scope, $http) {
-			$scope.message = 'You are in the login page!';
-		}
-]);
+(function() {
+
+  angular
+    .module('LogInModule',[])
+  
+    .controller('LoginController', ['$scope', '$http',
+      LoginController
+    ]);
+
+  function LoginController($scope, $http) {
+  	$scope.message = 'You are in the login page!';
+  };
+
+}());
+

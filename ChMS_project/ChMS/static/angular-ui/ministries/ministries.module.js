@@ -1,7 +1,17 @@
-var ministriesModule = angular.module('MinistriesModule', []);
+// Ministries module
 
-ministriesModule.controller('MinistriesController', ['$scope', '$http',
-		function($scope, $http) {
-			$scope.message = 'You are in the Ministries page!';
-		}
-]);
+(function() {
+
+  angular
+    .module('MinistriesModule', [])
+  
+    .controller('MinistriesController', ['$scope', '$http',
+      MinistriesController
+    ]);
+
+  function MinistriesController($scope, $http) {
+  	$scope.message = 'You are in the Ministries page!';
+  };
+
+}());
+

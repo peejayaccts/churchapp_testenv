@@ -1,7 +1,17 @@
-var peopleModule = angular.module('PeopleModule', []);
+// People module
 
-peopleModule.controller('PeopleController', ['$scope', '$http',
-		function($scope, $http) {
-			$scope.message = 'You are in the People page!';
-		}
-]);
+(function() {
+
+  angular
+    .module('PeopleModule', [])
+  
+    .controller('PeopleController', ['$scope', '$http',
+      PeopleController
+    ]);
+
+  function PeopleController($scope, $http) {
+  	$scope.message = 'You are in the People page!';
+  };
+
+}());
+
