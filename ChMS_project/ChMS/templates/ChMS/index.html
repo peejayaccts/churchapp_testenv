@@ -1,136 +1,41 @@
 {% load staticfiles %}
-
 <!DOCTYPE html>
-
 <html>
-
   <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Church Management System</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Management System</title>
-
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/site.css' %}"> 
-
   </head>
-
-	<body ng-app="ChMS-ui">
-
-    <div class="wrapper">
-
-    <!-- Container -->
-		<div class="container">
-
-      <!-- Header -->
-			<div class="row">
-
-        <!-- Banner -->
-        <div class="jumbotron jumbotron-banner">
-          <h2>Management System</h2>
-          <small>Powered by Django</small>
-          <small>Front-end in Angular</small>
-          <h4>Vision: "For I know the plans for you.
-          Plans to prosper you and not to harm you,
-          plans to give you a hope and a future"</h4>
-        </div>
-
-        <!-- Status bar -->
-        <div class="nav status-bar">
-
-          <div class="col-sm-3 text-center status-bar wall"
-               style="padding-top : 1%;">
-            <p class="text-center">Sunday, June 12, 2016</p>
-            <p class="text-center">7:00 PM; AST</p>
-          </div>
-
-          <div class="col-sm-6 text-center status-bar wall">
-            <h1 class="">
-              NEW HIC
-            </h1>
-          </div>
-          
-          <div class="col-sm-3 text-center status-bar">
-            <button class="btn btn-lg btn-primary" type="button"
-                    style="margin-top:5%;margin-bottom:5%">
-              <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-              John Snow
-              <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-            </button>
-          </div>
-
-        </div>
-
-        <!-- Navigation bar -->
-          <nav class="navbar navbar-inverse">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed nav-left"
-                      data-toggle="collapse"
-                      data-target="#bs-nav-collapse"
-                      aria-expanded="false" >
-                <span class="sr-only">Toggle Navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-            </div>
-
-            <div class="collapse navbar-collapse" id=bs-nav-collapse>
-              <ul class="nav navbar-nav navbar-Left">
-                <li><a href="#/login">Login</a></li>
-                <li><a href="#/home">Home</a></li>
-                <li><a href="#/people">People</a></li>
-                <li><a href="#/ministries">Ministries</a></li>
-                <li><a href="#/admin">Admin</a></li>
-              </ul>
-            </div>
-          </nav>
-				
-			</div>
-      <!-- Header end -->
-
-      <!-- Contents -->
-			{% verbatim %}
-			<div id="main">
-				<div ng-view></div>
-			</div>
-			{% endverbatim %}
-      <!-- Contents end -->
-
-      <!-- Push div to fill the whole page if content does not. For Footer -->
-      <div class="push"></div> 
-
-		</div>
-    <!-- Container end -->
-    </div>
-
-    <div class="footer">
+  <body>
+    <div class="jumbotron">
       <div class="container">
-        <div class="col-sm-12" style="padding-top:20px;">
-          <a class="col-sm-1" href="#">Careers</a>
-          <a class="col-sm-1" href="#">Contact</a>
-          <a class="col-sm-1" href="#">About</a>
-          <p class="col-sm-4 text-muted">All Rights Reserved (C) 2016</p>
-        </div>
+	<h1>Welcome To PEK Team</h1>
+	<p>Sample lang.</p>
       </div>
     </div>
-
-
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+	<div class="collapse navbar-collapse">
+	  <ul class="nav navbar-nav">
+	    <li {% if slug == 'index' %}class="active"{% endif %}>
+	      <a href="/">Home</a>
+	    </li>
+	    <li {% if slug == 'contact' %}class="active"{% endif %}>
+	      <a href="/api">API</a>
+	    </li>
+	    <li {% if slug == 'contact' %}class="active"{% endif %}>
+	      <a href="/ChMS/templates/dist/index.html">UI</a>
+	    </li>
+	  </ul>
+	</div>
+      </div>
+    </div>
+    
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/angular.min.js' %}"></script>
-    <script src="{% static 'js/angular-route.min.js' %}"></script>
-    <script src="{% static 'angular-ui/login/login.module.js' %}"></script>
-    <script src="{% static 'angular-ui/home/home.module.js' %}"></script>
-    <script src="{% static 'angular-ui/ministries/ministries.module.js' %}"></script>
-    <script src="{% static 'angular-ui/people/people.module.js' %}"></script>
-    <script src="{% static 'angular-ui/admin/admin.module.js' %}"></script>
-    <script src="{% static 'angular-ui/app.module.js' %}"></script>
-    <script src="{% static 'angular-ui/app.routes.js' %}"></script>
-
   </body>
-
 </html>
