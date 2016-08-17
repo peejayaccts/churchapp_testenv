@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     # Internal apps
     'api',
-    'ChMS.apps.ChmsConfig'
+    'uichms.apps.UichmsConfig'
 ]
 
 MIDDLEWARE_CLASSES = [
