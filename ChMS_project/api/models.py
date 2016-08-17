@@ -1,6 +1,3 @@
-from datetime import date
-import datetime
-
 from django.db import models
 
 from django.utils.translation import ugettext_lazy as _
@@ -104,7 +101,7 @@ class Person(models.Model):
     )
 
     first_name = models.CharField(max_length=255, blank=False)
-    middle_initial = models.CharField(max_length=255, blank=True, default='')
+    middle_initial = models.CharField(max_length=255, blank=True, null=True)
     last_name = models.CharField(max_length=255, blank=False)
     date_of_birth = models.DateField(blank=False)
     age = models.IntegerField(blank=False)
@@ -119,3 +116,63 @@ class Person(models.Model):
     def __str__(self):
         return (self.first_name + ' ' + self.middle_initial + ' ' +
                 self.last_name)
+
+
+class ContactInfo(models.Model):
+    """
+    Contact Information for Person.
+    """
+    person = models.OneToOneField(Person,
+                                  on_delete=models.CASCADE,
+                                  primary_key=True,
+                                  related_name='contact_info')
+    primary_contact_num = models.CharField(max_length=255, blank=False)
+    other_contact_num = models.CharField(max_length=255, blank=True, null=True)
+    alternate_email = models.CharField(max_length=255, blank=False, null=True)
+
+    def __str__(self):
+        return self.person + ' ' + self.primary_contact_num
+
+
+class ResidentialAddress(models.Model):
+    """
+    Residential Address of Person.
+    """
+    person = models.OneToOneField(Person,
+                                  on_delete=models.CASCADE,
+                                  primary_key=True,
+                                  related_name='residential_address')
+    street = models.CharField(max_length=255, blank=False)
+    country = models.CharField(max_length=255, blank=False)
+    city = models.CharField(max_length=255, blank=False)
+    zip_post_code = models.PositiveIntegerField(blank=False)
+    state_province = models.CharField(max_length=255, blank=True, null=True)
+    latitude = models.DecimalField(
+        max_digits=9, decimal_places=7, blank=True, null=True)
+    longitude = models.DecimalField(
+        max_digits=10, decimal_places=7, blank=True, null=True)
+
+    def __str__(self):
+        return self.person + ' ' + self.street + ' ' + self.country
+
+
+class MailAddress(models.Model):
+    """
+    Mail Address of Person.
+    """
+    person = models.OneToOneField(Person,
+                                  on_delete=models.CASCADE,
+                                  primary_key=True,
+                                  related_name='mail_address')
+    street = models.CharField(max_length=255, blank=False)
+    country = models.CharField(max_length=255, blank=False)
+    city = models.CharField(max_length=255, blank=False)
+    zip_post_code = models.PositiveIntegerField(blank=False)
+    state_province = models.CharField(max_length=255, blank=True, null=True)
+    latitude = models.DecimalField(
+        max_digits=9, decimal_places=7, blank=True, null=True)
+    longitude = models.DecimalField(
+        max_digits=10, decimal_places=7, blank=True, null=True)
+
+    def __str__(self):
+        return self.person + ' ' + self.street + ' ' + self.country
