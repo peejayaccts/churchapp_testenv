@@ -32,7 +32,8 @@
   				})
   				.when('/admin', {
   					templateUrl : static_dir.concat('admin/admin.template.html'),
-  					controller : 'AdminController'
+  					controller : 'AdminController',
+            controllerAs : 'adminCtrl'
   				})
   		}
 

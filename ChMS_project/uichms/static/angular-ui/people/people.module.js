@@ -12,7 +12,6 @@
   function PeopleController($scope, $http) {
     var peopleVm = this;
     peopleVm.PeopleModel = {};
-    // peopleVm.PeopleModel.peopleList = [];
 
     peopleVm.PeopleModel.peopleList = [];
     for (var i = 0; i < 20; i++) {
