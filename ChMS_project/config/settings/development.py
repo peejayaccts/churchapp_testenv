@@ -10,8 +10,7 @@ DATABASES = {
         'NAME': 'GNT_ChMS_MyDB',
         'USER': 'pekUrsTruly',
         'PASSWORD': 'GloriaTai4ndP#k',
-        #'HOST': '127.0.0.1',
-        'HOST': 'ec2-54-152-188-2.compute-1.amazonaws.com' ,
+        'HOST':'ec2-54-152-188-2.compute-1.amazonaws.com',
         'PORT': '3306',
     }
 }
