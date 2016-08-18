@@ -3,13 +3,35 @@
 (function() {
 
   angular
-    .module('AdminModule', [])
+    .module('AdminModule', [
+      'ui.router',
+    ])
+
+    .config(['$stateProvider',
+        function($stateProvider) {
+
+          $stateProvider
+            .state('accountState', {
+              url : '#/account',
+              templateUrl : '/static/angular-ui/admin/states/accountManagement/accountManagement.template.html'
+            })
+            .state('churchSettingsState', {
+              url : '#/churchsettings',
+              template : '<p>Church Settings</p>'
+            })
+            .state('systemConfigState', {
+              url : '#/systemconfig',
+              template : '<p>System Configuration</p>'
+            })
+
+        }
+    ])
   
-    .controller('AdminController', ['$scope', '$http',
+    .controller('AdminController', ['$scope', '$http', '$state',
       AdminController
     ]);
 
-  function AdminController($scope, $http) {
+  function AdminController($scope, $http, $state) {
     var adminVm = this;
     var roleList = ['Super User', 'Pastor', 'System'];
     adminVm.AdminModel = {};
@@ -21,6 +43,11 @@
         name : 'Name ' + i,
         role : roleList[getRandomInt(0,3)]
       });
+    }
+
+    /* Sets the page's state */
+    if ($state.current.name === "") {
+      $state.go('accountState');
     }
   };
 

@@ -123,6 +123,12 @@
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/angular.min.js' %}"></script>
     <script src="{% static 'js/angular-route.min.js' %}"></script>
+    <!-- Compiled ui-router.min is currently not working. 
+      use unminified version instead -->
+    <!--
+    <script src="{% static 'js/angular-ui-router.min.js' %}"></script>
+    -->
+    <script src="{% static 'js/angular-ui-router.js' %}"></script>
     <script src="{% static 'angular-ui/login/login.module.js' %}"></script>
     <script src="{% static 'angular-ui/home/home.module.js' %}"></script>
     <script src="{% static 'angular-ui/ministries/ministries.module.js' %}"></script>

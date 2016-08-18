@@ -12,6 +12,7 @@
     ])
 
     .controller('MainController', ['$scope', '$http',
+      MainController
     ]);
   function MainController($scope, $http) {
   };
