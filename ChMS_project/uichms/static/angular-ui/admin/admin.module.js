@@ -17,7 +17,7 @@
             })
             .state('churchSettingsState', {
               url : '#/churchsettings',
-              template : '<p>Church Settings</p>'
+              templateUrl : '/static/angular-ui/admin/states/churchSettings/churchSettings.template.html'
             })
             .state('systemConfigState', {
               url : '#/systemconfig',
