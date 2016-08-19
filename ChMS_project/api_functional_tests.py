@@ -1144,5 +1144,63 @@ class PeopleAPITest(unittest.TestCase):
         self.assertTrue(put_response_json['mail_address'][
                         'zip_post_code'] == 321)
 
+
+class PersonInterestAPITest(unittest.TestCase):
+
+    added_test_data = []
+
+    def setUp(self):
+        response = requests.get('http://127.0.0.1:8000/api/')
+        self.assertTrue(response.status_code, 200)
+        self.api = response.json()
+        # pprint.pprint(self.api)
+
+    def tearDown(self):
+        while self.added_test_data:
+            response = requests.get(
+                self.api['people_interests'] + str(self.added_test_data.pop()))
+            self.assertTrue(response.status_code == 200)
+            interest = response.json()
+            # pprint.pprint('Deleting Interest: ' + interest['name'])
+            del_response = requests.delete(interest['links']['self'])
+            self.assertTrue(del_response.status_code == 204)
+
+    def test_interest_resource_found(self):
+        self.assertTrue('people_interests' in self.api)
+
+    def test_add_person_interest(self):
+        # pprint.pprint('Adding interest: ' + interest)
+        response = requests.post(
+            self.api['people_interests'], data={'person': 45, 'interest': 415})
+        self.assertTrue(response.status_code == 201)
+        response_json = response.json()
+        # pprint.pprint(response_json)
+        self.added_test_data.append(response_json['id'])
+
+    def test_delete_interest(self):
+        self.test_add_person_interest()
+        current_id = self.added_test_data[-1]
+        response = requests.get(self.api['people_interests'] + str(current_id))
+        self.assertTrue(response.status_code == 200)
+        interest = response.json()
+        # pprint.pprint('Deleting Interest: ' + interest['name'])
+        del_response = requests.delete(interest['links']['self'])
+        self.assertTrue(del_response.status_code == 204)
+        self.added_test_data.pop()
+
+    def test_filter_person(self):
+        self.test_add_person_interest()
+        response = requests.get(
+            self.api['interests'] + '?person=' + str(45))
+        self.assertTrue(response.status_code == 200)
+        self.assertTrue(len(response.json()) == 1)
+
+    def test_filter_interest(self):
+        self.test_add_person_interest()
+        response = requests.get(
+            self.api['interests'] + '?interest=' + str(415))
+        self.assertTrue(response.status_code == 200)
+        self.assertTrue(len(response.json()) == 1)
+
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
