@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'api',
     'ChMS',
     # Experimental ui app to show simplified ui structure
-    'ui'
+    'ui',
+    'uichms.apps.UichmsConfig'
 ]
 
 MIDDLEWARE_CLASSES = [
