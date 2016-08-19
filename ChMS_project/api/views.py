@@ -3,12 +3,15 @@ from django.shortcuts import render
 from rest_framework import authentication, permissions, viewsets, filters, mixins
 
 from .models import Church, Person, Interest, SkillAndProfession, \
-    SpiritualMilestone, Ministry, MemberStatus, PersonInterest
-from .serializers import ChurchSerializer, PersonSerializer
-from .serializers import InterestSerializer, SkillAndProfessionSerializer, \
+    SpiritualMilestone, Ministry, MemberStatus, PersonInterest, \
+    PersonSkillAndProfession, PersonSpiritualMilestone
+from .serializers import ChurchSerializer, PersonSerializer, \
+    InterestSerializer, SkillAndProfessionSerializer, \
     SpiritualMilestoneSerializer, MinistrySerializer, MemberStatusSerializer, \
-    PersonInterestSerializer
-from .forms import PersonInterestFilter
+    PersonInterestSerializer, PersonSkillAndProfessionSerializer, \
+    PersonSpiritualMilestoneSerializer
+from .forms import PersonInterestFilter, PersonSkillAndProfessionFilter, \
+    PersonSpiritualMilestoneFilter
 
 
 class DefaultsMixin(object):
@@ -190,3 +193,33 @@ class PersonInterestViewSet(mixins.ListModelMixin,
     serializer_class = PersonInterestSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     filter_class = PersonInterestFilter
+
+
+class PersonSkillAndProfessionViewSet(mixins.ListModelMixin,
+                                      mixins.RetrieveModelMixin,
+                                      mixins.CreateModelMixin,
+                                      mixins.DestroyModelMixin,
+                                      viewsets.GenericViewSet):
+    """
+    API Endpoint for listing, creating, and deleting maps for Person and Skills/Professions
+    """
+
+    queryset = PersonSkillAndProfession.objects.all()
+    serializer_class = PersonSkillAndProfessionSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = PersonSkillAndProfessionFilter
+
+
+class PersonSpiritualMilestoneViewSet(mixins.ListModelMixin,
+                                      mixins.RetrieveModelMixin,
+                                      mixins.CreateModelMixin,
+                                      mixins.DestroyModelMixin,
+                                      viewsets.GenericViewSet):
+    """
+    API Endpoint for listing, creating, and deleting maps for Person and Spiritual Milestone
+    """
+
+    queryset = PersonSpiritualMilestone.objects.all()
+    serializer_class = PersonSpiritualMilestoneSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = PersonSpiritualMilestoneFilter
