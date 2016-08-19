@@ -93,7 +93,10 @@ Collect all static files
 Go to repo/ChMS_project.
 run::
 
-    $ python manage.py collectstatic 
+    $ python manage.py collectstatic  --clear
+
+*note: Run this for every new assets is added. The static folder is located
+in /Chms_project/config/settings/static/.*
         
 Run Server and Test
 =============================
