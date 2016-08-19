@@ -50,6 +50,11 @@ body {
   padding-bottom : 99999px;
 }
 
+/* Dev purposes only */
+.color-red {  /* color the div to see scope */
+  background-color: red;
+}
+
 /* Home view style */
 .upcoming-events {
   height:150px;
