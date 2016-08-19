@@ -1191,14 +1191,75 @@ class PersonInterestAPITest(unittest.TestCase):
     def test_filter_person(self):
         self.test_add_person_interest()
         response = requests.get(
-            self.api['interests'] + '?person=' + str(45))
+            self.api['people_interests'] + '?person=' + str(45))
         self.assertTrue(response.status_code == 200)
         self.assertTrue(len(response.json()) == 1)
 
     def test_filter_interest(self):
         self.test_add_person_interest()
         response = requests.get(
-            self.api['interests'] + '?interest=' + str(415))
+            self.api['people_interests'] + '?interest=' + str(415))
+        self.assertTrue(response.status_code == 200)
+        # pprint.pprint(response.json())
+        self.assertTrue(len(response.json()) == 1)
+
+
+class PersonSkillAndProfessionAPITest(unittest.TestCase):
+
+    added_test_data = []
+
+    def setUp(self):
+        response = requests.get('http://127.0.0.1:8000/api/')
+        self.assertTrue(response.status_code, 200)
+        self.api = response.json()
+        # pprint.pprint(self.api)
+
+    def tearDown(self):
+        while self.added_test_data:
+            response = requests.get(
+                self.api['people_skills_and_professions'] + str(self.added_test_data.pop()))
+            self.assertTrue(response.status_code == 200)
+            skill_and_profession = response.json()
+            # pprint.pprint('Deleting Skill_And_Profession: ' + skill_and_profession['name'])
+            del_response = requests.delete(
+                skill_and_profession['links']['self'])
+            self.assertTrue(del_response.status_code == 204)
+
+    def test_skill_and_profession_resource_found(self):
+        self.assertTrue('people_skills_and_professions' in self.api)
+
+    def test_add_person_skill_and_profession(self):
+        # pprint.pprint('Adding skill_and_profession: ' + skill_and_profession)
+        response = requests.post(
+            self.api['people_skills_and_professions'], data={'person': 44, 'skill_and_profession': 1})
+        self.assertTrue(response.status_code == 201)
+        response_json = response.json()
+        # pprint.pprint(response_json)
+        self.added_test_data.append(response_json['id'])
+
+    def test_delete_skill_and_profession(self):
+        self.test_add_person_skill_and_profession()
+        current_id = self.added_test_data[-1]
+        response = requests.get(
+            self.api['people_skills_and_professions'] + str(current_id))
+        self.assertTrue(response.status_code == 200)
+        skill_and_profession = response.json()
+        # pprint.pprint('Deleting Skill_And_Profession: ' + skill_and_profession['name'])
+        del_response = requests.delete(skill_and_profession['links']['self'])
+        self.assertTrue(del_response.status_code == 204)
+        self.added_test_data.pop()
+
+    def test_filter_person(self):
+        self.test_add_person_skill_and_profession()
+        response = requests.get(
+            self.api['people_skills_and_professions'] + '?person=' + str(44))
+        self.assertTrue(response.status_code == 200)
+        self.assertTrue(len(response.json()) == 1)
+
+    def test_filter_skill_and_profession(self):
+        self.test_add_person_skill_and_profession()
+        response = requests.get(
+            self.api['people_skills_and_professions'] + '?skill_and_profession=' + str(1))
         self.assertTrue(response.status_code == 200)
         self.assertTrue(len(response.json()) == 1)
 

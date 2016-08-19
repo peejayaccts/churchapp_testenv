@@ -190,3 +190,18 @@ class PersonInterest(models.Model):
 
     def __str__(self):
         return (self.person + ' ' + self.Interest)
+
+
+class PersonSkillAndProfession(models.Model):
+    """
+    Mapping of Interests and People
+    """
+    person = models.ForeignKey(Person, blank=False, null=False)
+    skill_and_profession = models.ForeignKey(
+        SkillAndProfession, blank=False, null=False)
+
+    class Meta:
+        unique_together = ('person', 'skill_and_profession',)
+
+    def __str__(self):
+        return (self.person + ' ' + self.SkillAndProfession)
