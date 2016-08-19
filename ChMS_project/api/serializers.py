@@ -13,7 +13,8 @@ from rest_framework.reverse import reverse
 
 from .models import Church, Person, Interest, SkillAndProfession,\
     SpiritualMilestone, Ministry, MemberStatus, ChurchRegionalInfo, \
-    ContactInfo, ResidentialAddress, MailAddress, PersonInterest
+    ContactInfo, ResidentialAddress, MailAddress, PersonInterest, \
+    PersonSkillAndProfession, PersonSpiritualMilestone
 
 
 class ChurchRegionalInfoSerializer(serializers.ModelSerializer):
@@ -230,6 +231,7 @@ class PersonSerializer(serializers.ModelSerializer):
     residential_address = ResidentialAddressSerializer(
         required=False, allow_null=True)
     mail_address = MailAddressSerializer(required=False, allow_null=True)
+
     links = serializers.SerializerMethodField()
 
     class Meta:
@@ -251,6 +253,8 @@ class PersonSerializer(serializers.ModelSerializer):
         return {
             'self': reverse('person-detail', kwargs={'pk': obj.pk}, request=request),
             'interests': reverse('person_interest-list', request=request) + '?person={}'.format(obj.pk),
+            'skills_and_professions': reverse('person_skill_and_profession-list', request=request) + '?person={}'.format(obj.pk),
+            'spiritual_milestones': reverse('person_spiritual_milestone-list', request=request) + '?person={}'.format(obj.pk),
         }
 
     def validate(self, data):
@@ -403,3 +407,55 @@ class PersonInterestSerializer(serializers.ModelSerializer):
 
     def get_interest_name(self, obj):
         return str(obj.interest)
+
+
+class PersonSkillAndProfessionSerializer(serializers.ModelSerializer):
+
+    links = serializers.SerializerMethodField()
+    person_name = serializers.SerializerMethodField()
+    skill_and_profession_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = PersonSkillAndProfession
+        fields = ('id', 'person', 'person_name',
+                  'skill_and_profession', 'skill_and_profession_name', 'links',)
+
+    def get_links(self, obj):
+        request = self.context['request']
+        return {
+            'self': reverse('person_skill_and_profession-detail',
+                            kwargs={'pk': obj.pk},
+                            request=request),
+        }
+
+    def get_person_name(self, obj):
+        return str(obj.person)
+
+    def get_skill_and_profession_name(self, obj):
+        return str(obj.skill_and_profession)
+
+
+class PersonSpiritualMilestoneSerializer(serializers.ModelSerializer):
+
+    links = serializers.SerializerMethodField()
+    person_name = serializers.SerializerMethodField()
+    spiritual_milestone_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = PersonSpiritualMilestone
+        fields = ('id', 'person', 'person_name',
+                  'spiritual_milestone', 'spiritual_milestone_name', 'links',)
+
+    def get_links(self, obj):
+        request = self.context['request']
+        return {
+            'self': reverse('person_spiritual_milestone-detail',
+                            kwargs={'pk': obj.pk},
+                            request=request),
+        }
+
+    def get_person_name(self, obj):
+        return str(obj.person)
+
+    def get_spiritual_milestone_name(self, obj):
+        return str(obj.spiritual_milestone)
