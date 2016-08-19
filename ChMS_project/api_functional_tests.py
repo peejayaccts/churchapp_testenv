@@ -1171,7 +1171,7 @@ class PersonInterestAPITest(unittest.TestCase):
     def test_add_person_interest(self):
         # pprint.pprint('Adding interest: ' + interest)
         response = requests.post(
-            self.api['people_interests'], data={'person': 45, 'interest': 415})
+            self.api['people_interests'], data={'person': 45, 'interest': 497})
         self.assertTrue(response.status_code == 201)
         response_json = response.json()
         # pprint.pprint(response_json)
@@ -1198,7 +1198,7 @@ class PersonInterestAPITest(unittest.TestCase):
     def test_filter_interest(self):
         self.test_add_person_interest()
         response = requests.get(
-            self.api['people_interests'] + '?interest=' + str(415))
+            self.api['people_interests'] + '?interest=' + str(497))
         self.assertTrue(response.status_code == 200)
         # pprint.pprint(response.json())
         self.assertTrue(len(response.json()) == 1)
@@ -1260,6 +1260,66 @@ class PersonSkillAndProfessionAPITest(unittest.TestCase):
         self.test_add_person_skill_and_profession()
         response = requests.get(
             self.api['people_skills_and_professions'] + '?skill_and_profession=' + str(1))
+        self.assertTrue(response.status_code == 200)
+        self.assertTrue(len(response.json()) == 1)
+
+
+class PersonSpiritualMilestoneAPITest(unittest.TestCase):
+
+    added_test_data = []
+
+    def setUp(self):
+        response = requests.get('http://127.0.0.1:8000/api/')
+        self.assertTrue(response.status_code, 200)
+        self.api = response.json()
+        # pprint.pprint(self.api)
+
+    def tearDown(self):
+        while self.added_test_data:
+            response = requests.get(
+                self.api['people_spiritual_milestones'] + str(self.added_test_data.pop()))
+            self.assertTrue(response.status_code == 200)
+            spiritual_milestone = response.json()
+            # pprint.pprint('Deleting Spiritual_Milestone: ' + spiritual_milestone['name'])
+            del_response = requests.delete(
+                spiritual_milestone['links']['self'])
+            self.assertTrue(del_response.status_code == 204)
+
+    def test_spiritual_milestone_resource_found(self):
+        self.assertTrue('people_spiritual_milestones' in self.api)
+
+    def test_add_person_spiritual_milestone(self):
+        # pprint.pprint('Adding spiritual_milestone: ' + spiritual_milestone)
+        response = requests.post(
+            self.api['people_spiritual_milestones'], data={'person': 44, 'spiritual_milestone': 64})
+        self.assertTrue(response.status_code == 201)
+        response_json = response.json()
+        # pprint.pprint(response_json)
+        self.added_test_data.append(response_json['id'])
+
+    def test_delete_spiritual_milestone(self):
+        self.test_add_person_spiritual_milestone()
+        current_id = self.added_test_data[-1]
+        response = requests.get(
+            self.api['people_spiritual_milestones'] + str(current_id))
+        self.assertTrue(response.status_code == 200)
+        spiritual_milestone = response.json()
+        # pprint.pprint('Deleting Spiritual_Milestone: ' + spiritual_milestone['name'])
+        del_response = requests.delete(spiritual_milestone['links']['self'])
+        self.assertTrue(del_response.status_code == 204)
+        self.added_test_data.pop()
+
+    def test_filter_person(self):
+        self.test_add_person_spiritual_milestone()
+        response = requests.get(
+            self.api['people_spiritual_milestones'] + '?person=' + str(44))
+        self.assertTrue(response.status_code == 200)
+        self.assertTrue(len(response.json()) == 1)
+
+    def test_filter_spiritual_milestone(self):
+        self.test_add_person_spiritual_milestone()
+        response = requests.get(
+            self.api['people_spiritual_milestones'] + '?spiritual_milestone=' + str(64))
         self.assertTrue(response.status_code == 200)
         self.assertTrue(len(response.json()) == 1)
 

@@ -205,3 +205,18 @@ class PersonSkillAndProfession(models.Model):
 
     def __str__(self):
         return (self.person + ' ' + self.SkillAndProfession)
+
+
+class PersonSpiritualMilestone(models.Model):
+    """
+    Mapping of Interests and People
+    """
+    person = models.ForeignKey(Person, blank=False, null=False)
+    spiritual_milestone = models.ForeignKey(
+        SpiritualMilestone, blank=False, null=False)
+
+    class Meta:
+        unique_together = ('person', 'spiritual_milestone',)
+
+    def __str__(self):
+        return (self.person + ' ' + self.SpiritualMilestone)

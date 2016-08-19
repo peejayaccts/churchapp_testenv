@@ -4,12 +4,14 @@ from rest_framework import authentication, permissions, viewsets, filters, mixin
 
 from .models import Church, Person, Interest, SkillAndProfession, \
     SpiritualMilestone, Ministry, MemberStatus, PersonInterest, \
-    PersonSkillAndProfession
+    PersonSkillAndProfession, PersonSpiritualMilestone
 from .serializers import ChurchSerializer, PersonSerializer, \
     InterestSerializer, SkillAndProfessionSerializer, \
     SpiritualMilestoneSerializer, MinistrySerializer, MemberStatusSerializer, \
-    PersonInterestSerializer, PersonSkillAndProfessionSerializer
-from .forms import PersonInterestFilter, PersonSkillAndProfessionFilter
+    PersonInterestSerializer, PersonSkillAndProfessionSerializer, \
+    PersonSpiritualMilestoneSerializer
+from .forms import PersonInterestFilter, PersonSkillAndProfessionFilter, \
+    PersonSpiritualMilestoneFilter
 
 
 class DefaultsMixin(object):
@@ -199,10 +201,25 @@ class PersonSkillAndProfessionViewSet(mixins.ListModelMixin,
                                       mixins.DestroyModelMixin,
                                       viewsets.GenericViewSet):
     """
-    API Endpoint for listing, creating, and deleting maps for Person and Interest
+    API Endpoint for listing, creating, and deleting maps for Person and Skills/Professions
     """
 
     queryset = PersonSkillAndProfession.objects.all()
     serializer_class = PersonSkillAndProfessionSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     filter_class = PersonSkillAndProfessionFilter
+
+
+class PersonSpiritualMilestoneViewSet(mixins.ListModelMixin,
+                                      mixins.RetrieveModelMixin,
+                                      mixins.CreateModelMixin,
+                                      mixins.DestroyModelMixin,
+                                      viewsets.GenericViewSet):
+    """
+    API Endpoint for listing, creating, and deleting maps for Person and Spiritual Milestone
+    """
+
+    queryset = PersonSpiritualMilestone.objects.all()
+    serializer_class = PersonSpiritualMilestoneSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = PersonSpiritualMilestoneFilter
