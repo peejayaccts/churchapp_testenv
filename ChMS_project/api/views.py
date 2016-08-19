@@ -3,10 +3,12 @@ from django.shortcuts import render
 from rest_framework import authentication, permissions, viewsets, filters, mixins
 
 from .models import Church, Person, Interest, SkillAndProfession, \
-    SpiritualMilestone, Ministry, MemberStatus
+    SpiritualMilestone, Ministry, MemberStatus, PersonInterest
 from .serializers import ChurchSerializer, PersonSerializer
 from .serializers import InterestSerializer, SkillAndProfessionSerializer, \
-    SpiritualMilestoneSerializer, MinistrySerializer, MemberStatusSerializer
+    SpiritualMilestoneSerializer, MinistrySerializer, MemberStatusSerializer, \
+    PersonInterestSerializer
+from .forms import PersonInterestFilter
 
 
 class DefaultsMixin(object):
@@ -173,3 +175,18 @@ class PersonViewSet(mixins.ListModelMixin,
     )
     search_fields = ('first_name', 'last_name',)
     ordering_fields = ('first_name', 'last_name', )
+
+
+class PersonInterestViewSet(mixins.ListModelMixin,
+                            mixins.RetrieveModelMixin,
+                            mixins.CreateModelMixin,
+                            mixins.DestroyModelMixin,
+                            viewsets.GenericViewSet):
+    """
+    API Endpoint for listing, creating, and deleting maps for Person and Interest
+    """
+
+    queryset = PersonInterest.objects.all()
+    serializer_class = PersonInterestSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = PersonInterestFilter

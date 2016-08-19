@@ -176,3 +176,14 @@ class MailAddress(models.Model):
 
     def __str__(self):
         return self.person + ' ' + self.street + ' ' + self.country
+
+
+class PersonInterest(models.Model):
+    """
+    Mapping of Interests and People
+    """
+    person = models.ForeignKey(Person, blank=False, null=False)
+    interest = models.ForeignKey(Interest, blank=False, null=False)
+
+    def __str__(self):
+        return (self.person + ' ' + self.Interest)
