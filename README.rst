@@ -87,6 +87,13 @@ run::
 
 *note: Follow the instructions. Take note of the user and password entered here which
 will be used in authenticating the api.*
+
+Collect all static files
+=============================
+Go to repo/ChMS_project.
+run::
+
+    $ python manage.py collectstatic 
         
 Run Server and Test
 =============================
