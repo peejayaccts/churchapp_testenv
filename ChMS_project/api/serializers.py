@@ -1,6 +1,7 @@
 
 from datetime import date
 import datetime
+import pprint
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -12,7 +13,7 @@ from rest_framework.reverse import reverse
 
 from .models import Church, Person, Interest, SkillAndProfession,\
     SpiritualMilestone, Ministry, MemberStatus, ChurchRegionalInfo, \
-    ContactInfo, ResidentialAddress, MailAddress
+    ContactInfo, ResidentialAddress, MailAddress, PersonInterest
 
 
 class ChurchRegionalInfoSerializer(serializers.ModelSerializer):
@@ -249,6 +250,7 @@ class PersonSerializer(serializers.ModelSerializer):
         request = self.context['request']
         return {
             'self': reverse('person-detail', kwargs={'pk': obj.pk}, request=request),
+            'interests': reverse('person_interest-list', request=request) + '?person={}'.format(obj.pk),
         }
 
     def validate(self, data):
@@ -377,3 +379,27 @@ class PersonSerializer(serializers.ModelSerializer):
                     longitude=mail_address_data.get('longitude'))
                 instance.mail_address.save()
         return instance
+
+
+class PersonInterestSerializer(serializers.ModelSerializer):
+
+    links = serializers.SerializerMethodField()
+    person_name = serializers.SerializerMethodField()
+    interest_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = PersonInterest
+        fields = ('id', 'person', 'person_name',
+                  'interest', 'interest_name', 'links',)
+
+    def get_links(self, obj):
+        request = self.context['request']
+        return {
+            'self': reverse('person_interest-detail', kwargs={'pk': obj.pk}, request=request),
+        }
+
+    def get_person_name(self, obj):
+        return str(obj.person)
+
+    def get_interest_name(self, obj):
+        return str(obj.interest)
