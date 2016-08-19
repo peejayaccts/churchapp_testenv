@@ -231,6 +231,7 @@ class PersonSerializer(serializers.ModelSerializer):
     residential_address = ResidentialAddressSerializer(
         required=False, allow_null=True)
     mail_address = MailAddressSerializer(required=False, allow_null=True)
+
     links = serializers.SerializerMethodField()
 
     class Meta:
@@ -252,6 +253,7 @@ class PersonSerializer(serializers.ModelSerializer):
         return {
             'self': reverse('person-detail', kwargs={'pk': obj.pk}, request=request),
             'interests': reverse('person_interest-list', request=request) + '?person={}'.format(obj.pk),
+            'skill_and_profession': reverse('person_skill_and_profession-list', request=request) + '?person={}'.format(obj.pk),
         }
 
     def validate(self, data):
