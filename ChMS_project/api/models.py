@@ -185,5 +185,8 @@ class PersonInterest(models.Model):
     person = models.ForeignKey(Person, blank=False, null=False)
     interest = models.ForeignKey(Interest, blank=False, null=False)
 
+    class Meta:
+        unique_together = ('person', 'interest',)
+
     def __str__(self):
         return (self.person + ' ' + self.Interest)
