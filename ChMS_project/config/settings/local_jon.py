@@ -1,3 +1,5 @@
+from .base import *
+
 # INSTALLED_APPS += ('uichms.apps.UichmsConfig')
 
 DATABASES = {
