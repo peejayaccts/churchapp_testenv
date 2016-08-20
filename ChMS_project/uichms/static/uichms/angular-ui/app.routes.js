@@ -6,7 +6,7 @@
 
     .config(['$routeProvider',
   		function($routeProvider) {
-  			var static_dir = '/static/angular-ui/';
+  			var static_dir = '/static/uichms/angular-ui/';
   			$routeProvider
   				.when('/', {
   				  templateUrl : static_dir.concat('login/login.template.html'),
