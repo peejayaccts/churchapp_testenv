@@ -7,15 +7,15 @@
       'ui.router',
     ])
 
-    .config(['$stateProvider',
-        function($stateProvider) {
+    .config(['$stateProvider', '$urlRouterProvider',
+        function($stateProvider, $urlRouterProvider) {
           var staticDir = '/static/uichms/angular-ui/';
           var parentStateDir = staticDir.concat('people/states/');
 
           $stateProvider
             // Parent States in Admin
             .state('people.peopleList', {
-              url : '/peopleList',
+              url : '/peoplelist',
               templateUrl : parentStateDir.concat('peopleList.template.html')
             })
 
@@ -43,7 +43,10 @@
             .state('people.professionSkillsInterestsState', {
               url : '/professionskillsinterests',
               templateUrl : parentStateDir.concat('professionSkillsInterests.template.html')
-            })
+            });
+
+          // Set default state when entering People view
+          $urlRouterProvider.when('/people', '/people/peoplelist');
 
         }
     ])
@@ -68,9 +71,6 @@
       );
     }
 
-    if ($state.current.name === 'people') {
-      $state.go('people.peopleList');
-    }
   };
 
 }());

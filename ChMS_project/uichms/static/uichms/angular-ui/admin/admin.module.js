@@ -7,8 +7,8 @@
       'ui.router',
     ])
 
-    .config(['$stateProvider',
-        function($stateProvider) {
+    .config(['$stateProvider', '$urlRouterProvider',
+        function($stateProvider, $urlRouterProvider) {
           var staticDir = '/static/uichms/angular-ui/';
           var parentStateDir = staticDir.concat('admin/states/');
           var accountStatesDir = parentStateDir.concat('accountManagement/states/');
@@ -26,7 +26,6 @@
             })
             .state('admin.system', {
               url : '/systemconfig',
-              controller : ['$scope', '$state', SystemConfigController],
               templateUrl : parentStateDir.concat('systemConfig/systemConfig.template.html')
             })
 
@@ -64,8 +63,10 @@
             .state('admin.system.churches', {
               url : '/churches',
               templateUrl : systemStatesDir.concat('church.template.html')
-            })
+            });
 
+          // Set default state when entering Admin view
+          $urlRouterProvider.when('/admin', '/admin/account/users')
         }
     ])
   
@@ -87,23 +88,12 @@
       });
     }
 
-    /* Sets the page's state */
-    if ($state.current.name === 'admin') {
-      $state.go('admin.account.users');
-    }
   };
 
   function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
-  };
-
-  function SystemConfigController($scope, $state){
-    /* Sets the page's state */
-    if ($state.current.name === "system") {
-      $state.go('system.interests');
-    }
   };
 
 }());
