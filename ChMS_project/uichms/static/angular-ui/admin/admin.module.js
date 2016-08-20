@@ -10,7 +10,6 @@
     .config(['$stateProvider',
         function($stateProvider) {
 
-          $stateProvider
             .state('accountState', {
               url : '#/account',
               templateUrl : '/static/angular-ui/admin/states/accountManagement/accountManagement.template.html'
@@ -24,31 +23,6 @@
               template : '<p>System Configuration</p>'
             })
 
-            //PEOPLE templates
-            .state('userDetailsState', {
-              url : '#/userdetails',
-              templateUrl : '/static/angular-ui/admin/states/people/userDetails.template.html'
-            })
-            .state('personalInfoState', {
-              url : '#/personalinfo',
-              templateUrl : '/static/angular-ui/admin/states/people/personalInfo.template.html'
-            })
-            .state('contactInfoState', {
-              url : '#/contactinfo',
-              templateUrl : '/static/angular-ui/admin/states/people/contactInfo.template.html'
-            })
-            .state('familyState', {
-              url : '#/family',
-              templateUrl : '/static/angular-ui/admin/states/people/family.template.html'
-            })
-            .state('ministryInfoState', {
-              url : '#/ministryinfo',
-              templateUrl : '/static/angular-ui/admin/states/people/ministryInfo.template.html'
-            })
-            .state('professionSkillsInterestsState', {
-              url : '#/professionskillsinterests',
-              templateUrl : '/static/angular-ui/admin/states/people/professionSkillsInterests.template.html'
-            })
 
         }
     ])
