@@ -1,0 +1,151 @@
+<h3>John Smiths' Personal Info</h3>
+<div class="row">
+    <!-- Personal Info Form -->
+    <div class="col-sm-12 col-xs-12">
+        <form class='form-horizontal' style='background'>
+            <!-- 1stcolumn form-->
+            <div class="col-sm-6 col-xs-12" style='background:reen'>
+                <div class="form-group">
+                    <div class="col-sm-5 col-xs-4 control-label ">
+                        <p>Last Name*</p>
+                    </div>
+                    <div class="col-sm-7 col-xs-8" >
+                        <input type="textbox" class="col-sm-12 col-xs-12 form-control"
+                        placeholder=""/>
+                    </div>
+                    <div class="clearfix visible-sm-block visible-xs-block"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-5 col-xs-4 control-label ">
+                        <p>First Name*</p>
+                    </div>
+                    <div class="col-sm-7 col-xs-8" >
+                        <input type="textbox" class="col-sm-12 col-xs-12 form-control"
+                        placeholder=""/>
+                    </div>
+                    <div class="clearfix visible-sm-block visible-xs-block"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-5 col-xs-4 control-label ">
+                        <p>Middle Initial*</p>
+                    </div>
+                    <div class="col-sm-7 col-xs-8" >
+                        <input type="textbox" class="col-sm-12 col-xs-12 form-control"
+                        placeholder=""/>
+                    </div>
+                    <div class="clearfix visible-sm-block visible-xs-block"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-5 col-xs-4 control-label ">
+                        <p>Date of Birth*</p>
+                    </div>
+                    <div class="col-sm-7 col-xs-8" >
+                        <input type="textbox" class="col-sm-12 col-xs-12 form-control"
+                        placeholder="DATE PICKER HERE"/>
+                    </div>
+                    <div class="clearfix visible-sm-block visible-xs-block"></div>
+                </div>
+             </div>
+            <!-- end of 1st column form-->
+
+            <!-- 2nd column form-->
+            <div class="col-sm-6 col-xs-12" style='background:lue'>
+                <div class="form-group">
+                    <div class="col-sm-4 col-xs-4 control-label ">
+                        <p>Age*</p>
+                    </div>
+                    <div class="col-sm-8 col-xs-8" >
+                        <input type="textbox" class="col-sm-12 col-xs-12 form-control"
+                        readonly="readonly"
+                        placeholder=""/>
+                    </div>
+                    <div class="clearfix visible-sm-block visible-xs-block"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 col-xs-4 control-label">
+                        <p>Gender*</p>
+                    </div>
+                    <div class="col-sm-8 col-xs-8 " >
+                        <select class="form-control col-sm-12 col-xs-12">
+                            <option> Male </option>
+                            <option> Female </option>
+                        </select>
+                    </div>
+                    <div class="clearfix visible-sm-block visible-xs-block"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 col-xs-4 control-label">
+                        <p>Marital Status*</p>
+                    </div>
+                    <div class="col-sm-8 col-xs-8 " >
+                        <select class="form-control col-sm-12 col-xs-12">
+                            <option> Single </option>
+                            <option> Married </option>
+                        </select>
+                    </div>
+                    <div class="clearfix visible-sm-block visible-xs-block"></div>
+                </div>
+            </div>
+            <!-- end of 2nd column form-->
+
+            <div class='form-group'>
+                <div class="col-sm-offset-10 col-xs-offset-7 col-sm-7 col-xs-7">
+                    <button type="submit" class='btn btn-danger'>Cancel</button>
+                    <button type="submit" class='btn btn-success'>Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- end of Personal Info Form -->
+
+    <!-- Spiritual Milestone Table -->
+    <div class="col-sm-12 col-xs-12">
+       <fieldset class='box-border'>
+          <legend class="box-border">Spiritual Milestone</legend>
+            <!-- Spiritual Milestone Add button-->
+              <div class="text-right"
+                   style="padding-top:1%;">
+                <button type="button"
+                        class="btn btn-md btn-primary">
+                  <span class="glyphicon glyphicon-plus"></span>
+                  Add Milestone
+                </button>
+              </div>
+            <!-- end of Spiritual Milestone Add button-->
+            <div class="row bottom-buffer">
+              <div class="col-sm-12 col-xs-12">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Milestone</th>
+                      <th>Date</th>
+                      <th>Edit</th>
+                      <th>Remove</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="user in adminCtrl.AdminModel.usersList"
+                        class="text-center">
+                      <td>{{ user.no }}</td>
+                      <td>{{ user.username }}</td>
+                      <td>{{ user.username }}</td>
+                      <td>
+                        <a href="" class="icon">
+                          <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                      </td>
+                      <td>
+                        <a href="" class="icon">
+                          <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+       </fieldset>
+    </div>
+    <!-- end of Spiritual Milestone Table -->
+</div>
