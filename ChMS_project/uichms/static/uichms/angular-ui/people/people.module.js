@@ -14,45 +14,45 @@
 
           $stateProvider
             // Parent States in Admin
+            .state('people.peopleList', {
+              url : '/peopleList',
+              templateUrl : parentStateDir.concat('peopleList.template.html')
+            })
 
-            .state('userDetailsState', {
-              url : '#/userdetails',
+            .state('people.userDetailsState', {
+              url : '/userdetails',
               templateUrl : parentStateDir.concat('userDetails.template.html')
             })
 
-            // .state('userDetailsState', {
-            //   url : '#/userdetails',
-            //   templateUrl : '/static/angular-ui/admin/states/people/userDetails.template.html'
-            // })
-            .state('personalInfoState', {
-              url : '#/personalinfo',
+            .state('people.personalInfoState', {
+              url : '/personalinfo',
               templateUrl : parentStateDir.concat('personalInfo.template.html')
             })
-            .state('contactInfoState', {
-              url : '#/contactinfo',
+            .state('people.contactInfoState', {
+              url : '/contactinfo',
               templateUrl : parentStateDir.concat('contactInfo.template.html')
             })
-            .state('familyState', {
-              url : '#/family',
+            .state('people.familyState', {
+              url : '/family',
               templateUrl : parentStateDir.concat('family.template.html')
             })
-            .state('ministryInfoState', {
-              url : '#/ministryinfo',
+            .state('people.ministryInfoState', {
+              url : '/ministryinfo',
               templateUrl : parentStateDir.concat('ministryInfo.template.html')
             })
-            .state('professionSkillsInterestsState', {
-              url : '#/professionskillsinterests',
-              emplateUrl : parentStateDir.concat('professionSkillsInterests.template.html')
+            .state('people.professionSkillsInterestsState', {
+              url : '/professionskillsinterests',
+              templateUrl : parentStateDir.concat('professionSkillsInterests.template.html')
             })
 
         }
     ])
   
-    .controller('PeopleController', ['$scope', '$http',
+    .controller('PeopleController', ['$scope', '$http', '$state',
       PeopleController
     ]);
 
-  function PeopleController($scope, $http) {
+  function PeopleController($scope, $http, $state) {
     var peopleVm = this;
     peopleVm.PeopleModel = {};
 
@@ -66,6 +66,10 @@
             mName : 'mName ' + i
           }
       );
+    }
+
+    if ($state.current.name === 'people') {
+      $state.go('people.peopleList');
     }
   };
 

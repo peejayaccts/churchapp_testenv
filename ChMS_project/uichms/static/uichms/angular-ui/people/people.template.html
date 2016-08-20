@@ -3,99 +3,34 @@
   <!-- People html template-->
   <button type="button" 
           class="btn btn-md btn-primary" 
-          ui-sref="userDetailsState">
+          ui-sref="people.userDetailsState">
     User Details
   </button>
   <button type="button" 
           class="btn btn-md btn-primary" 
-          ui-sref="personalInfoState">
+          ui-sref="people.personalInfoState">
     Personal Info 
   </button>
   <button type="button" 
           class="btn btn-md btn-primary" 
-          ui-sref="contactInfoState">
+          ui-sref="people.contactInfoState">
     Contact Info 
   </button>
   <button type="button" 
           class="btn btn-md btn-primary" 
-          ui-sref="familyState">
+          ui-sref="people.familyState">
     Family 
   </button>
   <button type="button" 
           class="btn btn-md btn-primary" 
-          ui-sref="ministryInfoState"> 
+          ui-sref="people.ministryInfoState"> 
     Ministry Info 
   </button>
   <button type="button" 
           class="btn btn-md btn-primary" 
-          ui-sref="professionSkillsInterestsState">
+          ui-sref="people.professionSkillsInterestsState">
     Profession/Skills/Interests
   </button>
 </div>
 
-
-  <div class="col-xs-12">
-    <div class="input-group">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button">
-          <span class="glyphicon glyphicon-search"></span>
-        </button>
-      </span>
-      <input type="text" class="form-control" placeholder="Search for...">
-    </div>
-  </div>
-<!--</div>-->
-
-<div class="row bottom-buffer">
-  <div class="col-xs-12">
-    <button type="button" class="btn btn-md btn-primary pull-right">
-      <span class="glyphicon glyphicon-plus"></span>
-      Add Person
-    </button>
-  </div>
-</div>
-
-<!--
-<div class="row bottom-buffer">
-  <div class="col-xs-12">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Last Name</th>
-          <th>Middle Name</th>
-          <th>First Name</th>
-          <th>View</th>
-          <th>Edit</th>
-          <th>Remove</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="person in peopleCtrl.PeopleModel.peopleList"
-            class="text-center">
-          <td>{{ person.no }}</td>
-          <td>{{ person.lName }}</td>
-          <td>{{ person.mName }}</td>
-          <td>{{ person.fName }}</td>
-          <td>
-            <a href="" class="icon">
-              <span class="glyphicon glyphicon-eye-open"></a>
-            </a>
-          </td>
-          <td>
-            <a href="" class="icon">
-              <span class="glyphicon glyphicon-edit"></span>
-            </a>
-          </td>
-          <td>
-            <a href="" class="icon">
-              <span class="glyphicon glyphicon-trash"></span>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
--->
 <div ui-view></div>
