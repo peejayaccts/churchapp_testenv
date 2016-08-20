@@ -74,7 +74,7 @@
     /* Sets the page's state */
     if ($state.current.name === "") {
       /*$state.go('accountState');*/
-      $state.go('professionSkillsInterestsState');
+      $state.go('familyState');
     }
   };
 

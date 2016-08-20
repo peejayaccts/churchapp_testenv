@@ -1,0 +1,86 @@
+/* Custom CSS */
+/* Generic base style */
+* {
+  margin : 0;
+}
+
+html,
+body {
+	height	:	100%;
+}
+
+.container {
+  min-height : 100%;
+}
+
+.wrapper {
+  min-height : 100%;
+  height : auto !important;
+  height : 100%;
+  margin : 0 auto -60px;
+}
+
+.bottom-buffer {
+  margin-bottom : 20px;
+}
+
+.footer,
+.push {
+  height : 60px;
+}
+
+.footer {
+  background-color : black;
+}
+
+.jumbotron-banner {
+  margin-bottom : 0px;
+  min-height : 10px;
+}
+
+.status-bar {
+  overflow : hidden;
+  background-color : grey;
+  border-radius : 3px;
+}
+
+
+.status-bar [class*="col-"]{
+  margin-bottom : -99999px;
+  padding-bottom : 99999px;
+}
+
+/* Dev purposes only */
+.color-red {  /* color the div to see scope */
+  background-color: red;
+}
+
+/* Home view style */
+.upcoming-events {
+  height:150px;
+  overflow:auto;
+}
+
+
+/* People view style*/
+th {
+  text-align : center;
+}
+
+/* fieldset */
+fieldset.box-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow: 0 0 0 0 #000;
+            box-shadow: 0 0 0 0 #000;
+}
+
+legend.box-border {
+    font-size: 1.5em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    width: inherit;
+    padding: 0 10px;
+    border-bottom: none;
+}
