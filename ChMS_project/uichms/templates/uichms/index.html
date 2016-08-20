@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load compress %}
 
 <!DOCTYPE html>
 
@@ -13,8 +14,16 @@
 
     <title>Management System</title>
 
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/site.css' %}"> 
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'uichms/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'uichms/css/site.css' %}"> 
+    {% endcompress %}
+    <script id="config" type="text/json">
+      {
+        "apiRoot": "{% url 'api-root' %}",
+        "apiLogin": "{% url 'api-token' %}"
+      }
+    </script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -28,8 +37,6 @@
                 <h2>or use Firefox or Chrome browser </h3>
             </center>
     <![endif]-->
-    <link rel="stylesheet" href="{% static 'uichms/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'uichms/css/site.css' %}"> 
   </head>
 
 	<body ng-app="ChMS-ui">
@@ -133,10 +140,49 @@
     </div>
 
 
+{% compress js %}
     <script src="{% static 'uichms/js/jquery.min.js' %}"></script>
     <script src="{% static 'uichms/js/angular.min.js' %}"></script>
     <script src="{% static 'uichms/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'uichms/js/angular-route.min.js' %}"></script>
+    <script type="text/javascript">
+      var app = (function ($) {
+        var config = $('#config'),
+        app = JSON.parse(config.text());
+        return app;
+      })(jQuery);
+    </script>
+    <script>
+      $( document ).ready(function() {
+        console.log( "ready!" );
+        console.log(app);
+
+        // get all api links for churches, people, interests, etc..
+        $.ajax({
+          url: app.apiRoot,
+          async: false,
+          dataType: 'json',
+          success: function(data) {
+            // get api urls to avoid hardcoding it
+            app.churches = {url : data['churches']};
+            // app.people = {url : data['people]}
+            app.interests = {url : data['interests']};
+            app.member_statuses = {url : data['member_statuses']};
+            app.ministries = {url : data['ministries']}
+            app.skills_and_professions = {url : data['skills_and_professions']}
+            app.spiritual_milestones = {url : data['spiritual_milestones']}    
+          }
+        });
+
+        console.log(app);
+
+        // to get all churches
+        $.getJSON(app.churches.url, function( data ) {
+           console.log(data);
+        });
+      
+      });
+    </script>
     <!-- Compiled ui-router.min is currently not working. 
       use unminified version instead -->
     <!--
@@ -150,6 +196,7 @@
     <script src="{% static 'uichms/angular-ui/admin/admin.module.js' %}"></script>
     <script src="{% static 'uichms/angular-ui/app.module.js' %}"></script>
     <script src="{% static 'uichms/angular-ui/app.routes.js' %}"></script>
+{% endcompress %}
 
   </body>
 

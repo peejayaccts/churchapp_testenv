@@ -112,39 +112,39 @@
                 </button>
               </div>
             <!-- end of Spiritual Milestone Add button-->
-                <div class="row bottom-buffer">
-                  <div class="col-sm-12 col-xs-12">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th>No</th>
-                          <th>Milestone</th>
-                          <th>Date</th>
-                          <th>Edit</th>
-                          <th>Remove</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr ng-repeat="user in adminCtrl.AdminModel.usersList"
-                            class="text-center">
-                          <td>{{ user.no }}</td>
-                          <td>{{ user.username }}</td>
-                          <td>{{ user.username }}</td>
-                          <td>
-                            <a href="" class="icon">
-                              <span class="glyphicon glyphicon-edit"></span>
-                            </a>
-                          </td>
-                          <td>
-                            <a href="" class="icon">
-                              <span class="glyphicon glyphicon-trash"></span>
-                            </a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+            <div class="row bottom-buffer">
+              <div class="col-sm-12 col-xs-12">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Milestone</th>
+                      <th>Date</th>
+                      <th>Edit</th>
+                      <th>Remove</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="user in adminCtrl.AdminModel.usersList"
+                        class="text-center">
+                      <td>{{ user.no }}</td>
+                      <td>{{ user.username }}</td>
+                      <td>{{ user.username }}</td>
+                      <td>
+                        <a href="" class="icon">
+                          <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                      </td>
+                      <td>
+                        <a href="" class="icon">
+                          <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
        </fieldset>
     </div>
     <!-- end of Spiritual Milestone Table -->

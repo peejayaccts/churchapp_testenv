@@ -163,7 +163,7 @@ STATIC_ROOT = SETTINGS_DIR + '/static'
 
 #Indicate here all other static assets
 STATICFILES_DIRS = (
-    os.path.join(PROJ_DIR, 'ui', 'static'),
+    os.path.join(PROJ_DIR, 'uichms', 'static'),
 )
 
 STATICFILES_FINDERS = (
@@ -172,7 +172,8 @@ STATICFILES_FINDERS = (
     # other finders
     'compressor.finders.CompressorFinder',
 )
-COMPRESS_ROOT = os.path.join(PROJ_DIR, 'ui', 'static',)
+#COMPRESS_ROOT = os.path.join(PROJ_DIR, 'ui', 'static',)
+COMPRESS_ROOT = os.path.join(PROJ_DIR, 'uichms', 'static',)
 COMPRESS_CSS_FILTERS = ['compressor.filters.css_default.CssAbsoluteFilter',
                         'compressor.filters.cssmin.CSSMinFilter']
 DATE_INPUT_FORMATS = [
