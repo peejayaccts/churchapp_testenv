@@ -11,6 +11,7 @@
         function($stateProvider) {
           var staticDir = '/static/uichms/angular-ui/';
           var parentStateDir = staticDir.concat('admin/states/');
+          var accountStatesDir = parentStateDir.concat('accountManagement/states/');
           var systemStatesDir = parentStateDir.concat('systemConfig/states/');
 
           $stateProvider
@@ -27,6 +28,16 @@
               url : '#/systemconfig',
               controller : ['$scope', '$state', SystemConfigController],
               templateUrl : parentStateDir.concat('systemConfig/systemConfig.template.html')
+            })
+
+            // Account Management States
+            .state('account.users', {
+              url : '#/account/users',
+              templateUrl : accountStatesDir.concat('users.template.html')
+            })
+            .state('account.roles', {
+              url : '#/account/roles',
+              templateUrl : accountStatesDir.concat('roles.template.html')
             })
             
             // System Configuration States
@@ -78,7 +89,7 @@
 
     /* Sets the page's state */
     if ($state.current.name === "") {
-      $state.go('account');
+      $state.go('account.users');
     }
   };
 

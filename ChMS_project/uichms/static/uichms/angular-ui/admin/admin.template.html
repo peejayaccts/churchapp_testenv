@@ -1,24 +1,27 @@
 <!-- Admin html template -->
 <div class="row bottom-buffer">
 
-  <button type="button"
-          class="btn btn-md btn-primary"
-          ui-sref="account">
+  <button class="btn btn-md btn-primary dropdown dropdown-toggle bottom-buffer"
+          data-toggle="dropdown">
     Account Management
     <span class="glyphicon glyphicon-triangle-bottom"></span>
+    <ul class="dropdown-menu col-xs-12">
+      <li><a href="" ui-sref="account.users">Users</a></li>
+      <li><a href="" ui-sref="account.roles">Roles</a></li>
+    </ul>
   </button>
 
   <button type="button"
-          class="btn btn-md btn-primary"
+          class="btn btn-md btn-primary bottom-buffer"
           ui-sref="church">
     Local Church Settings
   </button>
 
-  <button class="btn btn-md btn-primary dropdown dropdown-toggle"
+  <button class="btn btn-md btn-primary dropdown dropdown-toggle bottom-buffer"
           data-toggle="dropwdown">
       System Configuration
       <span class="glyphicon glyphicon-triangle-bottom"></span>
-    <ul class="dropdown-menu">
+    <ul class="dropdown-menu col-xs-12">
       <li><a href="" ui-sref="system.interests">Interests</a></li>
       <li><a href="" ui-sref="system.skills">Skills and Professions</a></li>
       <li><a href="" ui-sref="system.spiritual">Spiritual Milestones</a></li>
