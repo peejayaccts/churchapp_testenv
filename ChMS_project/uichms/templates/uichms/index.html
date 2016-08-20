@@ -101,11 +101,11 @@
 
             <div class="collapse navbar-collapse" id=bs-nav-collapse>
               <ul class="nav navbar-nav navbar-Left">
-                <li><a href="#/login">Login</a></li>
-                <li><a href="#/home">Home</a></li>
-                <li><a href="#/people">People</a></li>
-                <li><a href="#/ministries">Ministries</a></li>
-                <li><a href="#/admin">Admin</a></li>
+                <li><a href="" ui-sref="login">Login</a></li>
+                <li><a href="" ui-sref="home">Home</a></li>
+                <li><a href="" ui-sref="people">People</a></li>
+                <li><a href="" ui-sref="ministries">Ministries</a></li>
+                <li><a href="" ui-sref="admin">Admin</a></li>
               </ul>
             </div>
           </nav>
@@ -116,7 +116,8 @@
       <!-- Contents -->
 			{% verbatim %}
 			<div id="main">
-				<div ng-view></div>
+        <!-- <div ng-view></div> -->
+        <div ui-view></div>
 			</div>
 			{% endverbatim %}
       <!-- Contents end -->

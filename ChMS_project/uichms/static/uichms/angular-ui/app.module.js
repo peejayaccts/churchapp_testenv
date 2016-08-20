@@ -4,6 +4,7 @@
   angular
     .module('ChMS-ui', [
       'ngRoute',
+      'ui.router',
       'HomeModule',
       'AdminModule',
       'LogInModule',
