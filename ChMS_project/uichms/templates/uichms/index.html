@@ -1,12 +1,8 @@
 {% load staticfiles %}
 {% load compress %}
-
 <!DOCTYPE html>
-
 <html>
-
   <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
@@ -38,7 +34,6 @@
             </center>
     <![endif]-->
   </head>
-
 	<body ng-app="ChMS-ui">
 
     <div class="wrapper">
@@ -49,41 +44,79 @@
       <!-- Header -->
 			<div class="row">
 
-        <!-- Banner -->
-        <div class="jumbotron jumbotron-banner">
-          <h2>Management System</h2>
-          <small>Powered by Django</small>
-          <small>Front-end in Angular</small>
-          <h4>Vision: "For I know the plans for you.
-          Plans to prosper you and not to harm you,
-          plans to give you a hope and a future"</h4>
-        </div>
+            <!-- Banner -->
+                <div class="jumbotron jumbotron-banner" style='backgroun:#10A754'>
+                    <div class="row" style='background: red'>
+                        <div class="col-xs-3 col-sm-3" style='backgroun: blue'>
+                            <img src="{% static 'uichms/img/logo-ipsum.png' %}" 
+                                 height='80' >
+                        </div>
+                        <div class="col-xs-9 col-sm-9">
+                            <img src="{% static 'uichms/img/banner.jpeg' %}" 
+                                 height='80' width='100%' >
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 text-center">
+                              <h4>Vision: "For I know the plans for you.
+                              Plans to prosper you and not to harm you,
+                              plans to give you a hope and a future"</h4>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- Status bar -->
-        <div class="nav status-bar">
+                <!-- Status bar -->
+                    <div class="nav status-bar" style=''>
 
-          <div class="col-sm-3 text-center status-bar wall"
-               style="padding-top : 1%;">
-            <p class="text-center">Sunday, June 12, 2016</p>
-            <p class="text-center">7:00 PM; AST</p>
-          </div>
+                        <div class="row">
+                            <div class="visible-xs 
+                                        hidden-sm 
+                                        hidden-md 
+                                        hidden-lg 
+                                        col-xs-12 
+                                        text-center
+                                        status-bar wall">
+                            <h1 class="">
+                              NEW HIC
+                            </h1>
+                          </div>
 
-          <div class="col-sm-6 text-center status-bar wall">
-            <h1 class="">
-              NEW HIC
-            </h1>
-          </div>
-          
-          <div class="col-sm-3 text-center status-bar">
-            <button class="btn btn-lg btn-primary" type="button"
-                    style="margin-top:5%;margin-bottom:5%">
-              <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-              John Snow
-              <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-            </button>
-          </div>
+                          <div class="col-sm-3 
+                                      col-xs-6 
+                                      text-center 
+                                      status-bar 
+                                      wall"
+                               style="padding-top : 1%;">
+                            <p class="text-center">Sunday, June 12, 2016</p>
+                            <p class="text-center">7:00 PM; AST</p>
+                          </div>
 
-        </div>
+                          <div class="hidden-xs 
+                                      visible-sm 
+                                      visible-md
+                                      visible-lg 
+                                      col-sm-6 
+                                      col-md-6 
+                                      col-lg-6 
+                                      text-center 
+                                      status-bar 
+                                      wall">
+                            <h1 class="">
+                              NEW HIC 
+                            </h1>
+                          </div>
+                          
+                          <div class="col-sm-3 col-md-3 col-xs-6 status-bar" >
+                                <button class="btn btn-primary" type="button"
+                                    style="margin-top:5%;margin-bottom:5%">
+                                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                  John Snow
+                                  <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                                </button>
+                          </div>
+
+                       </div>
+                    </div>
 
         <!-- Navigation bar -->
           <nav class="navbar navbar-inverse">
@@ -139,8 +172,6 @@
         </div>
       </div>
     </div>
-
-
 {% compress js %}
     <script src="{% static 'uichms/js/jquery.min.js' %}"></script>
     <script src="{% static 'uichms/js/angular.min.js' %}"></script>
@@ -198,7 +229,5 @@
     <script src="{% static 'uichms/angular-ui/app.module.js' %}"></script>
     <script src="{% static 'uichms/angular-ui/app.routes.js' %}"></script>
 {% endcompress %}
-
   </body>
-
 </html>
