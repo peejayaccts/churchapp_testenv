@@ -7,8 +7,8 @@
       'ui.router',
     ])
 
-    .config(['$stateProvider',
-        function($stateProvider) {
+    .config(['$stateProvider', '$urlRouterProvider',
+        function($stateProvider, $urlRouterProvider) {
           var staticDir = '/static/uichms/angular-ui/';
           var parentStateDir = staticDir.concat('admin/states/');
           var accountStatesDir = parentStateDir.concat('accountManagement/states/');
@@ -16,56 +16,57 @@
 
           $stateProvider
             // Parent States in Admin
-            .state('account', {
-              url : '#/account',
+            .state('admin.account', {
+              url : '/account',
               templateUrl : parentStateDir.concat('accountManagement/accountManagement.template.html')
             })
-            .state('church', {
-              url : '#/churchsettings',
+            .state('admin.church', {
+              url : '/churchsettings',
               templateUrl : parentStateDir.concat('churchSettings/churchSettings.template.html')
             })
-            .state('system', {
-              url : '#/systemconfig',
-              controller : ['$scope', '$state', SystemConfigController],
+            .state('admin.system', {
+              url : '/systemconfig',
               templateUrl : parentStateDir.concat('systemConfig/systemConfig.template.html')
             })
 
             // Account Management States
-            .state('account.users', {
-              url : '#/account/users',
+            .state('admin.account.users', {
+              url : '/users',
               templateUrl : accountStatesDir.concat('users.template.html')
             })
-            .state('account.roles', {
-              url : '#/account/roles',
+            .state('admin.account.roles', {
+              url : '/roles',
               templateUrl : accountStatesDir.concat('roles.template.html')
             })
             
             // System Configuration States
-            .state('system.interests', {
-              url : '#/systemconfig/interests',
+            .state('admin.system.interests', {
+              url : '/interests',
               templateUrl : systemStatesDir.concat('interests.template.html')
             })
-            .state('system.skills', {
-              url : '#/systemconfig/skills',
+            .state('admin.system.skills', {
+              url : '/skills',
               templateUrl : systemStatesDir.concat('skills.template.html')
             })
-            .state('system.spiritual', {
-              url : '#/systemconfig/spiritual',
+            .state('admin.system.spiritual', {
+              url : '/spiritual',
               templateUrl : systemStatesDir.concat('spiritual.template.html')
             })
-            .state('system.member', {
-              url : '#/systemconfig/member',
+            .state('admin.system.member', {
+              url : '/member',
               templateUrl : systemStatesDir.concat('member.template.html')
             })
-            .state('system.ministries', {
-              url : '#/systemconfig/ministries',
+            .state('admin.system.ministries', {
+              url : '/ministries',
               templateUrl : systemStatesDir.concat('ministries.template.html')
             })
-            .state('system.churches', {
-              url : '#/systemconfig/churches',
+            .state('admin.system.churches', {
+              url : '/churches',
               templateUrl : systemStatesDir.concat('church.template.html')
-            })
+            });
 
+          // Set default state when entering Admin view
+          $urlRouterProvider.when('/admin', '/admin/account/users')
         }
     ])
   
@@ -87,24 +88,12 @@
       });
     }
 
-    /* Sets the page's state */
-    if ($state.current.name === "") {
-      $state.go('account.users');
-    }
   };
 
   function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
-  };
-
-  function SystemConfigController($scope, $state){
-    /* Sets the page's state */
-    if ($state.current.name === "system") {
-      $state.go('system.interests');
-      console.log($state.current.name);
-    }
   };
 
 }());

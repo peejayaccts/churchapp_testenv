@@ -4,10 +4,9 @@
     <form class='form-horizontal' style='background'>
         <!--1st column form -->
         <div class="col-sm-2 ">
-            <!--<img src="../static/uichms/img/profile-placeholder.gif"
-                 height="112"/>-->
-            <img src="{% static 'uichms/img/logo.png' %}"
-                 height="112"/>
+            <!--Sample image only-->
+            <img src="/static/uichms/img/profile-placeholder.gif"
+                 class="img-responseive" height="112"/>
         </div>
         <!-- end of 1st column form -->
 
@@ -100,10 +99,13 @@
         <!-- end of  3rd column form-->
 
         <!--Submit buttons-->
-        <div class='form-group'>
-            <div class="col-sm-offset-10 col-xs-offset-7 col-sm-7 col-xs-7">
-                <button type="submit" class='btn btn-danger'>Cancel</button>
-                <button type="submit" class='btn btn-success'>Save</button>
+        <div class="col-sm-12 col-xs-12 bottom-buffer">
+            <div class="form-group text-right">
+                <div class="col-sm-12 col-xs-12" >
+                    <button type="submit" class='btn btn-danger'>Cancel</button>
+                    <button type="submit" class='btn btn-success'>Save</button>
+                </div>
+                <div class="clearfix visible-sm-block visible-xs-block"></div>
             </div>
         </div>
         <!--end of Submit buttons-->
