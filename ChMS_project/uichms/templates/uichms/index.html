@@ -45,22 +45,26 @@
 			<div class="row">
 
             <!-- Banner -->
-                <div class="jumbotron jumbotron-banner" style='backgroun:#10A754'>
-                    <div class="row" style='background: red'>
-                        <div class="col-xs-3 col-sm-3" style='backgroun: blue'>
-                            <img src="{% static 'uichms/img/logo-ipsum.png' %}" 
-                                 height='80' >
+                <div class="" style='padding-top: 2%; bacground:#10A754'>
+                    <div class="container-fluid">
+                        <div class="row" style='backgroun: red'>
+                            <div class="col-xs-4 col-sm-3" style='background: lue'>
+                                <img src="{% static 'uichms/img/logo-church1.png' %}" 
+                                      class="img-responsive">
+                            </div>
+                            <div class="col-xs-8 col-sm-9" style="background:ink">
+                                <img src="{% static 'uichms/img/banner-church1.jpg' %}" 
+                                     class="img-responsive">
+                            </div>
                         </div>
-                        <div class="col-xs-9 col-sm-9">
-                            <img src="{% static 'uichms/img/banner.jpeg' %}" 
-                                 height='80' width='100%' >
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 col-xs-12 text-center">
-                              <h4>Vision: "For I know the plans for you.
-                              Plans to prosper you and not to harm you,
-                              plans to give you a hope and a future"</h4>
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 text-center">
+                                <label class="text-justify"
+                                    style="padding: 2%">Vision: "For I know the plans for you.
+                                  Plans to prosper you and not to harm you,
+                                  plans to give you a hope and a
+                                  future"</label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -98,15 +102,15 @@
                                       col-sm-6 
                                       col-md-6 
                                       col-lg-6 
-                                      text-center 
                                       status-bar 
                                       wall">
-                            <h1 class="">
+                            <h2 class="text-center">
                               NEW HIC 
-                            </h1>
+                            </h2>
                           </div>
                           
-                          <div class="col-sm-3 col-md-3 col-xs-6 status-bar" >
+                          <div class="col-sm-3 col-md-3 col-xs-6 status-bar
+                              text-center" >
                                 <button class="btn btn-primary" type="button"
                                     style="margin-top:5%;margin-bottom:5%">
                                   <span class="glyphicon glyphicon-user" aria-hidden="true"></span>

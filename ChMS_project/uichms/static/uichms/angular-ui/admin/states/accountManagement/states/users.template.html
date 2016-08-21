@@ -1,23 +1,32 @@
 <!-- account.users template -->
 <div class="row bottom-buffer">
-  <div class="col-xs-4">
-    <h3 class="text-left">List of Users</h3>
-  </div>
-  <div class="text-right"
-       style="padding-top:1%;">
-    <button type="button"
-            class="btn btn-md btn-primary"
-            data-toggle="modal"
-            data-target="#email">
-      <span class="glyphicon glyphicon-envelope"></span>
-      Email All
-    </button>
-    <button type="button"
-            class="btn btn-md btn-primary"
-            ui-sref="people">
-      <span class="glyphicon glyphicon-plus"></span>
-      Add User
-    </button>
+        <div class="col-sm-6 col-xs-12" style="ackground:pink">
+              <div class="visible-xs hidden-sm text-center" >
+                   <label>List of Users</label>
+              </div>
+              <div class="visible-sm hidden-xs text-left" >
+                   <label>List of Users</label>
+              </div>
+        </div>
+        <div class="clearfix visible-xs-block bottom-buffer"></div>
+        <div class="col-sm-3 col-xs-12" style='ackground:blue'>
+            <button type="button"
+                    class="btn btn-md btn-primary col-xs-12 pull-right"
+                    data-toggle="modal"
+                    data-target="#email">
+              <span class="glyphicon glyphicon-envelope"></span>
+              Email All
+            </button>
+        </div>
+        <div class="clearfix visible-xs-block bottom-buffer"></div>
+        <div class="col-sm-3 col-xs-12" style='ackground:red'>
+            <button type="button"
+                    class="btn btn-md btn-primary col-xs-12">
+              <span class="glyphicon glyphicon-plus"></span>
+              Add User 
+            </button>
+        </div>
+        <div class="clearfix visible-xs-block top-buffer"></div>
 </div>
 
 <!-- Email Modal -->
@@ -78,7 +87,6 @@
       </div>
     </div>
   </div>
-
 </div>
 <!-- Email Modal -->
 
