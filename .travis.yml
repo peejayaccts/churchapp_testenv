@@ -26,6 +26,8 @@ before_script:
   - mysql -u root -e 'CREATE DATABASE GNT_ChMS_MyDB CHARACTER SET utf8; GRANT ALL ON GNT_ChMS_MyDB.* TO 'pekUrsTruly' IDENTIFIED BY "GloriaTai4ndP#k"';
 
 # RUN the migration and server
+  - sudo a2enmod ssl
+  - sudo mkdir $CI_ROOT/etc/apache2/ssl
   - cd $CI_HOME/ChMS_project 
   - cd $CI_ROOT/etc/apache2/sites-available/default-ssl.conf
   - pwd
