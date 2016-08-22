@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.conf import settings
 
 from rest_framework import authentication, permissions, viewsets, filters, mixins
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -20,11 +21,12 @@ class DefaultsMixin(object):
     Default settings for view authentication, permissions,
     filtering and pagination.
     """
-    authentication_classes = (
-        # authentication.BasicAuthentication,
-        # authentication.TokenAuthentication,
-        JSONWebTokenAuthentication,
-    )
+    if settings.DEBUG:
+        authentication_classes = (
+            authentication.BasicAuthentication, JSONWebTokenAuthentication,)
+    else:
+        authentication_classes = (JSONWebTokenAuthentication,)
+
     permission_classes = (
         permissions.IsAuthenticated,
     )
