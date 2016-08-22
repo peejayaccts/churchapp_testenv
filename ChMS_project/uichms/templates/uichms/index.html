@@ -201,7 +201,7 @@
           success: function(data) {
             // get api urls to avoid hardcoding it
             app.churches = {url : data['churches']};
-            // app.people = {url : data['people]}
+            app.people = {url : data['people']}
             app.interests = {url : data['interests']};
             app.member_statuses = {url : data['member_statuses']};
             app.ministries = {url : data['ministries']}
@@ -211,11 +211,6 @@
         });
 
         console.log(app);
-
-        // to get all churches
-        $.getJSON(app.churches.url, function( data ) {
-           console.log(data);
-        });
       
       });
     </script>

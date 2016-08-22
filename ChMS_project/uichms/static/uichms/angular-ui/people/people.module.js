@@ -58,18 +58,25 @@
   function PeopleController($scope, $http, $state) {
     var peopleVm = this;
     peopleVm.PeopleModel = {};
-
-    peopleVm.PeopleModel.peopleList = [];
-    for (var i = 0; i < 20; i++) {
-      peopleVm.PeopleModel.peopleList.push(
-          {
-            no : i,
-            lName : 'lName ' + i,
-            fName : 'fName ' + i,
-            mName : 'mName ' + i
-          }
+      peopleVm.PeopleModel.peopleList = [];
+      
+      $http({url: app.people.url, method: 'GET'})
+	 .success(function (data, status, headers, config) {
+	     console.log(data); // Should log 'foo'
+	     for (var i = 0; i < data.length; i++) {
+		 var person = data[i];
+		 peopleVm.PeopleModel.peopleList.push(
+		     {
+			 no : i,
+			 lName : (person['last_name']).substring(0,10),
+			 fName : (person['first_name']).substring(0,10),
+			 mName : (person['middle_initial']).substring(0,10)
+		     }
+		 );
+	     }
+	 }
       );
-    }
+      
 
   };
 
