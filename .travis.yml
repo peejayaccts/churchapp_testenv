@@ -27,7 +27,20 @@ install:
 before_script:
   - sudo ls -al /etc/apache2/sites-available/
   - sudo ls -al /etc/apache2/sites-enabled/
-  - "sh -e ./apache.sh"
+  - sudo a2enmod ssl
+  - sudo service apache2 restart
+  - sudo cp /etc/apache2/sites-available/default-ssl.conf  /etc/apache2/sites-available/default-ssl.conf.bak 
+
+  - sudo cat chms-default-ssl.conf > /etc/apache2/sites-available/default-ssl.conf 
+
+  - sudo cat /etc/apache2/sites-available/default-ssl.conf
+
+  - sudo a2ensite default-ssl.conf
+
+  - sudo apachectl configtest
+
+  - sudo service apache2 restart
+ # - "sh -e ./apache.sh"
 # LOAD DATABASE 
 # RUN the migration and server
 # DIRECT TO HOME DIRECOTRY 

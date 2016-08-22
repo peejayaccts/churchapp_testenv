@@ -8,8 +8,7 @@ sudo service apache2 restart
 #                -keyout /etc/apache2/ssl/apache.key \
 #                -out /etc/apache2/ssl/apache.crt
 
-sudo cp /etc/apache2/sites-available/default-ssl.conf \
-        /etc/apache2/sites-available/default-ssl.conf.bak 
+sudo cp /etc/apache2/sites-available/default-ssl.conf  /etc/apache2/sites-available/default-ssl.conf.bak 
 
 cat chms-default-ssl.conf > /etc/apache2/sites-available/default-ssl.conf 
 
