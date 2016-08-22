@@ -27,23 +27,9 @@ before_script:
 
 # RUN the migration and server
   - cd $CI_HOME/ChMS_project 
-  - python manage.py migrate --noinput
-  - python manage.py collectstatic --clear --noinput
-  - python manage.py runserver &
-  - sleep 3
-# RUN the headless UI 
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3
-# INSTALL FRONT-END BUILD TOOLS
-#  - npm install -g grunt-cli bower yo generator-karma generator-angular
-#  - cd $CI_HOME/ChMS_project/src 
-#  - npm install
-#  - bower install
-# DIRECT TO HOME DIRECOTRY 
-  - cd $CI_HOME 
-script: 
+  - cd $CI_ROOT/etc/apache2/sites-available/default-ssl.conf
+  - pwd
+script: true
 # RUN the django test script 
-  - "sh -e ./test-django.sh"
 # RUN the grunt build script 
 #  - "sh -e ./test-grunt.sh"
