@@ -6,25 +6,34 @@ sudo: required
 env:
   global:
     - CI_HOME='/home/travis/build/peejayaccts/churchapp_testenv'
+    - CI_ROOT='/home/travis'
 addons:
   apt:
     packages:
     - mysql-server-5.6
     - mysql-client-core-5.6
     - mysql-client-5.6
-    - nodejs
-    - npm 
-    - build-essential 
+   # - nodejs
+   # - npm 
+   # - build-essential 
+    - apache2 
+    - libapache2-mod-wsgi 
 services:
   - mysql 
 before_install:
 # Use django set-up for database 
   - export DJANGO_SETTINGS_MODULE=config.settings.base
+ # - which python
+ # - ls -lh $TRAVIS_BUILD_DIR
+ # - pwd
 install:
   - pip install -r requirements/base.txt
 before_script:
 # LOAD DATABASE 
   - mysql -u root -e 'CREATE DATABASE GNT_ChMS_MyDB CHARACTER SET utf8; GRANT ALL ON GNT_ChMS_MyDB.* TO 'pekUrsTruly' IDENTIFIED BY "GloriaTai4ndP#k"';
+
+# SET-UP SSL configuration 
+  - "sudo sh -e ./apache.sh"
 
 # RUN the migration and server
   - cd $CI_HOME/ChMS_project 
