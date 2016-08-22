@@ -27,13 +27,10 @@ before_script:
 
 # RUN the migration and server
   - sudo a2enmod ssl
-  - sudo mkdir $CI_ROOT/etc/apache2/ssl
+  - locate default-ssl.conf
+  - find default-ssl.conf
   - cd $CI_HOME/ChMS_project 
-  - cd $CI_ROOT/etc/apache2/sites-available/default-ssl.conf
   - pwd
-  - python manage.py migrate --noinput
-  - python manage.py collectstatic --clear --noinput
-  - python manage.py runserver &
 # DIRECT TO HOME DIRECOTRY 
   - cd $CI_HOME 
 script:  true
