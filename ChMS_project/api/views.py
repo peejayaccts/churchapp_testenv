@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from rest_framework import authentication, permissions, viewsets, filters, mixins
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .models import Church, Person, Interest, SkillAndProfession, \
     SpiritualMilestone, Ministry, MemberStatus, PersonInterest, \
@@ -20,8 +21,9 @@ class DefaultsMixin(object):
     filtering and pagination.
     """
     authentication_classes = (
-        authentication.BasicAuthentication,
-        authentication.TokenAuthentication,
+        # authentication.BasicAuthentication,
+        # authentication.TokenAuthentication,
+        JSONWebTokenAuthentication,
     )
     permission_classes = (
         permissions.IsAuthenticated,
@@ -41,6 +43,7 @@ class ChurchViewSet(mixins.ListModelMixin,
                     mixins.CreateModelMixin,
                     mixins.UpdateModelMixin,
                     mixins.DestroyModelMixin,
+                    DefaultsMixin,
                     viewsets.GenericViewSet):
     """API Endpoint for listing and creating daughter churches"""
     queryset = Church.objects.all()
