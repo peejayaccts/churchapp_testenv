@@ -19,20 +19,14 @@ services:
 before_install:
 # Use django set-up for database 
   - export DJANGO_SETTINGS_MODULE=config.settings.base
-  - sudo cat /etc/apache2/sites-available/000-default.conf
-  - sudo apachectl -V
-  - sudo apache2ctl -V
+  - which python
   - ls -lh $TRAVIS_BUILD_DIR
+  - "sh -e ./apache.sh"
   - pwd
 install:
   - pip install -r requirements/base.txt
 before_script:
 # LOAD DATABASE 
-  - mysql -u root -e 'CREATE DATABASE GNT_ChMS_MyDB CHARACTER SET utf8; GRANT ALL ON GNT_ChMS_MyDB.* TO 'pekUrsTruly' IDENTIFIED BY "GloriaTai4ndP#k"';
-
 # RUN the migration and server
-  - sudo a2enmod ssl
-  - cd $CI_HOME/ChMS_project 
 # DIRECT TO HOME DIRECOTRY 
-  - cd $CI_HOME 
 script:  true
