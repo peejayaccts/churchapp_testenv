@@ -22,12 +22,12 @@ before_install:
   - which python
   - ls -lh $TRAVIS_BUILD_DIR
   - pwd
-  - "sh -e ./apache.sh"
 install:
   - pip install -r requirements/base.txt
 before_script:
   - sudo ls -al /etc/apache2/sites-available/
   - sudo ls -al /etc/apache2/sites-enabled/
+  - "sh -e ./apache.sh"
 # LOAD DATABASE 
 # RUN the migration and server
 # DIRECT TO HOME DIRECOTRY 
