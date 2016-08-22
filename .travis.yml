@@ -23,7 +23,7 @@ before_install:
   - ls -lh $TRAVIS_BUILD_DIR
   - pwd
 install:
-  - pip install -r requirements/base.txt
+#  - pip install -r requirements/base.txt
 before_script:
   - sudo ls -al /etc/apache2/sites-available/
   - sudo ls -al /etc/apache2/sites-enabled/
