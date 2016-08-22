@@ -23,7 +23,8 @@ class DefaultsMixin(object):
     """
     if settings.DEBUG:
         authentication_classes = (
-            authentication.BasicAuthentication, JSONWebTokenAuthentication,)
+            authentication.BasicAuthentication,
+            JSONWebTokenAuthentication,)
     else:
         authentication_classes = (JSONWebTokenAuthentication,)
 
@@ -169,6 +170,7 @@ class PersonViewSet(mixins.ListModelMixin,
                     mixins.CreateModelMixin,
                     mixins.UpdateModelMixin,
                     mixins.DestroyModelMixin,
+                    DefaultsMixin,
                     viewsets.GenericViewSet):
     """
     API Endpoint for listing and creating daughter churches
