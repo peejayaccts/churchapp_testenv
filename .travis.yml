@@ -19,6 +19,11 @@ services:
 before_install:
 # Use django set-up for database 
   - export DJANGO_SETTINGS_MODULE=config.settings.base
+  - sudo cat /etc/apache2/sites-available/000-default.conf
+  - sudo apachectl -V
+  - sudo apache2ctl -V
+  - ls -lh $TRAVIS_BUILD_DIR
+  - pwd
 install:
   - pip install -r requirements/base.txt
 before_script:
@@ -27,10 +32,7 @@ before_script:
 
 # RUN the migration and server
   - sudo a2enmod ssl
-  - locate default-ssl.conf
-  - find default-ssl.conf
   - cd $CI_HOME/ChMS_project 
-  - pwd
 # DIRECT TO HOME DIRECOTRY 
   - cd $CI_HOME 
 script:  true
