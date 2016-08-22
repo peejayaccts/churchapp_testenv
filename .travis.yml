@@ -6,7 +6,7 @@ sudo: required
 env:
   global:
     - CI_HOME='/home/travis/build/peejayaccts/churchapp_testenv'
-    - CI_ROOT='/home/travis/'
+    - CI_ROOT='/home/travis'
 addons:
   apt:
     packages:
