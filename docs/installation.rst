@@ -4,12 +4,6 @@ Church Management System(ChMS) - Production Environment Set-up
 
 A project of Good News Technologies, powered by PEK Team of UPITDC.
 
-:Authors:
-    Philip Sales
-    Efren Sia
-    Kristhian Tiu
-    Jonathan Tabac
-
 :Version: 3.0 as of August 15, 2016
 
 Technology Stack and Version
@@ -29,19 +23,21 @@ To use this project follow these steps:
 
 #. Create Amazon Elastic Cloud Computing (EC2) Instance 
 
-#. `Initial Server set-up`_.
+#. `Initial server set-up`_.
 
 #. `Install MySQL`_.
 
-#. `Install packages from Ubuntu Repositories`_.
+#. `Install packages from Ubuntu repositories`_.
 
-#. `Download Django based app`_.
+#. `Download the church application`_.
 
 #. `Create the church app MySQL database`_.
 
-#. `Sync Database with church app`_.
+#. `Sync database with church application`_.
 
 #. `Create a SSL Certificate on Apache (Self-Signed SSL certificate)`_.
+
+#. `Configure Apache`_.
 
 
 Create Ec2 Instance 
@@ -54,16 +50,14 @@ Make IAM users
 Insert here.
 
 
-Initial Server set-up
+Initial server set-up
 =============================
 
+1. In your local computer, log into your AWS EC2 server as ubuntu user.  You 
+   will need to know your server's public IP address and the path to the 
+   security key. ::
 
-1. In your local computer, log into your AWS EC2 server as ubuntu user. 
-You will need to know your server's public IP address and the path to the 
-security key ::
-
-    $ ssh -i path/to/.pem ubuntu@SERVER_IP_ADDRESS 
-
+    $ ssh -i path/to/.pem ubuntu@SERVER_IP_ADDRESS
 
 2. From ubuntu user, switch user as root ::
 
@@ -74,9 +68,9 @@ security key ::
 
     $ adduser chms_admin 
 
-   A prompt will appear like this, just enter password and fill the information
 
-   ::
+   *A prompt will appear like this, just enter password and fill the information* ::
+
         Adding user \`chms_admin' ...
         Adding new group \`chms_admin' (1001) ...
         Adding new user \`chms_admin' (1001) with group \`chms_admin' ...
@@ -128,13 +122,13 @@ The following dependencies for environment set-up are:
     
     $ mysql —-version
 
-
 #. Check the status of your MySQL and restart. ::
    
     $ service mysql status
     $ sudo service mysql restart
 
-Install packages from Ubuntu Repositories
+
+Install packages from Ubuntu repositories
 =============================
 
 #. For Django with Python 3, install the dependencies using. ::
@@ -150,19 +144,17 @@ Install packages from Ubuntu Repositories
  
     $ mkdir ~/src
 
-
 #. Create a virtual environment directory for the project. ::
  
     $ cd ~/src
     $ virtualenv churchapp_env
-    
 
 #. Activate the python virtual environment for the project. ::
 
     $ cd ~/src
     $ source churchapp_env/bin/activate
 
-Download Django based app 
+Download the church application
 =============================
 
 #. Download the project from the repository to the created project folder. ::
@@ -175,7 +167,7 @@ Download Django based app
     $ cd ~/src/churchappp
     $ pip install -r requirements/production.txt
 
-   *Your console will look like this*::
+   *Your console will now look like this*::
 
         $ (churchapp_env) chms_admin@SERVER_IP_ADDRESS: ~/src
 
@@ -190,24 +182,21 @@ Create the church app MySQL database
 
    *note: this is the actual application database name and password*
     
-Sync Database with church app 
+Sync database with church application
 =============================
 
 1. Go to app source code directory. ::
 
     $ cd ~/src/churchapp/ChMS_project 
 
-
-2. Run migrate to synchronize the app object data model to MySQL. ::
+2. Run migrate command to synchronize the app object data model with MySQL. ::
 
     $ python manage.py migrate
 
-
-3. Collect all static files into one folder directory for easier caching of
-the django application assets. :: 
+3. Collect all static files into one folder directory for easier caching of 
+   the django application assets. :: 
 
     $ python manage.py collectstatic 
-
 
    *note: A prompt will look like this, type 'yes' and hit enter* ::
 
@@ -238,153 +227,241 @@ Create a SSL Certificate on Apache (Self-Signed SSL certificate)
                        -out /etc/apache2/ssl/apache.crt
 
 
-  *note: for reference guide*
+  *For reference guide*
   ::
-    * openssl: This is the basic command line tool provided by OpenSSL to create and manage certificates, keys, signing requests, etc.
+    * openssl: This is the basic command line tool provided by OpenSSL to 
+      create and manage certificates, keys, signing requests, etc.
 
-    * req: This specifies a subcommand for X.509 certificate signing request (CSR) management. X.509 is a public key infrastructure standard that SSL adheres to for its key and certificate managment. Since we are wanting to create a new X.509 certificate, this is what we want.
+    * req: This specifies a subcommand for X.509 certificate signing request 
+      (CSR) management. X.509 is a public key infrastructure standard that 
+      SSL adheres to for its key and certificate managment.  Since we are 
+      wanting to create a new X.509 certificate, this is what we want.
 
-    * -x509: This option specifies that we want to make a self-signed certificate file instead of generating a certificate request.
+    * -x509: This option specifies that we want to make a self-signed 
+      certificate file instead of generating a certificate request.
 
-    * -nodes: This option tells OpenSSL that we do not wish to secure our key file with a passphrase. Having a password protected key file would get in the way of Apache starting automatically as we would have to enter the password every time the service restarts.
+    * -nodes: This option tells OpenSSL that we do not wish to secure 
+      our key file with a passphrase. Having a password protected key 
+      file would get in the way of Apache starting automatically as we 
+      would have to enter the password every time the service restarts.
 
-    * -days 365: This specifies that the certificate we are creating will be valid for one year.
+    * -days 365: This specifies that the certificate we are creating will 
+      be valid for one year.
 
-    * -newkey rsa:2048: This option will create the certificate request and a new private key at the same time. This is necessary since we didn't create a private key in advance. The rsa:2048 tells OpenSSL to generate an RSA key that is 2048 bits long.
+    * -newkey rsa:2048: This option will create the certificate request 
+      and a new private key at the same time. This is necessary since we 
+      didn't create a private key in advance. The rsa:2048 tells OpenSSL to 
+      generate an RSA key that is 2048 bits long.
 
-    * -keyout: This parameter names the output file for the private key file that is being created.
+    * -keyout: This parameter names the output file for the private key file 
+      that is being created.
 
-    * -out: This option names the output file for the certificate that we are generating.
-
-
-3. When you hit "ENTER", you will be asked a number of questions.
-The most important item that is requested is the line that reads 
-**"Common Name (e.g. server FQDN or YOUR name)"**. You should enter the domain 
-name you want to associate with the certificate, or the server's public 
-IP address if you do not have a domain name.  The questions portion looks something like this
-
-::
-    Country Name (2 letter code) [AU]:Your Country
-    State or Province Name (full name) [Some-State]:Your State
-    Locality Name (eg, city) []:Your Locality
-    Organization Name (eg, company) [Internet Widgits Pty Ltd]:Your Company
-    Organizational Unit Name (eg, section) []:Department of Kittens
-    Common Name (e.g. server FQDN or YOUR name) []:your_domain.com
-    Email Address []:your_email@domain.com.
+    * -out: This option names the output file for the certificate that we are 
+      generating.
 
 
-4. Configure the Apache to Use SSL, use the **default-ssl.conf** for the 
-Apache virtual host configuration file.  Open the file with root privileges::
+3. When you hit "ENTER", you will be asked a number of questions.  The most 
+   important item that is requested is the line that reads **"Common Name 
+   (e.g. server fqdn or your name)"**. you should enter the domain name you 
 
+   want to associate with the certificate, or the server's public ip address 
+   if you do not have a domain name.  the questions portion looks something 
+   like this ::
+
+        Country Name (2 letter code) [au]:your country
+        State or Province name (full name) [some-state]:your state
+        Locality Name (eg, city) []:your locality
+        Organization Name (eg, company) [Internet Widgits Pty Ltd]:your company
+        Organizational Unit Name (eg, section) []:department of kittens
+        Common Name (e.g. server FQDN or YOUR name) []:your_domain.com
+        Email Address []:your_email@domain.com.
+
+
+4. Configure the Apache to use the generated SSL, make an original copy of 
+   **default-ssl.conf** for the apache virtual host configuration file.  ::
+
+    $ sudo cp /etc/apache2/sites-available/default-ssl.conf.bak  \
+              /etc/apache2/sites-available/default-ssl.conf 
+
+5. Open file with root privileges and edit. ::
 
     $ sudo nano /etc/apache2/sites-available/default-ssl.conf
 
-   *With all comments removed, the file will look like this* ::
+*With all comments removed, the file will look like this* ::
 
-            <IfModule mod_ssl.c>
-                <VirtualHost _default_:443>
-                    ServerAdmin webmaster@localhost
-                    DocumentRoot /var/www/html
-                    ErrorLog ${APACHE_LOG_DIR}/error.log
-                    CustomLog ${APACHE_LOG_DIR}/access.log combined
-                    SSLEngine on
-                    SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem
-                    SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
-                    <FilesMatch "\.(cgi|shtml|phtml|php)$">
-                                    SSLOptions +StdEnvVars
-                    </FilesMatch>
-                    <Directory /usr/lib/cgi-bin>
-                                    SSLOptions +StdEnvVars
-                    </Directory>
-                    BrowserMatch "MSIE [2-6]" \
-                                    nokeepalive ssl-unclean-shutdown \
-                                    downgrade-1.0 force-response-1.0
-                    BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
-                </VirtualHost>
-            </IfModule>
+    <IfModule mod_ssl.c>
+        <VirtualHost _default_:443>
 
+            ServerAdmin webmaster@localhost
+            DocumentRoot /var/www/html
+            ErrorLog ${APACHE_LOG_DIR}/error.log
+            CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-   *Add (if text not existing) or edit the file to look like this, then save and exit the file.* ::
+            SSLEngine on
+            SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem
+            SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
 
+            <FilesMatch "\.(cgi|shtml|phtml|php)$">
+                            SSLOptions +StdEnvVars
+            </FilesMatch>
+            <Directory /usr/lib/cgi-bin>
+                            SSLOptions +StdEnvVars
+            </Directory>
+            BrowserMatch "MSIE [2-6]" \
+                            nokeepalive ssl-unclean-shutdown \
+                            downgrade-1.0 force-response-1.0
+            BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
+        </VirtualHost>
+    </IfModule>
 
-            <IfModule mod_ssl.c>
-                <VirtualHost _default_:443>
-                    ServerAdmin admin@example.com
-                    ServerName your_domain.com
-                    ServerAlias www.your_domain.com
-                    DocumentRoot /var/www/html
-                    ErrorLog ${APACHE_LOG_DIR}/error.log
-                    CustomLog ${APACHE_LOG_DIR}/access.log combined
+*Add (if text not existing) or edit the file to look like this, then save and 
+exit the file.* ::
 
-                    Alias /static /home/chms_admin/src/churchapp/ChMS_project/ChMS/static
-                    <Directory /home/chms_admin/src/churchapp/ChMS_project/ChMS/static>
-                        Require all granted
-                    </Directory>
+    <IfModule mod_ssl.c>
+        <VirtualHost _default_:443>
 
-                    <Directory /home/chms_admin/src/churchapp/ChMS_project/ChMS>
-                        <Files wsgi.py>
-                            Require all granted
-                        </Files>
-                    </Directory>
+            ServerAdmin admin@example.com
+            ServerName your_domain.com
+            ServerAlias www.your_domain.com
+            DocumentRoot /var/www/html
 
-                    WSGIDaemonProcess churchapp python-home=/home/chms_admin/src/churchapp/churchapp_env python-path=/home/chms_admin/src/churchapp/ChMS_project/ChMS
-                    WSGIProcessGroup churchapp
-                    WSGIScriptAlias / /home/chms_admin/src/churchapp/ChMS_project/ChMS/wsgi.py
+            ErrorLog ${APACHE_LOG_DIR}/error.log
+            CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-                    SSLEngine on
-                    SSLCertificateFile **/etc/apache2/ssl/apache.crt**
-                    SSLCertificateKeyFile **/etc/apache2/ssl/apache.key**
-                    <FilesMatch "\.(cgi|shtml|phtml|php)$">
-                                    SSLOptions +StdEnvVars
-                    </FilesMatch>
-                    <Directory /usr/lib/cgi-bin>
-                                    SSLOptions +StdEnvVars
-                    </Directory>
-                    BrowserMatch "MSIE [2-6]" \
-                                    nokeepalive ssl-unclean-shutdown \
-                                    downgrade-1.0 force-response-1.0
-                    BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
-                </VirtualHost>
-            </IfModule>
+            SSLEngine on
+            SSLCertificateFile /etc/apache2/ssl/apache.crt
+            SSLCertificateKeyFile /etc/apache2/ssl/apache.key
 
-   *This part below, is how we configure the WSGI pass in Apache. 
-    Client connections that Apache receives will be translated into the WSGI 
-    format that the Django application expects using the mod_wsgi module.* ::
+            <FilesMatch "\.(cgi|shtml|phtml|php)$">
+                            SSLOptions +StdEnvVars
+            </FilesMatch>
+            <Directory /usr/lib/cgi-bin>
+                            SSLOptions +StdEnvVars
+            </Directory>
+            BrowserMatch "MSIE [2-6]" \
+                            nokeepalive ssl-unclean-shutdown \
+                            downgrade-1.0 force-response-1.0
+            BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
+        </VirtualHost>
+    </IfModule>
 
+*Take note of the followng updated lines exit the file.* ::
 
-                Alias /static /home/chms_admin/src/churchapp/ChMS_project/ChMS/static
-                <Directory /home/chms_admin/src/churchapp/ChMS_project/ChMS/static>
-                    Require all granted
-                </Directory>
+            ServerAdmin admin@example.com
+            ServerName your_domain.com
+            ServerAlias www.your_domain.com
 
-                <Directory /home/chms_admin/src/churchapp/ChMS_project/ChMS>
-                    <Files wsgi.py>
-                        Require all granted
-                    </Files>
-                </Directory>
+            SSLEngine on
+            SSLCertificateFile /etc/apache2/ssl/apache.crt
+            SSLCertificateKeyFile /etc/apache2/ssl/apache.key
 
-                WSGIDaemonProcess churchapp python-home=/home/chms_admin/src/churchapp/churchapp_env python-path=/home/chms_admin/src/churchapp/ChMS_project/ChMS
-                WSGIProcessGroup churchapp
-                WSGIScriptAlias / /home/chms_admin/src/churchapp/ChMS_project/ChMS/wsgi.py
-
-
-5. Activate the SSL enabled site configuration, the restart the Apache to load the new file ::
-
+5. Activate the SSL enabled site configuration, :: 
 
     $ sudo a2ensite default—ssl.conf
+
+Configure Apache
+=============================
+
+1. Update the Apache SSL Virtual Host configuration file. :: 
+   
+    $ sudo nano /etc/apache2/sites-available/default-ssl.conf
+
+2. Add this part below, save and exit the file. :: 
+
+    Alias /static /home/chms_admin/src/churchapp/ChMS_project/ChMS/static
+    <Directory /home/chms_admin/src/churchapp/ChMS_project/ChMS/static>
+        Require all granted
+    </Directory>
+
+    <Directory /home/chms_admin/src/churchapp/ChMS_project/ChMS>
+        <Files wsgi.py>
+            Require all granted
+        </Files>
+    </Directory>
+
+    WSGIDaemonProcess churchapp python-home=/home/chms_admin/src/churchapp/churchapp_env python-path=/home/chms_admin/src/churchapp/ChMS_project/ChMS
+    WSGIProcessGroup churchapp
+    WSGIScriptAlias / /home/chms_admin/src/churchapp/ChMS_project/ChMS/wsgi.py
+
+   *This is how we configure the WSGI pass in Apache. Client connections 
+   that Apache receives will be translated into the WSGI 
+   format that the Django application expects using the mod_wsgi module* 
+
+3. The default-ssl.conf file will now look like this. ::
+  
+    <IfModule mod_ssl.c>
+        <VirtualHost _default_:443>
+            ServerAdmin admin@example.com
+            ServerName your_domain.com
+            ServerAlias www.your_domain.com
+            DocumentRoot /var/www/html
+            ErrorLog ${APACHE_LOG_DIR}/error.log
+            CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+            Alias /static /home/chms_admin/src/churchapp/ChMS_project/ChMS/static
+            <Directory /home/chms_admin/src/churchapp/ChMS_project/ChMS/static>
+                Require all granted
+            </Directory>
+
+            <Directory /home/chms_admin/src/churchapp/ChMS_project/ChMS>
+                <Files wsgi.py>
+                    Require all granted
+                </Files>
+            </Directory>
+
+            WSGIDaemonProcess churchapp python-home=/home/chms_admin/src/churchapp/churchapp_env python-path=/home/chms_admin/src/churchapp/ChMS_project/ChMS
+            WSGIProcessGroup churchapp
+            WSGIScriptAlias / /home/chms_admin/src/churchapp/ChMS_project/ChMS/wsgi.py
+
+            SSLEngine on
+            SSLCertificateFile **/etc/apache2/ssl/apache.crt**
+            SSLCertificateKeyFile **/etc/apache2/ssl/apache.key**
+            <FilesMatch "\.(cgi|shtml|phtml|php)$">
+                            SSLOptions +StdEnvVars
+            </FilesMatch>
+            <Directory /usr/lib/cgi-bin>
+                            SSLOptions +StdEnvVars
+            </Directory>
+            BrowserMatch "MSIE [2-6]" \
+                            nokeepalive ssl-unclean-shutdown \
+                            downgrade-1.0 force-response-1.0
+            BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
+        </VirtualHost>
+    </IfModule>
+
+5. Modify the Unencrypted Virtual Host file to redirect to HTTPS. ::
+
+    $ sudo nano /etc/apache2/sites-available/000-default.conf
+
+   and add the following line. ::
+
+     <VirtualHost *:80>
+             . . .
+
+             Redirect "/" "https://your_domain_or_IP/"
+
+             . . .
+     </VirtualHost *:80>
+    
+5. Check if the configuration syntax are correct. ::
+
+    $ sudo apachectl configtest
+
+   *If done correclty, you will expect to see this* ::
+    
+    $ Syntax OK
+
+6. Restart the Apache to load the new file configuration ::
+
     $ sudo service apache2 restart
 
-
-6. Test your set-up in your browser ::
-
+7. Test your set-up in your browser ::
 
     $ https://server_domain_name_or_IP_address
 
-
-   *note: You will get a warning that your browser cannot verify the identity of 
-    your server because it has not been signed by one of the certificate 
-    authorities that it trusts. Just hit the “Proceed anyway” button*
-
+*note: You will get a warning that your browser cannot verify the identity of 
+your server because it has not been signed by one of the certificate authorities 
+that it trusts. Just hit the “Proceed anyway” button*
 
 **REFERENCES**
 =============================
@@ -395,6 +472,15 @@ Apache virtual host configuration file.  Open the file with root privileges::
 
 **TODO**
 
+REDIRECT 
+
 `Additional server setup <https://www.digitalocean.com/community/tutorials/additional-recommended-steps-for-new-ubuntu-14-04-servers>`_.
 
 `MySQL secure setup <https://www.digitalocean.com/community/tutorials/how-to-secure-mysql-and-mariadb-databases-in-a-linux-vps>`_.
+
+
+:Authors:
+    Efren Sia
+    Kristhian Tiu
+    Jonathan Tabac
+    Philip Sales
