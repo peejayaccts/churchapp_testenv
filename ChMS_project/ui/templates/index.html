@@ -72,11 +72,33 @@
           }
         });
 
+        // get token
+        $.ajax({
+          url: app.apiLogin,
+          method: 'POST',
+          data: {
+             'username': 'demo',
+             'password': 'demodemo'
+          },
+          async: false,
+          dataType: 'json',
+          success: function(data) {
+          console.log(data);
+             app.token = data['token']
+          }
+        });
+
         console.log(app);
 
         // to get all churches
-        $.getJSON(app.churches.url, function( data ) {
-           console.log(data);
+        $.ajax({
+          headers: { "Authorization": "JWT " + app.token },
+          url: app.churches.url,
+          method: 'GET',
+          dataType: 'json',
+          success: function(data) {
+             console.log(data);
+          }
         });
       
       });

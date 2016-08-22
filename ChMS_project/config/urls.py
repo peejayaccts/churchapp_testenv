@@ -16,15 +16,19 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.views.generic import TemplateView
 
-from rest_framework.authtoken.views import obtain_auth_token
+#from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework_jwt.views import obtain_jwt_token
 
 from api.urls import router
 
 urlpatterns = [
-    url(r'^api/token/', obtain_auth_token, name="api-token"),
+    #url(r'^api/token/', obtain_auth_token, name="api-token"),
+    #url(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
+    url(r'^api/token/', obtain_jwt_token, name="api-token"),
     url(r'^api/', include(router.urls)),
     url(r'^$', TemplateView.as_view(template_name='ChMS/index.html')),
     # Experimental Django App to show simple ui app
     url(r'^ui/', TemplateView.as_view(template_name='index.html')),
+    url(r'^ui2/', TemplateView.as_view(template_name='index2.html')),
     url(r'^uichms/', TemplateView.as_view(template_name='uichms/index.html')),
 ]
