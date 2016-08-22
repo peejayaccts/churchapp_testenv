@@ -21,11 +21,13 @@ before_install:
   - export DJANGO_SETTINGS_MODULE=config.settings.base
   - which python
   - ls -lh $TRAVIS_BUILD_DIR
-  - "sh -e ./apache.sh"
   - pwd
+  - "sh -e ./apache.sh"
 install:
   - pip install -r requirements/base.txt
 before_script:
+  - sudo ls -al /etc/apache2/sites-available/
+  - sudo ls -al /etc/apache2/sites-enabled/
 # LOAD DATABASE 
 # RUN the migration and server
 # DIRECT TO HOME DIRECOTRY 
