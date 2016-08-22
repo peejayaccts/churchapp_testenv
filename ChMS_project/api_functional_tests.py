@@ -7,6 +7,10 @@ import string
 import json
 
 
+USERNAME = 'demo'
+PASSWORD = 'demodemo'
+
+
 def randomword(length):
     return ''.join(random.choice(string.ascii_lowercase) for i in range(length))
 
@@ -604,16 +608,47 @@ class ChurchAPITest(unittest.TestCase):
         response = requests.get('http://127.0.0.1:8000/api/')
         self.assertTrue(response.status_code, 200)
         self.api = response.json()
+        response = requests.post('http://127.0.0.1:8000/api/token/',
+                                 data={'username': USERNAME,
+                                       'password': PASSWORD, })
+        self.assertTrue(response.status_code == 200)
+        response_json = response.json()
+        self.token = response_json['token']
+        self.headers = {
+            'Authorization': 'JWT ' + self.token,
+            'X-Requested-With': 'Python requests',
+            'Content-type': 'application/json'
+        }
         # pprint.pprint(self.api)
+
+    def request_get(self, url, header=None):
+        if not header:
+            header = self.headers
+        return requests.get(url, headers=header)
+
+    def request_post(self, url, data, header=None):
+        if not header:
+            header = self.headers
+        return requests.post(url, json=data, headers=header)
+
+    def request_put(self, url, data, header=None):
+        if not header:
+            header = self.headers
+        return requests.put(url, json=data, headers=header)
+
+    def request_delete(self, url, header=None):
+        if not header:
+            header = self.headers
+        return requests.delete(url, headers=header)
 
     def tearDown(self):
         while self.added_test_data:
-            response = requests.get(
+            response = self.request_get(
                 self.api['churches'] + str(self.added_test_data.pop()))
             self.assertTrue(response.status_code == 200)
             interest = response.json()
             # pprint.pprint('Deleting Interest: ' + interest['name'])
-            del_response = requests.delete(interest['links']['self'])
+            del_response = self.request_delete(interest['links']['self'])
             self.assertTrue(del_response.status_code == 204)
 
     def test_church_resource_found(self):
@@ -627,12 +662,8 @@ class ChurchAPITest(unittest.TestCase):
             'banner': randomword(200),
             'regional_info': None
         }
-        headers = {'X-Requested-With': 'Python requests',
-                   'Content-type': 'application/json'}
-        response = requests.post(
-            self.api['churches'], data=json.dumps(input_data), headers=headers)
+        response = self.request_post(self.api['churches'], input_data)
         response_json = response.json()
-        # pprint.pprint(response_json)
         self.assertTrue(response.status_code == 201)
         self.added_test_data.append(response_json['id'])
 
@@ -646,10 +677,7 @@ class ChurchAPITest(unittest.TestCase):
             'banner': randomword(200),
             'regional_info': None,
         }
-        headers = {'X-Requested-With': 'Python requests',
-                   'Content-type': 'application/json'}
-        response = requests.post(
-            self.api['churches'], data=json.dumps(input_data), headers=headers)
+        response = self.request_post(self.api['churches'], input_data)
         if(response.status_code != 400):
             response_json = response.json()
             self.added_test_data.append(response_json['id'])
@@ -665,10 +693,7 @@ class ChurchAPITest(unittest.TestCase):
             'banner': randomword(200),
             'regional_info': None,
         }
-        headers = {'X-Requested-With': 'Python requests',
-                   'Content-type': 'application/json'}
-        response = requests.post(
-            self.api['churches'], data=json.dumps(input_data), headers=headers)
+        response = self.request_post(self.api['churches'], input_data)
         if(response.status_code != 400):
             response_json = response.json()
             self.added_test_data.append(response_json['id'])
@@ -684,10 +709,7 @@ class ChurchAPITest(unittest.TestCase):
             'banner': randomword(200),
             'regional_info': None,
         }
-        headers = {'X-Requested-With': 'Python requests',
-                   'Content-type': 'application/json'}
-        response = requests.post(
-            self.api['churches'], data=json.dumps(input_data), headers=headers)
+        response = self.request_post(self.api['churches'], input_data)
         if(response.status_code != 400):
             response_json = response.json()
             self.added_test_data.append(response_json['id'])
@@ -695,13 +717,13 @@ class ChurchAPITest(unittest.TestCase):
                         'Must not allow church name exceeding 255.')
 
     def test_get_all_church(self):
-        response = requests.get(self.api['churches'])
+        response = self.request_get(self.api['churches'])
         self.assertTrue(response.status_code == 200)
 
     def test_search_church(self):
         new_church = randomword(20)
         self.test_add_church(new_church)
-        response = requests.get(
+        response = self.request_get(
             self.api['churches'] + '?search=' + new_church)
         self.assertTrue(response.status_code == 200)
         self.assertTrue(len(response.json()) == 1)
@@ -709,7 +731,7 @@ class ChurchAPITest(unittest.TestCase):
     def test_update_basic_info_church(self):
         new_church = randomword(200)
         self.test_add_church(new_church)
-        response = requests.get(self.api['churches'])
+        response = self.request_get(self.api['churches'])
         self.assertTrue(response.status_code == 200)
         churches = response.json()
         for church in churches:
@@ -718,11 +740,8 @@ class ChurchAPITest(unittest.TestCase):
                 church['vision'] = 'Test: Updated Vision'
                 church['logo'] = 'Test: Logo'
                 church['banner'] = 'Test: Banner'
-                headers = {'X-Requested-With': 'Python requests',
-                           'Content-type': 'application/json'}
-                put_response = requests.put(church['links']['self'],
-                                            data=json.dumps(church),
-                                            headers=headers)
+                put_response = self.request_put(
+                    church['links']['self'], church)
                 put_response_json = put_response.json()
                 self.assertTrue(put_response.status_code == 200)
                 self.assertTrue(put_response_json['name'] == church['name'])
@@ -735,11 +754,11 @@ class ChurchAPITest(unittest.TestCase):
     def test_delete_church(self):
         self.test_add_church()
         current_id = self.added_test_data[-1]
-        response = requests.get(
+        response = self.request_get(
             self.api['churches'] + str(current_id))
         self.assertTrue(response.status_code == 200)
         church = response.json()
-        del_response = requests.delete(church['links']['self'])
+        del_response = self.request_delete(church['links']['self'])
         self.assertTrue(del_response.status_code == 204)
         self.added_test_data.pop()
 
@@ -748,7 +767,7 @@ class ChurchAPITest(unittest.TestCase):
         self.test_add_church(new_church)
         another_church = 'Z' * 10
         self.test_add_church(another_church)
-        response = requests.get(
+        response = self.request_get(
             self.api['churches'] + '?ordering=name')
         churches = response.json()
         latest_church = ''
@@ -764,7 +783,7 @@ class ChurchAPITest(unittest.TestCase):
         self.test_add_church(new_church)
         another_church = 'Z' * 10
         self.test_add_church(another_church)
-        response = requests.get(
+        response = self.request_get(
             self.api['churches'] + '?ordering=-name')
         churches = response.json()
         latest_church = ''
@@ -778,7 +797,8 @@ class ChurchAPITest(unittest.TestCase):
     def test_link_regional_info_link(self):
         new_church = randomword(20)
         self.test_add_church(new_church)
-        response = requests.get(self.api['churches'] + '?search=' + new_church)
+        response = self.request_get(
+            self.api['churches'] + '?search=' + new_church)
         self.assertTrue(response.status_code == 200)
         churches = response.json()
         for church in churches:
@@ -787,7 +807,7 @@ class ChurchAPITest(unittest.TestCase):
     def test_add_update_region_info_church(self):
         new_church = randomword(200)
         self.test_add_church(new_church)
-        response = requests.get(self.api['churches'])
+        response = self.request_get(self.api['churches'])
         self.assertTrue(response.status_code == 200)
         churches = response.json()
         for church in churches:
@@ -804,11 +824,8 @@ class ChurchAPITest(unittest.TestCase):
                     'zip_post_code': 999
                 }
                 church['regional_info'] = regional_info
-                headers = {'X-Requested-With': 'Python requests',
-                           'Content-type': 'application/json'}
-                put_response = requests.put(church['links']['self'],
-                                            data=json.dumps(church),
-                                            headers=headers)
+                put_response = self.request_put(
+                    church['links']['self'], church)
                 put_response_json = put_response.json()
                 self.assertTrue(put_response.status_code ==
                                 200, put_response.status_code)
@@ -818,11 +835,8 @@ class ChurchAPITest(unittest.TestCase):
                 # UPDATE : With existing regional info
                 regional_info['date_format'] = 'date_format_updated'
                 church['regional_info'] = regional_info
-                headers = {'X-Requested-With': 'Python requests',
-                           'Content-type': 'application/json'}
-                put_response = requests.put(church['links']['self'],
-                                            data=json.dumps(church),
-                                            headers=headers)
+                put_response = self.request_put(
+                    church['links']['self'], church)
                 put_response_json = put_response.json()
                 self.assertTrue(put_response.status_code ==
                                 200, put_response.status_code)
@@ -832,7 +846,7 @@ class ChurchAPITest(unittest.TestCase):
     def test_update_global_info_church(self):
         new_church = randomword(200)
         self.test_add_church(new_church)
-        response = requests.get(self.api['churches'])
+        response = self.request_get(self.api['churches'])
         self.assertTrue(response.status_code == 200)
         churches = response.json()
         for church in churches:
@@ -840,11 +854,8 @@ class ChurchAPITest(unittest.TestCase):
                 church['max_mentees_mentor'] = 98
                 church['max_subgroup_person'] = 99
                 church['max_subgroup_members'] = 100
-                headers = {'X-Requested-With': 'Python requests',
-                           'Content-type': 'application/json'}
-                put_response = requests.put(church['links']['self'],
-                                            data=json.dumps(church),
-                                            headers=headers)
+                put_response = self.request_put(
+                    church['links']['self'], church)
                 put_response_json = put_response.json()
                 self.assertTrue(put_response.status_code == 200)
                 self.assertTrue(put_response_json['max_mentees_mentor'] == 98)
