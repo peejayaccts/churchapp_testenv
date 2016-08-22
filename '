@@ -30,7 +30,6 @@ before_script:
   - sudo a2enmod ssl
   - sudo service apache2 restart
   - sudo cp /etc/apache2/sites-available/default-ssl.conf  /etc/apache2/sites-available/default-ssl.conf.bak 
-  - sudo ls -al /etc/apache2/sites-available/
   - sudo cat chms-default-ssl.conf > /etc/apache2/sites-available/default-ssl.conf 
   - sudo tee chms-default-ssl.conf > /etc/apache2/sites-available/default-ssl.conf 
   - sudo a2ensite default-ssl.conf
