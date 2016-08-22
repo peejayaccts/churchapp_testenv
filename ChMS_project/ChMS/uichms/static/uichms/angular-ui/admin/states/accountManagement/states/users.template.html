@@ -1,0 +1,133 @@
+<!-- account.users template -->
+<div class="row bottom-buffer">
+        <div class="col-sm-6 col-xs-12" style="ackground:pink">
+              <div class="visible-xs hidden-sm text-center" >
+                   <label>List of Users</label>
+              </div>
+              <div class="visible-sm hidden-xs text-left" >
+                   <label>List of Users</label>
+              </div>
+        </div>
+        <div class="clearfix visible-xs-block bottom-buffer"></div>
+        <div class="col-sm-3 col-xs-12" style='ackground:blue'>
+            <button type="button"
+                    class="btn btn-md btn-primary col-xs-12 pull-right"
+                    data-toggle="modal"
+                    data-target="#email">
+              <span class="glyphicon glyphicon-envelope"></span>
+              Email All
+            </button>
+        </div>
+        <div class="clearfix visible-xs-block bottom-buffer"></div>
+        <div class="col-sm-3 col-xs-12" style='ackground:red'>
+            <button type="button"
+                    class="btn btn-md btn-primary col-xs-12">
+              <span class="glyphicon glyphicon-plus"></span>
+              Add User 
+            </button>
+        </div>
+        <div class="clearfix visible-xs-block top-buffer"></div>
+</div>
+
+<!-- Email Modal -->
+<div class="modal fade"
+     id="email"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content form-group">
+      <div class="modal-header">
+        <h4 class="modal-title">Send Email</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row col-xs-offset-3">
+          <div class="row">
+            <div class="col-xs-3">
+              From: 
+            </div>
+            <div class="col-xs-5">
+              <input type="text"
+                     class="form-control"
+                     value="myemail@gmail.com">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-3">
+              To: 
+            </div>
+            <div class="col-xs-5">
+              <textarea class="form-control">email1@gmail.com
+              </textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-3">
+              Message
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-8">
+              <textarea class="form-control col-xs-12"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="btn btn-md btn-primary"
+                data-dismiss="modal">
+          Cancel
+        </button>
+        <button type="submit"
+                class="btn btn-md btn-primary"
+                data-dismiss="modal">
+          Send
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Email Modal -->
+
+<div class="row bottom-buffer">
+  <div class="col-xs-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Username</th>
+          <th>Name</th>
+          <th>Role</th>
+          <th>View</th>
+          <th>Edit</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="user in adminCtrl.AdminModel.usersList"
+            class="text-center">
+          <td>{{ user.no }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <a href="" class="icon">
+              <span class="glyphicon glyphicon-eye-open"></a>
+            </a>
+          </td>
+          <td>
+            <a href="" class="icon">
+              <span class="glyphicon glyphicon-edit"></span>
+            </a>
+          </td>
+          <td>
+            <a href="" class="icon">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

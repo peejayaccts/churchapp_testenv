@@ -1,0 +1,237 @@
+{% load staticfiles %}
+{% load compress %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Management System</title>
+
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'uichms/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'uichms/css/site.css' %}"> 
+    {% endcompress %}
+    <script id="config" type="text/json">
+      {
+        "apiRoot": "{% url 'api-root' %}",
+        "apiLogin": "{% url 'api-token' %}"
+      }
+    </script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+            <center>
+                <h3 style="color:red">Your Browser Is not supported!</h3>
+                <h2>Please upgrade your Internet Explorer to 
+                    <a target='_blank' 
+                        href='http://browsehappy.com'>latest browser versions</a>
+                </h2> 
+                <h2>or use Firefox or Chrome browser </h3>
+            </center>
+    <![endif]-->
+  </head>
+	<body ng-app="ChMS-ui">
+
+    <div class="wrapper">
+
+    <!-- Container -->
+		<div class="container">
+
+      <!-- Header -->
+			<div class="row">
+
+            <!-- Banner -->
+                <div class="" style='padding-top: 2%; bacground:#10A754'>
+                    <div class="container-fluid">
+                        <div class="row" style='backgroun: red'>
+                            <div class="col-xs-4 col-sm-3" style='background: lue'>
+                                <img src="{% static 'uichms/img/logo-church1.png' %}" 
+                                      class="img-responsive">
+                            </div>
+                            <div class="col-xs-8 col-sm-9" style="background:ink">
+                                <img src="{% static 'uichms/img/banner-church1.jpg' %}" 
+                                     class="img-responsive">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 text-center">
+                                <label class="text-justify"
+                                    style="padding: 2%">Vision: "For I know the plans for you.
+                                  Plans to prosper you and not to harm you,
+                                  plans to give you a hope and a
+                                  future"</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status bar -->
+                    <div class="nav status-bar" style=''>
+
+                        <div class="row">
+                            <div class="visible-xs 
+                                        hidden-sm 
+                                        hidden-md 
+                                        hidden-lg 
+                                        col-xs-12 
+                                        text-center
+                                        status-bar wall">
+                            <h1 class="">
+                              NEW HIC
+                            </h1>
+                          </div>
+
+                          <div class="col-sm-3 
+                                      col-xs-6 
+                                      text-center 
+                                      status-bar 
+                                      wall"
+                               style="padding-top : 1%;">
+                            <p class="text-center">Sunday, June 12, 2016</p>
+                            <p class="text-center">7:00 PM; AST</p>
+                          </div>
+
+                          <div class="hidden-xs 
+                                      visible-sm 
+                                      visible-md
+                                      visible-lg 
+                                      col-sm-6 
+                                      col-md-6 
+                                      col-lg-6 
+                                      status-bar 
+                                      wall">
+                            <h2 class="text-center">
+                              NEW HIC 
+                            </h2>
+                          </div>
+                          
+                          <div class="col-sm-3 col-md-3 col-xs-6 status-bar
+                              text-center" >
+                                <button class="btn btn-primary" type="button"
+                                    style="margin-top:5%;margin-bottom:5%">
+                                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                  John Snow
+                                  <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                                </button>
+                          </div>
+
+                       </div>
+                    </div>
+
+        <!-- Navigation bar -->
+          <nav class="navbar navbar-inverse">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed nav-left"
+                      data-toggle="collapse"
+                      data-target="#bs-nav-collapse"
+                      aria-expanded="false" >
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+
+            <div class="collapse navbar-collapse" id=bs-nav-collapse>
+              <ul class="nav navbar-nav navbar-Left">
+                <li><a href="" ui-sref="login">Login</a></li>
+                <li><a href="" ui-sref="home">Home</a></li>
+                <li><a href="" ui-sref="people">People</a></li>
+                <li><a href="" ui-sref="ministries">Ministries</a></li>
+                <li><a href="" ui-sref="admin">Admin</a></li>
+              </ul>
+            </div>
+          </nav>
+				
+			</div>
+      <!-- Header end -->
+
+      <!-- Contents -->
+			{% verbatim %}
+			<div id="main">
+        <!-- <div ng-view></div> -->
+        <div ui-view></div>
+			</div>
+			{% endverbatim %}
+      <!-- Contents end -->
+
+      <!-- Push div to fill the whole page if content does not. For Footer -->
+      <div class="push"></div> 
+
+		</div>
+    <!-- Container end -->
+    </div>
+
+    <div class="footer">
+      <div class="container">
+        <div class="col-sm-12" style="padding-top:20px;">
+          <a class="col-sm-1" href="#">Careers</a>
+          <a class="col-sm-1" href="#">Contact</a>
+          <a class="col-sm-1" href="#">About</a>
+          <p class="col-sm-4 text-muted">All Rights Reserved (C) 2016</p>
+        </div>
+      </div>
+    </div>
+{% compress js %}
+    <script src="{% static 'uichms/js/jquery.min.js' %}"></script>
+    <script src="{% static 'uichms/js/angular.min.js' %}"></script>
+    <script src="{% static 'uichms/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'uichms/js/angular-route.min.js' %}"></script>
+    <script type="text/javascript">
+      var app = (function ($) {
+        var config = $('#config'),
+        app = JSON.parse(config.text());
+        return app;
+      })(jQuery);
+    </script>
+    <script>
+      $( document ).ready(function() {
+        console.log( "ready!" );
+        console.log(app);
+
+        // get all api links for churches, people, interests, etc..
+        $.ajax({
+          url: app.apiRoot,
+          async: false,
+          dataType: 'json',
+          success: function(data) {
+            // get api urls to avoid hardcoding it
+            app.churches = {url : data['churches']};
+            // app.people = {url : data['people]}
+            app.interests = {url : data['interests']};
+            app.member_statuses = {url : data['member_statuses']};
+            app.ministries = {url : data['ministries']}
+            app.skills_and_professions = {url : data['skills_and_professions']}
+            app.spiritual_milestones = {url : data['spiritual_milestones']}    
+          }
+        });
+
+        console.log(app);
+
+        // to get all churches
+        $.getJSON(app.churches.url, function( data ) {
+           console.log(data);
+        });
+      
+      });
+    </script>
+    <!-- Compiled ui-router.min is currently not working. 
+      use unminified version instead -->
+    <!--
+    <script src="{% static 'js/angular-ui-router.min.js' %}"></script>
+    -->
+    <script src="{% static 'uichms/js/angular-ui-router.js' %}"></script>
+    <script src="{% static 'uichms/angular-ui/login/login.module.js' %}"></script>
+    <script src="{% static 'uichms/angular-ui/home/home.module.js' %}"></script>
+    <script src="{% static 'uichms/angular-ui/ministries/ministries.module.js' %}"></script>
+    <script src="{% static 'uichms/angular-ui/people/people.module.js' %}"></script>
+    <script src="{% static 'uichms/angular-ui/admin/admin.module.js' %}"></script>
+    <script src="{% static 'uichms/angular-ui/app.module.js' %}"></script>
+    <script src="{% static 'uichms/angular-ui/app.routes.js' %}"></script>
+{% endcompress %}
+  </body>
+</html>

@@ -1,0 +1,115 @@
+<!-- account.roles state html -->
+<div class="row bottom-buffer">
+  <button type="button"
+          class="btn btn-md btn-primary"
+          ui-sref="admin.account.users">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    Back to List of Users
+  </button>
+</div>
+
+<div class="row bottom-buffer">
+        <div class="col-sm-9 col-xs-12" >
+              <div class="visible-xs hidden-sm text-center" >
+                   <label>List of Roles</label>
+              </div>
+              <div class="visible-sm hidden-xs text-left" >
+                   <label>List of Roles</label>
+              </div>
+        </div>
+        <div class="clearfix visible-xs-block bottom-buffer"></div>
+        <div class="col-sm-3 col-xs-12">
+            <button type="button"
+                    class="btn btn-md btn-primary col-xs-12 pull-right"
+                    data-toggle="modal"
+                    data-target="#addPerson">
+              <span class="glyphicon glyphicon-plus"></span>
+              Add Role 
+            </button>
+        </div>
+        <div class="clearfix visible-xs-block bottom-buffer"></div>
+</div>
+<!-- Modal -->
+<div class="modal fade"
+     id="addPerson"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content form-group">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Role</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-3">
+            Name:* 
+          </div>
+          <div class="col-xs-5">
+            <input type="text" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-3">
+            Copy Existing Role:* 
+          </div>
+          <div class="col-xs-5">
+            <select class="form-control">
+              <option>Pastor</option>
+              <option>Deacon</option>
+            </select>
+          </div>
+          
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="btn btn-md btn-primary"
+                data-dismiss="modal">
+          Cancel
+        </button>
+        <button type="submit"
+                class="btn btn-md btn-primary"
+                data-dismiss="modal">
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+
+<div class="row bottom-buffer">
+  <div class="col-xs-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Name</th>
+          <th>Edit</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="ministry in [{
+                                      no: 1,
+                                      name : 'data 1',
+                                   }]"
+            class="text-center" >
+          <td>{{ ministry.no }}</td>
+          <td>{{ ministry.name }}</td>
+          <td>
+            <a href="" class="icon">
+              <span class="glyphicon glyphicon-edit"></span>
+            </a>
+          </td>
+          <td>
+            <a href="" class="icon">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
