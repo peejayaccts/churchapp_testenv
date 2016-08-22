@@ -3,6 +3,7 @@ from .base import *
 
 DEBUG = False
 COMPRESS_ENABLED = True
+LOCAL_DEV = False 
 
 DATABASES = {
     'default': {

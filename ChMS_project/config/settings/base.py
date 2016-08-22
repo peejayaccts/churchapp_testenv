@@ -26,7 +26,7 @@ SECRET_KEY = '%x2cu!a42o(4t*r-5kd7!#hr7^_+hg53^oe7k25^e(t)2*0cov'
 DEBUG = True
 # COMPRESS is disabled when debug is True, to force compression set below
 # to True, comment out during production
-COMPRESS_ENABLED = True
+COMPRESS_ENABLED = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -161,7 +161,7 @@ STATIC_URL = '/static/'
 SETTINGS_DIR = os.path.dirname(__file__)
 STATIC_ROOT = SETTINGS_DIR + '/static'
 
-#Indicate here all other static assets
+# Indicate here all other static assets
 STATICFILES_DIRS = (
     os.path.join(PROJ_DIR, 'uichms', 'static'),
 )

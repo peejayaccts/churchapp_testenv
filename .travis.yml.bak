@@ -3,17 +3,15 @@ python:
   - 3.5
 dist: trusty 
 sudo: required
-env:
-  global:
-    - CI_HOME='/home/travis/build/peejayaccts/churchapp_testenv'
-    - CI_ROOT='/home/travis/'
 addons:
   apt:
     packages:
     - mysql-server-5.6
     - mysql-client-core-5.6
     - mysql-client-5.6
-    - apache2 
+    - nodejs
+    - npm 
+    - build-essential 
 services:
   - mysql 
 before_install:
@@ -22,34 +20,26 @@ before_install:
 install:
   - pip install -r requirements/base.txt
 before_script:
-# LOAD DATABASE 
+# Load database 
   - mysql -u root -e 'CREATE DATABASE GNT_ChMS_MyDB CHARACTER SET utf8; GRANT ALL ON GNT_ChMS_MyDB.* TO 'pekUrsTruly' IDENTIFIED BY "GloriaTai4ndP#k"';
 
 # RUN the migration and server
-  - sudo a2enmod ssl
-  - sudo mkdir $CI_ROOT/etc/apache2/ssl
-  - cd $CI_HOME/ChMS_project 
-<<<<<<< HEAD
-  - cd $CI_ROOT/etc/apache2/sites-available/default-ssl.conf
-  - pwd
-script: true
-=======
+  - cd ChMS_project/
   - python manage.py migrate --noinput
-  - python manage.py collectstatic --clear --noinput
   - python manage.py runserver &
   - sleep 3
 # RUN the headless UI 
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3
-# INSTALL FRONT-END BUILD TOOLS
+# RUN FRONT END
   - npm install -g grunt-cli bower yo generator-karma generator-angular
-  - cd $CI_HOME/ChMS_project/src 
+  - cd src/ 
   - npm install
   - bower install
-# DIRECT TO HOME DIRECOTRY 
-  - cd $CI_HOME 
 script: 
->>>>>>> 5c5ff15d8b4d376a2445e94297861765b19c420e
 # RUN the django test script 
-# RUN the grunt build script 
+  - cd ..
+  - cd ChMS_project/
+  - python api_functional_tests.py
+  - python functional_tests.py
