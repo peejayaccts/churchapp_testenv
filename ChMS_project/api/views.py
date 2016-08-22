@@ -31,14 +31,6 @@ class DefaultsMixin(object):
     permission_classes = (
         permissions.IsAuthenticated,
     )
-    paginate_by = 25
-    paginate_by_param = 'page_size'
-    max_paginate_by = 100
-    filter_backends = (
-        filters.DjangoFilterBackend,
-        filters.SearchFilter,
-        filters.OrderingFilter,
-    )
 
 
 class ChurchViewSet(mixins.ListModelMixin,
@@ -65,6 +57,7 @@ class InterestViewSet(mixins.ListModelMixin,
                       mixins.CreateModelMixin,
                       mixins.UpdateModelMixin,
                       mixins.DestroyModelMixin,
+                      DefaultsMixin,
                       viewsets.GenericViewSet):
     """
     API Endpoint for listing, creating, updating, deleting Interest List
@@ -86,6 +79,7 @@ class SkillAndProfessionViewSet(mixins.ListModelMixin,
                                 mixins.CreateModelMixin,
                                 mixins.UpdateModelMixin,
                                 mixins.DestroyModelMixin,
+                                DefaultsMixin,
                                 viewsets.GenericViewSet):
     """
     API Endpoint for listing, creating, updating, deleting Skills and Professions List
@@ -107,6 +101,7 @@ class SpiritualMilestoneViewSet(mixins.ListModelMixin,
                                 mixins.CreateModelMixin,
                                 mixins.UpdateModelMixin,
                                 mixins.DestroyModelMixin,
+                                DefaultsMixin,
                                 viewsets.GenericViewSet):
     """
     API Endpoint for listing, creating, updating, deleting Spiritual Milestones List
@@ -128,6 +123,7 @@ class MinistryViewSet(mixins.ListModelMixin,
                       mixins.CreateModelMixin,
                       mixins.UpdateModelMixin,
                       mixins.DestroyModelMixin,
+                      DefaultsMixin,
                       viewsets.GenericViewSet):
     """
     API Endpoint for listing, creating, updating, deleting Ministry List
@@ -149,6 +145,7 @@ class MemberStatusViewSet(mixins.ListModelMixin,
                           mixins.CreateModelMixin,
                           mixins.UpdateModelMixin,
                           mixins.DestroyModelMixin,
+                          DefaultsMixin,
                           viewsets.GenericViewSet):
     """
     API Endpoint for listing, creating, updating, deleting Member Statuses List
@@ -191,6 +188,7 @@ class PersonInterestViewSet(mixins.ListModelMixin,
                             mixins.RetrieveModelMixin,
                             mixins.CreateModelMixin,
                             mixins.DestroyModelMixin,
+                            DefaultsMixin,
                             viewsets.GenericViewSet):
     """
     API Endpoint for listing, creating, and deleting maps for Person and Interest
@@ -206,6 +204,7 @@ class PersonSkillAndProfessionViewSet(mixins.ListModelMixin,
                                       mixins.RetrieveModelMixin,
                                       mixins.CreateModelMixin,
                                       mixins.DestroyModelMixin,
+                                      DefaultsMixin,
                                       viewsets.GenericViewSet):
     """
     API Endpoint for listing, creating, and deleting maps for Person and Skills/Professions
@@ -221,6 +220,7 @@ class PersonSpiritualMilestoneViewSet(mixins.ListModelMixin,
                                       mixins.RetrieveModelMixin,
                                       mixins.CreateModelMixin,
                                       mixins.DestroyModelMixin,
+                                      DefaultsMixin,
                                       viewsets.GenericViewSet):
     """
     API Endpoint for listing, creating, and deleting maps for Person and Spiritual Milestone
